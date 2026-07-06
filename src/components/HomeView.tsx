@@ -6,6 +6,7 @@ import CategoryCard from './CategoryCard';
 import ProductCard from './ProductCard';
 import ProductIllustration from './ProductIllustration';
 import Logo from './Logo';
+import { getCandidateImageUrls } from '../utils/imageHelper';
 
 import { Product } from '../types';
 
@@ -13,12 +14,13 @@ interface HomeViewProps {
   setActiveTab: (tab: string) => void;
   setSelectedCategory: (catId: string) => void;
   onAddToCart?: (product: Product) => void;
+  onViewDetail?: (product: Product) => void;
 }
 
-export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCart }: HomeViewProps) {
+export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCart, onViewDetail }: HomeViewProps) {
   // Filter featured products (e.g., first 4 marked as featured)
   const featuredProducts = products.filter(p => p.isFeatured).slice(0, 4);
-  const bestSellerProduct = products.find(p => p.isBestSeller && p.id === 'p9') || products[4]; // Sajavan Ghee or Kesar Pista Shrikhand
+  const bestSellerProduct = products.find(p => p.id === 'kesar-pista-shrikhand-1kg') || products[4]; // Kesar Pista Shrikhand as Best Seller
 
   const generalWhatsappUrl = getGeneralWhatsAppUrl();
 
@@ -67,7 +69,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
 
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#3E2723] leading-tight tracking-tight">
-              શુદ્ધતા અને સ્વાદનું અનોખું સંગમ <br className="hidden sm:inline" />
+              The Perfect Union of Purity & Taste <br className="hidden sm:inline" />
               <span className="text-[#FF9933] bg-gradient-to-r from-[#FF9933] to-[#C5A059] bg-clip-text text-transparent">
                 Shree Khodiyar Dairy
               </span>
@@ -139,7 +141,15 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                 </div>
 
                 {/* Large visual illustration of Shrikhand or Ghee */}
-                <ProductIllustration type="shrikhand" size="lg" className="rounded-2xl" />
+                <div className="w-full h-56 md:h-64 rounded-2xl overflow-hidden bg-[#FAF6EE] border border-[#F0EAD6]/50 flex items-center justify-center">
+                  <img
+                    src="/images/banner.webp"
+                    alt="Shree Khodiyar Dairy"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover animate-fade-in"
+                    loading="eager"
+                  />
+                </div>
                 
                 {/* Float Card 1: Best Seller tag */}
                 <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 bg-[#FF9933] border-2 border-white px-3.5 py-1.5 rounded-2xl shadow-md rotate-6 flex items-center gap-1">
@@ -177,7 +187,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             Explore by Category
           </p>
           <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-            અમારી વિશેષ પ્રોડક્ટ્સ
+            Our Special Products
           </h2>
           <div className="h-1 w-12 bg-[#FF9933] mx-auto rounded-full" />
         </div>
@@ -260,7 +270,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
               Handpicked Delicacies
             </p>
             <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-              આજના ખાસ આકર્ષણ
+              Today's Special Attractions
             </h2>
           </div>
           
@@ -281,7 +291,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
         {/* 2 columns mobile, 3 tablet, 4 desktop */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
           {featuredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
+            <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} onViewDetail={onViewDetail} />
           ))}
         </div>
       </section>
@@ -308,7 +318,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
               <span className="text-[#FF9933] font-sans">{bestSellerProduct.gujaratiName}</span>
             </h3>
             <p className="text-xs sm:text-sm text-[#3E2723]/70 leading-relaxed">
-              Our gold-standard Sajavan Ghee is prized for its rich, authentic, granular structure ("દાણાદાર ઘી") and unforgettable aromatic fragrance. Traditionally slow-boiled in small batches using pure hand-churned dairy butter.
+              Our gold-standard Sajavan Ghee is prized for its rich, authentic, granular structure ("granular ghee") and unforgettable aromatic fragrance. Traditionally slow-boiled in small batches using pure hand-churned dairy butter.
             </p>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
@@ -325,8 +335,16 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
 
           <div className="flex flex-col items-center gap-4 shrink-0 w-full lg:w-auto">
             {/* Elegant vector display */}
-            <div className="w-44 h-44 rounded-2xl bg-white p-3 border border-[#F0EAD6] shadow-md">
-              <ProductIllustration type="ghee" size="md" className="h-full" />
+            <div className="w-44 h-44 rounded-2xl bg-[#FAF6EE] p-1.5 border border-[#F0EAD6] overflow-hidden flex items-center justify-center">
+              <img
+                src={getCandidateImageUrls(bestSellerProduct, 1)[0]}
+                alt={bestSellerProduct.name}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover rounded-xl"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/images/kesar-pista-shikhand.webp';
+                }}
+              />
             </div>
 
             <motion.a
@@ -359,7 +377,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
               Behind the Scenes
             </p>
             <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-              અમારી ડેરી ની એક ઝલક
+              A Glimpse of Our Dairy
             </h2>
           </div>
           
@@ -387,7 +405,6 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
               <ProductIllustration type={item.illustrationType} size="sm" className="h-32 sm:h-40 w-full rounded-xl" />
               <div className="mt-2 text-center">
                 <p className="text-xs font-bold text-[#3E2723] leading-tight truncate">{item.title}</p>
-                <p className="text-[10px] text-[#FF9933] font-medium mt-0.5 truncate">{item.gujaratiTitle}</p>
               </div>
             </motion.div>
           ))}
@@ -407,7 +424,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             Customer Love
           </p>
           <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-            ગ્રાહકોના અભિપ્રાયો
+            What Our Customers Say
           </h2>
           <div className="h-1 w-12 bg-[#FF9933] mx-auto rounded-full" />
         </div>
@@ -441,9 +458,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                   <h4 className="text-xs sm:text-sm font-extrabold text-[#3E2723]">
                     {test.name}
                   </h4>
-                  <p className="text-[10px] text-[#FF9933] font-bold">
-                    {test.gujaratiName}
-                  </p>
+                  {/* Reviewer's Gujarati name removed to satisfy English UI requirement */}
                 </div>
                 <div className="text-right text-[10px] text-[#C5A059] font-medium font-mono">
                   <span>{test.location}</span>
@@ -471,7 +486,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             </p>
 
             <div className="text-xs font-bold text-[#FF9933] font-sans">
-              બાબરા નું ગૌરવ • Since 1996
+              Pride of Babra • Since 1996
             </div>
           </div>
 

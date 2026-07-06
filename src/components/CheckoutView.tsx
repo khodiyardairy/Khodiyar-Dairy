@@ -45,23 +45,23 @@ export default function CheckoutView({
     cart.forEach((item, index) => {
       const pName = item.product.gujaratiName || item.product.name;
       const itemSubtotal = item.product.price * item.quantity;
-      orderDetails += `${index + 1}. *${pName}*\n   જથ્થો: ${item.quantity} x (₹${item.product.price} / ${item.product.unit}) = *₹${itemSubtotal}*\n`;
+      orderDetails += `${index + 1}. *${pName}*\n   Qty: ${item.quantity} x (₹${item.product.price} / ${item.product.unit}) = *₹${itemSubtotal}*\n`;
     });
 
     const waMessage = 
-`*શ્રી ખોડિયાર ડેરી (બાબરા) — નવો ઓર્ડર* 🥣🥛
+`*Shree Khodiyar Dairy (Babra) — New Order* 🥣🥛
 
-• *ગ્રાહકનું નામ:* ${formData.name}
-• *ફોન નંબર:* ${formData.phone}
-• *સરનામું:* ${formData.address}
-${formData.note ? `• *વિશેષ નોંધ:* ${formData.note}\n` : ''}
-*ઓર્ડર વિગતો:*
+• *Customer Name:* ${formData.name}
+• *Phone Number:* ${formData.phone}
+• *Address:* ${formData.address}
+${formData.note ? `• *Special Note:* ${formData.note}\n` : ''}
+*Order Details:*
 --------------------------------
 ${orderDetails}--------------------------------
-*કુલ આઇટમ્સ:* ${totalItems}
-*કુલ રકમ (Subtotal):* *₹${subtotal}*
+*Total Items:* ${totalItems}
+*Subtotal:* *₹${subtotal}*
 
-કૃપા કરીને મારો ઓર્ડર કન્ફર્મ કરવા અને ડિલિવરી સમય જણાવવા વિનંતી છે. આભાર!`;
+Please confirm my order and let me know the delivery time. Thank you!`;
 
     const encodedText = encodeURIComponent(waMessage);
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
@@ -89,7 +89,7 @@ ${orderDetails}--------------------------------
             🥣
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-[#3E2723] mb-2">
-            ઓર્ડર આપવા માટે કાર્ટ ખાલી છે
+            Your Cart is Empty
           </h2>
           <p className="text-xs sm:text-sm text-[#3E2723]/60 mb-8 max-w-xs mx-auto leading-relaxed">
             Please add some products to your cart before proceeding to checkout.
@@ -116,13 +116,13 @@ ${orderDetails}--------------------------------
         className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#C5A059] hover:text-[#FF9933] mb-6 transition-colors focus:outline-none"
       >
         <ArrowLeft className="w-4 h-4" />
-        Back to Cart / કાર્ટ પર પાછા જાઓ
+        Back to Cart
       </button>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Form Input Card - Left Column */}
         <div className="lg:col-span-7 bg-white rounded-3xl border border-[#F0EAD6] p-5 sm:p-6 shadow-xs">
-          <h2 className="text-lg sm:text-xl font-black text-[#3E2723] mb-1">ઓર્ડર અને ડિલિવરી વિગતો</h2>
+          <h2 className="text-lg sm:text-xl font-black text-[#3E2723] mb-1">Order & Delivery Details</h2>
           <p className="text-xs text-[#C5A059] font-bold uppercase tracking-wider mb-6">
             Delivery & Contact Details
           </p>
@@ -131,7 +131,7 @@ ${orderDetails}--------------------------------
             {/* Customer Name */}
             <div className="flex flex-col gap-1">
               <label htmlFor="name" className="text-xs font-black text-[#3E2723] uppercase tracking-wide flex justify-between">
-                <span>Customer Name / નામ <span className="text-red-500">*</span></span>
+                <span>Customer Name <span className="text-red-500">*</span></span>
               </label>
               <input
                 id="name"
@@ -140,7 +140,7 @@ ${orderDetails}--------------------------------
                 required
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="એન્ટર કરો ગ્રાહકનું નામ (e.g. Ramesh Patel)"
+                placeholder="Enter customer name (e.g. Ramesh Patel)"
                 className="w-full px-4 py-3 rounded-xl border border-[#F0EAD6] bg-[#FAF6EE]/30 text-sm font-medium text-[#3E2723] placeholder-[#C5A059]/40 focus:outline-none focus:border-[#FF9933] focus:bg-white transition-all"
               />
             </div>
@@ -148,7 +148,7 @@ ${orderDetails}--------------------------------
             {/* Phone Number */}
             <div className="flex flex-col gap-1">
               <label htmlFor="phone" className="text-xs font-black text-[#3E2723] uppercase tracking-wide flex justify-between">
-                <span>Phone Number / મોબાઈલ નંબર <span className="text-red-500">*</span></span>
+                <span>Phone Number <span className="text-red-500">*</span></span>
               </label>
               <input
                 id="phone"
@@ -157,7 +157,7 @@ ${orderDetails}--------------------------------
                 required
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="નંબર દાખલ કરો (e.g. 9876543210)"
+                placeholder="Enter phone number (e.g. 9876543210)"
                 className="w-full px-4 py-3 rounded-xl border border-[#F0EAD6] bg-[#FAF6EE]/30 text-sm font-medium text-[#3E2723] placeholder-[#C5A059]/40 focus:outline-none focus:border-[#FF9933] focus:bg-white transition-all"
               />
             </div>
@@ -165,7 +165,7 @@ ${orderDetails}--------------------------------
             {/* Delivery/Pickup Address */}
             <div className="flex flex-col gap-1">
               <label htmlFor="address" className="text-xs font-black text-[#3E2723] uppercase tracking-wide flex justify-between">
-                <span>Delivery or Pickup Address / પૂરું સરનામું <span className="text-red-500">*</span></span>
+                <span>Delivery or Pickup Address <span className="text-red-500">*</span></span>
               </label>
               <textarea
                 id="address"
@@ -174,7 +174,7 @@ ${orderDetails}--------------------------------
                 rows={3}
                 value={formData.address}
                 onChange={handleChange}
-                placeholder="તમારું ઘર નંબર, સોસાયટી, ગામ/વિસ્તાર, બાબરા (e.g. Opp. Bus Station, Babra)"
+                placeholder="Your house number, society, village/area, Babra (e.g. Opp. Bus Station, Babra)"
                 className="w-full px-4 py-3 rounded-xl border border-[#F0EAD6] bg-[#FAF6EE]/30 text-sm font-medium text-[#3E2723] placeholder-[#C5A059]/40 focus:outline-none focus:border-[#FF9933] focus:bg-white transition-all resize-none"
               />
             </div>
@@ -182,7 +182,7 @@ ${orderDetails}--------------------------------
             {/* Optional Note */}
             <div className="flex flex-col gap-1">
               <label htmlFor="note" className="text-xs font-black text-[#3E2723] uppercase tracking-wide">
-                Optional Note / વિશેષ નોંધ (optional)
+                Optional Note (optional)
               </label>
               <input
                 id="note"
@@ -190,7 +190,7 @@ ${orderDetails}--------------------------------
                 name="note"
                 value={formData.note}
                 onChange={handleChange}
-                placeholder="કોઈ ખાસ સૂચના (e.g. 'ઓછી ખાંડવાળું', 'ડિલિવરી સાંજે ૫ વાગ્યે')"
+                placeholder="Any special instructions (e.g. 'Less sugar', 'Deliver in evening')"
                 className="w-full px-4 py-3 rounded-xl border border-[#F0EAD6] bg-[#FAF6EE]/30 text-sm font-medium text-[#3E2723] placeholder-[#C5A059]/40 focus:outline-none focus:border-[#FF9933] focus:bg-white transition-all"
               />
             </div>
@@ -204,7 +204,7 @@ ${orderDetails}--------------------------------
               className={`w-full py-4 px-6 rounded-2xl bg-[#25D366] hover:bg-[#128C7E] disabled:bg-[#25D366]/60 text-white text-sm font-black uppercase tracking-wider shadow-md shadow-[#25D366]/15 transition-all flex items-center justify-center gap-2 mt-4 cursor-pointer`}
             >
               <Send className="w-4 h-4 shrink-0" />
-              {isSubmitting ? 'Sending Order via WhatsApp...' : 'ઑર્ડર મોકલો (WhatsApp)'}
+              {isSubmitting ? 'Sending Order via WhatsApp...' : 'Send Order (WhatsApp)'}
             </motion.button>
           </form>
         </div>
@@ -212,7 +212,7 @@ ${orderDetails}--------------------------------
         {/* Order Review List - Right Column */}
         <div className="lg:col-span-5 flex flex-col gap-4">
           <div className="bg-white rounded-3xl border border-[#F0EAD6] p-5 shadow-xs">
-            <h3 className="text-base font-black text-[#3E2723] mb-1">તમારો ઓર્ડર સમરી</h3>
+            <h3 className="text-base font-black text-[#3E2723] mb-1">Your Order Summary</h3>
             <p className="text-[10px] text-[#C5A059] font-bold uppercase tracking-wider mb-4">
               Review Your Selected Products
             </p>

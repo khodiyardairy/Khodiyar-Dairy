@@ -20,7 +20,7 @@ export default function CategoriesView({ setActiveTab, setSelectedCategory }: Ca
       {/* Page Header */}
       <div className="text-left space-y-1">
         <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-          પ્રોડક્ટ કેટેગરીઝ
+          Product Categories
         </h2>
         <p className="text-xs sm:text-sm text-[#C5A059] font-medium">
           Discover Babra's legendary taste categories. Sourced clean and served fresh.
@@ -56,7 +56,6 @@ export default function CategoriesView({ setActiveTab, setSelectedCategory }: Ca
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="text-base font-black text-[#3E2723]">{cat.name}</h4>
-                    <p className="text-xs font-bold text-[#FF9933]">{cat.gujaratiName}</p>
                   </div>
                   <span className="text-xs font-bold text-[#C5A059] bg-[#FDFBF7] border border-[#F0EAD6] px-2.5 py-1 rounded-lg">
                     {catProducts.length} Items

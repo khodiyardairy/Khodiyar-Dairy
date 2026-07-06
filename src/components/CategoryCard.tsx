@@ -38,9 +38,7 @@ export default function CategoryCard({ category, productCount, onClick }: Catego
         <h3 className="text-sm sm:text-base font-bold text-[#3E2723] leading-tight group-hover:text-[#FF9933] transition-colors duration-200">
           {category.name}
         </h3>
-        <p className="text-xs font-semibold text-[#C5A059] mt-0.5">
-          {category.gujaratiName}
-        </p>
+
       </div>
 
       {/* Product Count Footer */}

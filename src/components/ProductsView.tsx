@@ -9,12 +9,14 @@ interface ProductsViewProps {
   selectedCategory: string;
   setSelectedCategory: (catId: string) => void;
   onAddToCart?: (product: Product) => void;
+  onViewDetail?: (product: Product) => void;
 }
 
 export default function ProductsView({
   selectedCategory,
   setSelectedCategory,
-  onAddToCart
+  onAddToCart,
+  onViewDetail
 }: ProductsViewProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -45,7 +47,7 @@ export default function ProductsView({
         className="text-left space-y-1"
       >
         <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-          પ્રોડક્ટ કેટલોગ
+          Product Catalog
         </h2>
         <p className="text-xs sm:text-sm text-[#C5A059] font-medium">
           Select pure products to order instantly via pre-filled WhatsApp message.
@@ -113,28 +115,6 @@ export default function ProductsView({
               </motion.button>
             );
           })}
-
-          {/* Manual Other Dairy Products Filter Chip */}
-          {(() => {
-            const count = products.filter(p => p.category === 'other').length;
-            if (count > 0) {
-              return (
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setSelectedCategory('other')}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-colors cursor-pointer ${
-                    selectedCategory === 'other'
-                      ? 'bg-[#FF9933] text-white shadow-xs'
-                      : 'bg-[#FDFBF7] text-[#3E2723] border border-[#F0EAD6] hover:bg-[#FAF6EE]'
-                  }`}
-                >
-                  Other Dairy ({count})
-                </motion.button>
-              );
-            }
-            return null;
-          })()}
         </div>
 
       </motion.div>
@@ -150,9 +130,7 @@ export default function ProductsView({
           >
             <span className="text-[11px] text-[#C5A059]">Active Category:</span>
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#FFF8E1] text-[#FF9933] text-xs font-extrabold border border-[#F0EAD6]">
-              {selectedCategory === 'other'
-                ? 'Other Dairy Products'
-                : categories.find(c => c.id === selectedCategory)?.name}
+              {categories.find(c => c.id === selectedCategory)?.name}
               <button onClick={() => setSelectedCategory('all')} className="hover:text-red-600 ml-0.5 cursor-pointer">
                 <X className="w-3 h-3" />
               </button>
@@ -165,7 +143,7 @@ export default function ProductsView({
       {filteredProducts.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
           {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
+            <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} onViewDetail={onViewDetail} />
           ))}
         </div>
       ) : (

@@ -9,12 +9,14 @@ import AboutView from './components/AboutView';
 import ContactView from './components/ContactView';
 import CartView from './components/CartView';
 import CheckoutView from './components/CheckoutView';
+import ProductDetailView from './components/ProductDetailView';
 import { Product, CartItem } from './types';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   // Load cart state from localStorage
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -31,18 +33,23 @@ export default function App() {
     localStorage.setItem('khodiyar_cart', JSON.stringify(cart));
   }, [cart]);
 
+  const handleTabChange = (tabId: string) => {
+    setSelectedProduct(null);
+    setActiveTab(tabId);
+  };
+
   // Cart helper functions
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = (product: Product, quantity: number = 1) => {
     setCart((prevCart) => {
       const existing = prevCart.find((item) => item.product.id === product.id);
       if (existing) {
         return prevCart.map((item) =>
           item.product.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       }
-      return [...prevCart, { product, quantity: 1 }];
+      return [...prevCart, { product, quantity }];
     });
   };
 
@@ -70,13 +77,26 @@ export default function App() {
 
   // Render current tab content with smooth transitions
   const renderContent = () => {
+    if (selectedProduct) {
+      return (
+        <ProductDetailView
+          product={selectedProduct}
+          onBack={() => setSelectedProduct(null)}
+          onAddToCart={handleAddToCart}
+          cart={cart}
+          onUpdateQuantity={handleUpdateQuantity}
+        />
+      );
+    }
+
     switch (activeTab) {
       case 'home':
         return (
           <HomeView
-            setActiveTab={setActiveTab}
+            setActiveTab={handleTabChange}
             setSelectedCategory={setSelectedCategory}
-            onAddToCart={handleAddToCart}
+            onAddToCart={(prod) => handleAddToCart(prod, 1)}
+            onViewDetail={setSelectedProduct}
           />
         );
       case 'products':
@@ -84,20 +104,21 @@ export default function App() {
           <ProductsView
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
-            onAddToCart={handleAddToCart}
+            onAddToCart={(prod) => handleAddToCart(prod, 1)}
+            onViewDetail={setSelectedProduct}
           />
         );
       case 'categories':
         return (
           <CategoriesView
-            setActiveTab={setActiveTab}
+            setActiveTab={handleTabChange}
             setSelectedCategory={setSelectedCategory}
           />
         );
       case 'gallery':
         return <GalleryView />;
       case 'about':
-        return <AboutView setActiveTab={setActiveTab} />;
+        return <AboutView setActiveTab={handleTabChange} />;
       case 'contact':
         return <ContactView />;
       case 'cart':
@@ -107,7 +128,7 @@ export default function App() {
             onUpdateQuantity={handleUpdateQuantity}
             onRemoveFromCart={handleRemoveFromCart}
             onClearCart={handleClearCart}
-            setActiveTab={setActiveTab}
+            setActiveTab={handleTabChange}
           />
         );
       case 'checkout':
@@ -115,15 +136,16 @@ export default function App() {
           <CheckoutView
             cart={cart}
             onClearCart={handleClearCart}
-            setActiveTab={setActiveTab}
+            setActiveTab={handleTabChange}
           />
         );
       default:
         return (
           <HomeView
-            setActiveTab={setActiveTab}
+            setActiveTab={handleTabChange}
             setSelectedCategory={setSelectedCategory}
-            onAddToCart={handleAddToCart}
+            onAddToCart={(prod) => handleAddToCart(prod, 1)}
+            onViewDetail={setSelectedProduct}
           />
         );
     }
@@ -133,13 +155,13 @@ export default function App() {
     <div className="min-h-screen bg-[#FDFBF7] text-[#3E2723] flex flex-col selection:bg-[#FF9933]/10 selection:text-[#FF9933]">
       
       {/* Premium Top Navigation Header */}
-      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} cartCount={totalCartCount} />
+      <Navbar activeTab={activeTab} setActiveTab={handleTabChange} cartCount={totalCartCount} />
 
       {/* Main Content Area with elegant fade-up animations on page transit */}
       <main className="flex-grow">
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeTab}
+            key={selectedProduct ? `detail-${selectedProduct.id}` : activeTab}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
@@ -152,7 +174,7 @@ export default function App() {
       </main>
 
       {/* Sticky Mobile Bottom Navigation Panel */}
-      <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} cartCount={totalCartCount} />
+      <BottomNav activeTab={activeTab} setActiveTab={handleTabChange} cartCount={totalCartCount} />
 
     </div>
   );

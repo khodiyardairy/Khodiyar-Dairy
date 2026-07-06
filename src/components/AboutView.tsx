@@ -17,7 +17,7 @@ export default function AboutView({ setActiveTab }: AboutViewProps) {
       {/* Page Header */}
       <div className="text-left space-y-1">
         <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-          અમારો પરિચય - Our 1996 Story
+          Our 1996 Story
         </h2>
         <p className="text-xs sm:text-sm text-[#C5A059] font-medium">
           Decades of pure dedication to quality milk products, sweets, and local trust in Babra.
@@ -85,7 +85,7 @@ export default function AboutView({ setActiveTab }: AboutViewProps) {
       {/* Bento Grid: Core Values */}
       <div className="space-y-6">
         <div className="text-center space-y-1">
-          <h4 className="text-base sm:text-lg font-black text-[#3E2723]">અમારી વિશેષતા - Our Core Commitments</h4>
+          <h4 className="text-base sm:text-lg font-black text-[#3E2723]">Our Core Commitments</h4>
           <p className="text-xs text-[#C5A059]">What keeps us Babra's absolute favorite dairy for three decades.</p>
         </div>
 

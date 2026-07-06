@@ -12,7 +12,7 @@ export default function ContactView() {
     if (!name.trim() || !message.trim()) return;
 
     // Prefill custom enquiry WhatsApp link
-    const baseText = `*શ્રી ખોડિયાર ડેરી (ઇન્ક્વાયરી)*\n\nનમસ્તે, મારે આ બાબતે પૂછપરછ કરવી છે:\n\n• *નામ:* ${name}\n• *વિષય:* ${topic}\n• *મેસેજ:* ${message}\n\nકૃપા કરીને મને વળતો જવાબ આપવા વિનંતી. આભાર!`;
+    const baseText = `*Shree Khodiyar Dairy (Enquiry)*\n\nHello, I have an enquiry regarding:\n\n• *Name:* ${name}\n• *Topic:* ${topic}\n• *Message:* ${message}\n\nThank you!`;
     const encodedText = encodeURIComponent(baseText);
     const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
 
@@ -26,7 +26,7 @@ export default function ContactView() {
       {/* Page Title */}
       <div className="text-left space-y-1">
         <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-          અમારો સંપર્ક કરો - Contact Us
+          Contact Us
         </h2>
         <p className="text-xs sm:text-sm text-[#C5A059] font-medium">
           Have questions or planning a festival order? Reach out or visit us in Babra.
@@ -120,7 +120,7 @@ export default function ContactView() {
             
             {/* Name Input */}
             <div className="space-y-1">
-              <label className="block text-xs font-bold text-[#C5A059]">Your Name (તમારું નામ)</label>
+              <label className="block text-xs font-bold text-[#C5A059]">Your Name</label>
               <input
                 type="text"
                 required
@@ -149,7 +149,7 @@ export default function ContactView() {
 
             {/* Message Textarea */}
             <div className="space-y-1">
-              <label className="block text-xs font-bold text-[#C5A059]">Message (તમારો સંદેશો)</label>
+              <label className="block text-xs font-bold text-[#C5A059]">Message</label>
               <textarea
                 required
                 rows={4}

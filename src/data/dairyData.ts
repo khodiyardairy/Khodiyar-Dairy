@@ -43,7 +43,7 @@ export const categories: Category[] = [
 // All products from the attached CSV
 export const products: Product[] = [
   {
-    id: 'coco-કોકો-1-kg',
+    id: 'coco-1kg',
     name: 'Coco',
     gujaratiName: 'કોકો',
     price: 280,
@@ -53,7 +53,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'lassi-લસ્સી-1-kg',
+    id: 'lassi-1kg',
     name: 'Lassi',
     gujaratiName: 'લસ્સી',
     price: 200,
@@ -63,7 +63,7 @@ export const products: Product[] = [
     illustrationType: 'buttermilk'
   },
   {
-    id: 'cham-cham-ચમચમ-1-kg',
+    id: 'cham-cham-1kg',
     name: 'Cham Cham',
     gujaratiName: 'ચમચમ',
     price: 360,
@@ -74,7 +74,7 @@ export const products: Product[] = [
     isFeatured: true
   },
   {
-    id: 'k-d-special-matho-k-d-સ્પેશ્યલ-માથો-1-kg',
+    id: 'kd-special-matho-1kg',
     name: 'K-D Special Matho',
     gujaratiName: 'K&D સ્પેશ્યલ મઠો',
     price: 400,
@@ -86,7 +86,7 @@ export const products: Product[] = [
     badge: 'Signature'
   },
   {
-    id: 'kesar-badam-matho-કેસર-બાદામ-માથો-1-kg',
+    id: 'kesar-badam-matho-1kg',
     name: 'Kesar Badam Matho',
     gujaratiName: 'કેસર બાદામ મઠો',
     price: 360,
@@ -96,7 +96,7 @@ export const products: Product[] = [
     illustrationType: 'shrikhand'
   },
   {
-    id: 'american-dryfruit-liq-matho-અમેરિકન-ડ્રાયફ્રૂટ-લિક્વિડ-માથો-1-kg',
+    id: 'american-dryfruit-liq-matho-1kg',
     name: 'American Dry Fruit Matho',
     gujaratiName: 'અમેરિકન ડ્રાયફ્રૂટ લિક્વિડ મઠો',
     price: 280,
@@ -106,7 +106,7 @@ export const products: Product[] = [
     illustrationType: 'shrikhand'
   },
   {
-    id: 'adadiya-અડદિયા-1-kg',
+    id: 'adadiya-1kg',
     name: 'Adadiya',
     gujaratiName: 'અડદિયા',
     price: 440,
@@ -118,27 +118,27 @@ export const products: Product[] = [
     badge: 'Winter Special'
   },
   {
-    id: 'bombe-halvo-બોમ્બે-હલ્વો-1-kg',
+    id: 'bombe-halvo-1kg',
     name: 'Bombe Halvo',
     gujaratiName: 'બોમ્બે હલ્વો',
     price: 260,
-    category: 'other',
+    category: 'mithai',
     unit: '1 Kg',
     description: 'Vibrant and chewy Bombay-style halwa - bright, glossy and translucent pieces made with cornflour, ghee and sugar.',
     illustrationType: 'sweet'
   },
   {
-    id: 'panch-ratna-halvo-પંચ-રત્ન-હલ્વો-1-kg',
+    id: 'panch-ratna-halvo-1kg',
     name: 'Panch Ratna Halvo',
     gujaratiName: 'પંચ રત્ન હલ્વો',
     price: 360,
-    category: 'other',
+    category: 'mithai',
     unit: '1 Kg',
     description: 'Five-layer colorful halwa made with pure ghee. Visually stunning and richly flavored.',
     illustrationType: 'sweet'
   },
   {
-    id: 'maisup-pak-મૈસૂર-પાક-1-kg',
+    id: 'maisup-pak-1kg',
     name: 'Mysore Pak',
     gujaratiName: 'મૈસૂર પાક',
     price: 600,
@@ -148,7 +148,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'laddu-motichur-લાડુ-મોતીચૂર-1-kg',
+    id: 'laddu-motichur-1kg',
     name: 'Motichur Laddu',
     gujaratiName: 'લાડુ મોતીચૂર',
     price: 260,
@@ -158,7 +158,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'kalakand-કલાકંદ-1-kg',
+    id: 'kalakand-1kg',
     name: 'Kalakand',
     gujaratiName: 'કલાકંદ',
     price: 500,
@@ -168,7 +168,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'jalebi-જલેબી-1-kg',
+    id: 'jalebi-1kg',
     name: 'Jalebi',
     gujaratiName: 'જલેબી',
     price: 360,
@@ -178,7 +178,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'modak-flavours-મોદક-ફ્લેવર્સ-1-kg',
+    id: 'modak-flavours-1kg',
     name: 'Modak Flavours',
     gujaratiName: 'મોદક ફ્લેવર્સ',
     price: 260,
@@ -188,7 +188,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'modak-મોદક-1-kg',
+    id: 'modak-1kg',
     name: 'Modak',
     gujaratiName: 'મોદક',
     price: 260,
@@ -198,7 +198,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'soan-papdi-સોન-પાપડી-1-kg',
+    id: 'soan-papdi-1kg',
     name: 'Soan Papdi',
     gujaratiName: 'સોન પાપડી',
     price: 300,
@@ -208,7 +208,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'pista-barfi-પિસ્તા-બરફી-1-kg',
+    id: 'pista-barfi-1kg',
     name: 'Pista Barfi',
     gujaratiName: 'પિસ્તા બરફી',
     price: 440,
@@ -218,7 +218,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'barfi-chocolate-બરફી-ચોકલેટ-1-kg',
+    id: 'barfi-chocolate-1kg',
     name: 'Barfi Chocolate',
     gujaratiName: 'બરફી ચોકલેટ',
     price: 440,
@@ -228,7 +228,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'barfi-white-બરફી-વ્હાઇટ-1-kg',
+    id: 'barfi-white-1kg',
     name: 'Barfi White',
     gujaratiName: 'બરફી વ્હાઇટ',
     price: 440,
@@ -238,7 +238,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'kala-jambu-કાળા-જામુ-1-kg',
+    id: 'kala-jambu-1kg',
     name: 'Kala Jambu',
     gujaratiName: 'કાળા જામુ',
     price: 260,
@@ -248,7 +248,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'marcel-cake-માર્સલ-કેક-1-kg',
+    id: 'marcel-cake-1kg',
     name: 'Marcel Cake',
     gujaratiName: 'માર્સલ કેક',
     price: 440,
@@ -258,7 +258,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'keri-no-ras-કેરી-નો-રસ-1-kg',
+    id: 'keri-no-ras-1kg',
     name: 'Keri No Ras',
     gujaratiName: 'કેરી નો રસ',
     price: 260,
@@ -268,7 +268,7 @@ export const products: Product[] = [
     illustrationType: 'milk'
   },
   {
-    id: 'mix-fruit-shrikhand-મિક્સ-ફ્રૂટ-શ્રીખંડ-1-kg',
+    id: 'mix-fruit-shrikhand-1kg',
     name: 'Mix Fruit Shrikhand',
     gujaratiName: 'મિક્સ ફ્રૂટ શ્રીખંડ',
     price: 300,
@@ -278,7 +278,7 @@ export const products: Product[] = [
     illustrationType: 'shrikhand'
   },
   {
-    id: 'white-elaichi-shrikhand-વ્હાઇટ-એલાઇચી-શ્રીખંડ-1-kg',
+    id: 'white-elaichi-shrikhand-1kg',
     name: 'White Elaichi Shrikhand',
     gujaratiName: 'વ્હાઇટ એલાઇચી શ્રીખંડ',
     price: 280,
@@ -288,7 +288,7 @@ export const products: Product[] = [
     illustrationType: 'shrikhand'
   },
   {
-    id: 'kesar-pista-shrikhand-કેસર-પિસ્તા-શ્રીખંડ-1-kg',
+    id: 'kesar-pista-shrikhand-1kg',
     name: 'Kesar Pista Shrikhand',
     gujaratiName: 'કેસર પિસ્તા શ્રીખંડ',
     price: 340,
@@ -301,7 +301,7 @@ export const products: Product[] = [
     badge: 'Famous'
   },
   {
-    id: 'rajbhog-shrikhand-રાજભોગ-શ્રીખંડ-1-kg',
+    id: 'rajbhog-shrikhand-1kg',
     name: 'Rajbhog Shrikhand',
     gujaratiName: 'રાજભોગ શ્રીખંડ',
     price: 200,
@@ -311,7 +311,7 @@ export const products: Product[] = [
     illustrationType: 'shrikhand'
   },
   {
-    id: 'pineapple-shrikhand-પાઇનેપલ-શ્રીખંડ-1-kg',
+    id: 'pineapple-shrikhand-1kg',
     name: 'Pineapple Shrikhand',
     gujaratiName: 'પાઇનેપલ શ્રીખંડ',
     price: 260,
@@ -321,7 +321,7 @@ export const products: Product[] = [
     illustrationType: 'shrikhand'
   },
   {
-    id: 'american-dryfruit-shrikhand-અમેરિકન-ડ્રાયફ્રૂટ-શ્રીખંડ-1-kg',
+    id: 'american-dryfruit-shrikhand-1kg',
     name: 'American Dry Fruit Matho',
     gujaratiName: 'અમેરિકન ડ્રાયફ્રૂટ શ્રીખંડ',
     price: 280,
@@ -331,7 +331,7 @@ export const products: Product[] = [
     illustrationType: 'shrikhand'
   },
   {
-    id: 'shrikhand-શ્રીખંડ-1-kg',
+    id: 'shrikhand-1kg',
     name: 'Shrikhand',
     gujaratiName: 'શ્રીખંડ',
     price: 280,
@@ -341,7 +341,7 @@ export const products: Product[] = [
     illustrationType: 'shrikhand'
   },
   {
-    id: 'gajar-halvo-ગાજર-હલ્વો-1-kg',
+    id: 'gajar-halvo-1kg',
     name: 'Gajar Halvo',
     gujaratiName: 'ગાજર હલ્વો',
     price: 360,
@@ -351,17 +351,17 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'kasata-કસાટા-1-kg',
+    id: 'kasata-1kg',
     name: 'Kasata',
     gujaratiName: 'કસાટા',
     price: 300,
-    category: 'other',
+    category: 'mithai',
     unit: '1 Kg',
     description: 'Tri-color dairy ice cream sweet with strawberry, vanilla and pistachio layers.',
     illustrationType: 'sweet'
   },
   {
-    id: 'mango-pie-મેંગો-પાઈ-1-kg',
+    id: 'mango-pie-1kg',
     name: 'Mango Pie',
     gujaratiName: 'મેંગો પાઈ',
     price: 440,
@@ -371,7 +371,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'badam-shake-બદામશેક-1-kg',
+    id: 'badam-shake-1kg',
     name: 'Badam Shake',
     gujaratiName: 'બદામ શેક',
     price: 150,
@@ -381,7 +381,7 @@ export const products: Product[] = [
     illustrationType: 'milk'
   },
   {
-    id: 'fruit-salad-ફ્રૂટ-સલાટ-1-kg',
+    id: 'fruit-salad-1kg',
     name: 'Fruit Salad',
     gujaratiName: 'ફ્રૂટ સલાડ',
     price: 240,
@@ -391,7 +391,7 @@ export const products: Product[] = [
     illustrationType: 'milk'
   },
   {
-    id: 'sitafal-rabdi-સીતાફળ-રબડી-1-kg',
+    id: 'sitafal-rabdi-1kg',
     name: 'Sitafal Rabdi',
     gujaratiName: 'સીતાફળ રબડી',
     price: 350,
@@ -401,7 +401,7 @@ export const products: Product[] = [
     illustrationType: 'milk'
   },
   {
-    id: 'angur-rabdi-અંગૂર-રબડી-1-kg',
+    id: 'angur-rabdi-1kg',
     name: 'Angur Rabdi',
     gujaratiName: 'અંગૂર રબડી',
     price: 350,
@@ -411,7 +411,7 @@ export const products: Product[] = [
     illustrationType: 'milk'
   },
   {
-    id: 'basundi-બાસુંડી-1-kg',
+    id: 'basundi-1kg',
     name: 'Basundi',
     gujaratiName: 'બાસુંડી',
     price: 260,
@@ -421,7 +421,7 @@ export const products: Product[] = [
     illustrationType: 'milk'
   },
   {
-    id: 'kesar-pista-1-kg',
+    id: 'kesar-pista-1kg',
     name: 'Kesar Pista',
     gujaratiName: 'કેસર પિસ્તા',
     price: 340,
@@ -431,9 +431,9 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'shrikhand-1-kg',
-    name: 'Shrikhand',
-    gujaratiName: 'શ્રીખંડ',
+    id: 'shrikhand-classic-1kg',
+    name: 'Shrikhand Classic',
+    gujaratiName: 'શ્રીખંડ ક્લાસિક',
     price: 280,
     category: 'shrikhand_matho',
     unit: '1 Kg',
@@ -441,7 +441,7 @@ export const products: Product[] = [
     illustrationType: 'shrikhand'
   },
   {
-    id: 'gajar-halvo-1-kg',
+    id: 'rasgulla-1kg',
     name: 'Rasgulla',
     gujaratiName: 'રસગુલ્લા',
     price: 200,
@@ -451,7 +451,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'kasata-1-kg',
+    id: 'dudhi-halvo-1kg',
     name: 'Dudhi Halvo',
     gujaratiName: 'દૂધી હલ્વો',
     price: 360,
@@ -461,7 +461,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'anjir-pak-1-kg',
+    id: 'anjir-pak-1kg',
     name: 'Anjir Pak',
     gujaratiName: 'અંજીર પાક',
     price: 440,
@@ -471,7 +471,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'anjir-cake-1-kg',
+    id: 'anjir-cake-1kg',
     name: 'Anjir Cake',
     gujaratiName: 'અંજીર કેક',
     price: 440,
@@ -481,7 +481,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'khajur-pak-1-kg',
+    id: 'khajur-pak-1kg',
     name: 'Khajur Pak',
     gujaratiName: 'ખજૂર પાક',
     price: 440,
@@ -491,7 +491,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'topra-pak-1-kg',
+    id: 'topra-pak-1kg',
     name: 'Topra Pak',
     gujaratiName: 'ટોપરા પાક',
     price: 440,
@@ -501,7 +501,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'gulab-jambu-1-kg',
+    id: 'gulab-jambu-1kg',
     name: 'Gulab Jambu',
     gujaratiName: 'ગુલાબ જાંબુ',
     price: 220,
@@ -511,11 +511,11 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'thabdi-1-kg',
+    id: 'thabdi-1kg',
     name: 'Thabdi',
     gujaratiName: 'થાબડી',
     price: 440,
-    category: 'other',
+    category: 'mithai',
     unit: '1 Kg',
     description: 'Pure khoya slow-cooked with sugar to a rich golden brown grainy texture.',
     illustrationType: 'sweet',
@@ -523,7 +523,7 @@ export const products: Product[] = [
     badge: 'Granular Ghee Style'
   },
   {
-    id: 'mohanthal-1-kg',
+    id: 'mohanthal-1kg',
     name: 'Mohanthal',
     gujaratiName: 'મોહનથાળ',
     price: 440,
@@ -533,7 +533,7 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'kaju-katli-1-kg',
+    id: 'kaju-katli-1kg',
     name: 'Kaju Katli',
     gujaratiName: 'કાજુ કતલી',
     price: 900,
@@ -545,21 +545,21 @@ export const products: Product[] = [
     badge: 'King of Sweets'
   },
   {
-    id: 'penda-thabdi-1-kg',
+    id: 'penda-thabdi-1kg',
     name: 'Thabdi Penda',
     gujaratiName: 'થાબડી પૈંડા',
     price: 440,
-    category: 'other',
+    category: 'mithai',
     unit: '1 Kg',
     description: 'Crafted from pure khoya slow-cooked to a dense, rich caramelized finish.',
     illustrationType: 'sweet'
   },
   {
-    id: 'penda-milk-1-kg',
+    id: 'penda-milk-1kg',
     name: 'Milk Penda',
     gujaratiName: 'દૂધના પૈંડા',
     price: 400,
-    category: 'other',
+    category: 'mithai',
     unit: '1 Kg',
     description: 'Soft melt-in-mouth pedha made from the finest slow-cooked milk solids and sugar.',
     illustrationType: 'pedha'
@@ -625,12 +625,12 @@ export const galleryItems: GalleryItem[] = [
 
 // Helper to generate custom WhatsApp order text
 export function getWhatsAppUrl(productName: string, price: number, unit: string): string {
-  const baseText = `*શ્રી ખોડિયાર ડેરી (બાબરા)*\n\nનમસ્તે, મારે આ પ્રોડક્ટ ઓર્ડર કરવી છે:\n\n• *પ્રોડક્ટ:* ${productName}\n• *પેકિંગ:* ${unit}\n• *ભાવ:* ₹${price}\n\nકૃપા કરીને આ ઓર્ડર કન્ફર્મ કરશોજી. આભાર!`;
+  const baseText = `*Shree Khodiyar Dairy (Babra)*\n\nHello, I would like to order this product:\n\n• *Product:* ${productName}\n• *Packing:* ${unit}\n• *Price:* ₹${price}\n\nPlease confirm this order. Thank you!`;
   const encodedText = encodeURIComponent(baseText);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
 }
 
 export function getGeneralWhatsAppUrl(): string {
-  const baseText = `*શ્રી ખોડિયાર ડેરી (બાબરા)*\n\nનમસ્તે, મને પ્રોડક્ટ્સ અને સ્પેશિયલ ઓર્ડર ડિલિવરી વિશે માહિતી આપવા વિનંતી.`;
+  const baseText = `*Shree Khodiyar Dairy (Babra)*\n\nHello, please provide more information about your products and special order delivery.`;
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(baseText)}`;
 }

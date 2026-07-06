@@ -19,7 +19,7 @@ export default function BottomNav({ activeTab, setActiveTab, cartCount }: Bottom
   const cleanPhoneNum = STORE_PHONE.replace(/\s+/g, '');
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#FDFBF7]/95 backdrop-blur-lg border-t border-[#F0EAD6] py-2 px-3 shadow-[0_-10px_25px_rgba(62,39,35,0.06)]">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[105] bg-[#FDFBF7]/95 backdrop-blur-lg border-t border-[#F0EAD6] py-2 px-3 shadow-[0_-10px_25px_rgba(62,39,35,0.06)]">
       <div className="max-w-md mx-auto flex items-center justify-between">
         
         {/* Home Button */}

@@ -39,7 +39,7 @@ export default function CartView({
             🥣
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-[#3E2723] mb-2">
-            તમારું કાર્ટ ખાલી છે
+            Your Cart is Empty
           </h2>
           <p className="text-sm text-[#C5A059] font-bold mb-6 uppercase tracking-wider">
             Your Cart is Empty!
@@ -66,7 +66,7 @@ export default function CartView({
       {/* Page Title */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-xl sm:text-2xl font-black text-[#3E2723]">તમારું કાર્ટ</h2>
+          <h2 className="text-xl sm:text-2xl font-black text-[#3E2723]">Your Cart</h2>
           <p className="text-xs text-[#C5A059] font-bold uppercase tracking-wider">
             Your Selected Items ({totalItems})
           </p>

@@ -25,7 +25,7 @@ export default function GalleryView() {
       {/* Title block */}
       <div className="text-left space-y-1">
         <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-          ફોટો ગેલેરી
+          Photo Gallery
         </h2>
         <p className="text-xs sm:text-sm text-[#C5A059] font-medium">
           Behind the scenes of our preparation process, store, and traditional sweet craft.
@@ -69,9 +69,7 @@ export default function GalleryView() {
               <h3 className="text-xs sm:text-sm font-extrabold text-[#3E2723] leading-tight">
                 {item.title}
               </h3>
-              <p className="text-[11px] font-bold text-[#C5A059] mt-0.5">
-                {item.gujaratiTitle}
-              </p>
+              {/* Removed Gujarati title */}
             </div>
 
             <p className="text-[10px] sm:text-xs text-[#3E2723]/70 leading-relaxed mt-2 pt-2 border-t border-[#F0EAD6]">
