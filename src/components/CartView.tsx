@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { CartItem } from '../types';
 import { Minus, Plus, Trash2, ArrowRight, ShoppingBag } from 'lucide-react';
 import { categories } from '../data/dairyData';
+import { getCandidateImageUrls } from '../utils/imageHelper';
 
 interface CartViewProps {
   cart: CartItem[];
@@ -97,25 +98,17 @@ export default function CartView({
               className="bg-white rounded-2xl border border-[#F0EAD6] p-3 sm:p-4 flex gap-3 sm:gap-4 items-center shadow-xs"
             >
               {/* Product Thumbnail with basic fallback */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#FAF6EE] flex items-center justify-center overflow-hidden border border-[#F0EAD6]/50 shrink-0">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#FAF6EE] flex items-center justify-center overflow-hidden border border-[#F0EAD6]/50 shrink-0 relative">
                 <img
-                  src={`/assets/${cleanEnglishName}.jpeg`}
+                  src={getCandidateImageUrls(item.product, 1)[0]}
                   alt={item.product.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover relative z-10"
                   onError={(e) => {
-                    // Try jpg if jpeg fails
                     const target = e.currentTarget;
-                    if (target.src.endsWith('.jpeg')) {
-                      target.src = `/assets/${cleanEnglishName}.jpg`;
-                    } else if (target.src.endsWith('.jpg')) {
-                      target.src = `/assets/${cleanEnglishName}.png`;
-                    } else {
-                      // Fallback to text representation
-                      target.style.display = 'none';
-                    }
+                    target.style.display = 'none';
                   }}
                 />
-                <span className="text-2xl select-none absolute" style={{ zIndex: -1 }}>
+                <span className="text-2xl select-none absolute" style={{ zIndex: 1 }}>
                   {fallbackEmoji}
                 </span>
               </div>

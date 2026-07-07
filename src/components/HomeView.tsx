@@ -143,7 +143,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                 {/* Large visual illustration of Shrikhand or Ghee */}
                 <div className="w-full h-56 md:h-64 rounded-2xl overflow-hidden bg-[#FAF6EE] border border-[#F0EAD6]/50 flex items-center justify-center">
                   <img
-                    src="/images/banner.webp"
+                    src="/images/banner.jpeg"
                     alt="Shree Khodiyar Dairy"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover animate-fade-in"
@@ -342,7 +342,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover rounded-xl"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/images/kesar-pista-shikhand.webp';
+                  (e.target as HTMLImageElement).src = '/images/kesar-pista-shikhand.jpeg';
                 }}
               />
             </div>
