@@ -121,7 +121,7 @@ export function getCandidateImageUrls(product: Product, imgNumber: number = 1): 
 
   const slugs = getProductSlugs(product);
   const suffix = imgNumber === 1 ? '' : String(imgNumber);
-  const extensions = ['.jpeg', '.jpg', '.png'];
+  const extensions = ['.jpeg'];
   const folders = ['/images/', '/assets/', '/'];
 
   const urls: string[] = [];
