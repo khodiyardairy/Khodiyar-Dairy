@@ -23,13 +23,131 @@ html {
   background-color: #FDFBF7;
 }
 
-/* Animations helpers */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Premium Lightweight CSS Animations */
+
+/* 1. Saffron/Cream gradient movement */
+@keyframes heroGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-hero-gradient {
+  background: linear-gradient(-45deg, #FAF6EE, #FFF9F2, #FFF5EB, #FFF8E1);
+  background-size: 200% 200%;
+  animation: heroGradient 15s ease-in-out infinite;
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.2s ease-out forwards;
+/* 2. Fade Up smoothly for text and blocks on load */
+@keyframes fadeUpSmooth {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up-smooth {
+  animation: fadeUpSmooth 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* 3. Float up/down slowly */
+@keyframes floatSlow {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+/* 4. Subtle float for categories with small delays */
+@keyframes floatSubtle {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+.animate-float-subtle {
+  animation: floatSubtle 5s ease-in-out infinite;
+}
+
+/* 5. Gold moving/pulsing glow backdrop */
+@keyframes goldGlow {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate(10px, -10px) scale(1.15);
+    opacity: 0.28;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.15;
+  }
+}
+.animate-gold-glow {
+  animation: goldGlow 10s ease-in-out infinite;
+}
+
+/* 6. Header first-load slide-down */
+@keyframes slideDownHeader {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+.animate-slide-down-header {
+  animation: slideDownHeader 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 7. Scroll reveal classes */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 8. Desktop premium hover states (no-hover on mobile is automatically handled by media hover) */
+@media (hover: hover) {
+  .product-card-hover {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .product-card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px -10px rgba(62, 39, 35, 0.12);
+  }
+  .product-image-hover {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .product-card-hover:hover .product-image-hover {
+    transform: scale(1.04);
+  }
+  .button-glow-hover {
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  }
+  .product-card-hover:hover .button-glow-hover {
+    box-shadow: 0 0 16px rgba(255, 153, 51, 0.45);
+  }
+}
+
+/* 9. Respect prefers-reduced-motion OS preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+  .reveal-section {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

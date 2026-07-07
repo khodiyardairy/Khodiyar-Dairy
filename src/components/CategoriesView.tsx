@@ -29,13 +29,14 @@ export default function CategoriesView({ setActiveTab, setSelectedCategory }: Ca
 
       {/* Grid of Categories (exactly 2 columns on mobile) */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-6">
-        {categories.map((category) => {
+        {categories.map((category, idx) => {
           const productCount = products.filter(p => p.category === category.id).length;
           return (
             <CategoryCard
               key={category.id}
               category={category}
               productCount={productCount}
+              delayIndex={idx}
               onClick={() => handleCategorySelect(category.id)}
             />
           );

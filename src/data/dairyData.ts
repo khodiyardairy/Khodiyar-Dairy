@@ -10,7 +10,7 @@ export const MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m
 export const categories: Category[] = [
   {
     id: 'mithai',
-    name: 'Mithai',
+    name: 'Sweets',
     gujaratiName: 'મીઠાઈઓ',
     description: 'Traditional mouth-watering sweets crafted with pure ghee and dry fruits.',
     iconName: 'Sparkles',

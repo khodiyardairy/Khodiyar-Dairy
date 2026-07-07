@@ -68,7 +68,7 @@ export default function ProductCard({ product, onAddToCart, onViewDetail }: Prod
       whileHover={{ y: -5, boxShadow: "0 10px 25px rgba(62, 39, 35, 0.06)" }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
       onClick={handleCardClick}
-      className="group relative bg-white rounded-2xl border border-[#F0EAD6] p-3 sm:p-4 flex flex-col justify-between transition-all duration-200 cursor-pointer h-full select-none"
+      className="product-card-hover group relative bg-white rounded-2xl border border-[#F0EAD6] p-3 sm:p-4 flex flex-col justify-between transition-all duration-200 cursor-pointer h-full select-none"
     >
       {/* Premium Badge */}
       {finalBadge && (
@@ -85,7 +85,7 @@ export default function ProductCard({ product, onAddToCart, onViewDetail }: Prod
               src={currentImageUrl}
               alt={product.name}
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              className="product-image-hover w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               onError={handleImageError}
               loading="lazy"
             />
@@ -139,7 +139,7 @@ export default function ProductCard({ product, onAddToCart, onViewDetail }: Prod
         <motion.button
           whileTap={{ scale: 0.96 }}
           onClick={handleAddToCartClick}
-          className={`w-full py-2 px-2.5 rounded-xl text-xs font-black tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer z-10 ${
+          className={`button-glow-hover w-full py-2 px-2.5 rounded-xl text-xs font-black tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer z-10 ${
             isAdded
               ? 'bg-[#10B981] text-white shadow-sm'
               : 'bg-[#FF9933] hover:bg-[#E68A00] text-white shadow-xs shadow-[#FF9933]/10'

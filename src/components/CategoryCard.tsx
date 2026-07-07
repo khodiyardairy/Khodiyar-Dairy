@@ -9,9 +9,10 @@ interface CategoryCardProps {
   productCount: number;
   onClick: () => void;
   key?: string | number;
+  delayIndex?: number;
 }
 
-export default function CategoryCard({ category, productCount, onClick }: CategoryCardProps) {
+export default function CategoryCard({ category, productCount, onClick, delayIndex = 0 }: CategoryCardProps) {
   // Dynamically resolve Lucide icons if available
   const IconComponent = (LucideIcons as any)[category.iconName] || LucideIcons.Sparkles;
 
@@ -27,8 +28,11 @@ export default function CategoryCard({ category, productCount, onClick }: Catego
     >
       <div className="w-full">
         {/* Category Visual */}
-        <div className="relative mb-3 rounded-xl overflow-hidden">
-          <ProductIllustration type={category.illustrationType} size="sm" className="h-24 md:h-28 w-full" />
+        <div 
+          className="relative mb-3 rounded-xl overflow-hidden animate-float-subtle"
+          style={{ animationDelay: `${delayIndex * 0.4}s` }}
+        >
+          <ProductIllustration type={category.illustrationType} size="sm" className="h-24 md:h-28 w-full animate-fade-in" />
           <div className="absolute bottom-2 right-2 p-1.5 rounded-lg bg-white/90 shadow-sm backdrop-blur-xs">
             <IconComponent className="w-4 h-4 text-[#FF9933]" />
           </div>

@@ -60,7 +60,7 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
   return (
     <>
       {/* Sticky Premium Header Container */}
-      <header className="sticky top-0 z-[80] bg-[#FDFBF7] border-b border-[#F0EAD6]/60 shadow-xs h-[72px] sm:h-[78px] flex items-center">
+      <header className="animate-slide-down-header sticky top-0 z-[80] bg-[#FDFBF7] border-b border-[#F0EAD6]/60 shadow-xs h-[72px] sm:h-[78px] flex items-center">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             
@@ -80,9 +80,9 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
                 onClick={() => handleNavClick('home')}
                 className="flex items-center gap-2 xs:gap-3 focus:outline-none text-left cursor-pointer"
               >
-                <Logo size={42} className="xs:size-[46px] hover:scale-105 transition-transform duration-300" />
+                <Logo className="h-[44px] w-[44px] xs:h-[46px] xs:w-[46px] md:h-[56px] md:w-[56px] hover:scale-105 transition-transform duration-300" />
                 <div className="flex flex-col">
-                  <h1 className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl font-extrabold text-[#3E2723] leading-none tracking-tight truncate max-w-[140px] xxs:max-w-[170px] xs:max-w-none">
+                  <h1 className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl font-extrabold text-[#3E2723] leading-none tracking-tight truncate max-w-[140px] xxs:max-w-[170px] xs:max-w-none font-sans">
                     Khodiyar Dairy & Products
                   </h1>
                   <p className="text-[9px] xs:text-[10px] sm:text-xs text-[#C5A059] font-bold mt-0.5 tracking-wide">
@@ -136,7 +136,7 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
               >
                 <ShoppingCart className="w-5 h-5 text-current" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#C5A059] text-white text-[9px] font-black font-mono flex items-center justify-center border border-[#FDFBF7]">
+                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#FF9933] text-white text-[9px] font-black font-mono flex items-center justify-center border border-[#FDFBF7]">
                     {cartCount}
                   </span>
                 )}
@@ -188,7 +188,7 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
             </button>
 
             {/* Existing Logo SVG inside Drawer */}
-            <Logo size={36} className="shrink-0" />
+            <Logo size={44} className="shrink-0" />
             
             {/* Drawer Title & Gujarati Subtitle */}
             <div className="flex flex-col text-left">
@@ -217,7 +217,7 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
             >
               <ShoppingCart className="w-4 h-4 text-[#3E2723]" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-[#C5A059] text-white text-[8px] font-black font-mono flex items-center justify-center border border-[#FDFBF7]">
+                <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-[#FF9933] text-white text-[8px] font-black font-mono flex items-center justify-center border border-[#FDFBF7]">
                   {cartCount}
                 </span>
               )}

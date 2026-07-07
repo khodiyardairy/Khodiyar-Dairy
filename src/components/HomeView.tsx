@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { categories, products, testimonials, galleryItems, getGeneralWhatsAppUrl, getWhatsAppUrl } from '../data/dairyData';
 import { ShoppingBag, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone } from 'lucide-react';
@@ -7,6 +7,7 @@ import ProductCard from './ProductCard';
 import ProductIllustration from './ProductIllustration';
 import Logo from './Logo';
 import { getCandidateImageUrls } from '../utils/imageHelper';
+import AnimatedCounter from './AnimatedCounter';
 
 import { Product } from '../types';
 
@@ -33,6 +34,31 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
   const currentYear = new Date().getFullYear();
   const yearsActive = currentYear - 1996;
 
+  // Set up scroll reveal effect using native IntersectionObserver
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.05,
+        rootMargin: '0px 0px -40px 0px',
+      }
+    );
+
+    const elements = document.querySelectorAll('.reveal-section');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   // Animation constants for fast and smooth fade-up
   const fadeUpVariants = {
     hidden: { opacity: 0, y: 24 },
@@ -47,7 +73,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
     <div className="space-y-16 pb-20 overflow-x-hidden">
       
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#FAF6EE] to-[#FDFBF7] pt-8 pb-12 sm:pb-16 px-4">
+      <section className="relative overflow-hidden animate-hero-gradient pt-8 pb-12 sm:pb-16 px-4">
         {/* Subtle decorative background curves */}
         <div className="absolute top-10 right-[-10%] w-72 h-72 rounded-full bg-[#F0EAD6]/40 blur-3xl pointer-events-none" />
         <div className="absolute bottom-10 left-[-10%] w-72 h-72 rounded-full bg-[#F5EFE6]/30 blur-3xl pointer-events-none" />
@@ -55,12 +81,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Hero Text */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 text-center lg:text-left space-y-5"
-          >
+          <div className="lg:col-span-7 text-center lg:text-left space-y-5 animate-fade-up-smooth">
             {/* Tagline */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF8E1] border border-[#F0EAD6] text-[#FF9933] text-xs font-extrabold tracking-wider uppercase">
               <Award className="w-3.5 h-3.5" />
@@ -70,8 +91,8 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#3E2723] leading-tight tracking-tight">
               The Perfect Union of Purity & Taste <br className="hidden sm:inline" />
-              <span className="text-[#FF9933] bg-gradient-to-r from-[#FF9933] to-[#C5A059] bg-clip-text text-transparent">
-                Shree Khodiyar Dairy
+              <span className="text-[#FF9933] bg-gradient-to-r from-[#FF9933] to-[#C5A059] bg-clip-text text-transparent font-sans">
+                Khodiyar Dairy
               </span>
             </h1>
 
@@ -121,18 +142,13 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                 <span>Babra's Heritage Food</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Hero Illustration Block */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 flex justify-center"
-          >
-            <div className="relative w-full max-w-[340px] sm:max-w-[400px]">
+          <div className="lg:col-span-5 flex justify-center animate-fade-up-smooth" style={{ animationDelay: '0.1s' }}>
+            <div className="relative w-full max-w-[340px] sm:max-w-[400px] animate-float-slow">
               {/* Golden circular glow backdrop */}
-              <div className="absolute inset-0 bg-[#FF9933]/10 rounded-full filter blur-2xl animate-pulse" />
+              <div className="absolute inset-0 bg-[#FF9933]/15 rounded-full filter blur-3xl animate-gold-glow pointer-events-none" />
               
               <div className="relative bg-white p-4 sm:p-5 rounded-3xl border border-[#F0EAD6] shadow-lg shadow-[#3E2723]/5">
                 {/* Float Card: Official 1996 Stamp Logo */}
@@ -146,7 +162,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                     src="/images/banner.jpeg"
                     alt="Shree Khodiyar Dairy"
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover animate-fade-in"
+                    className="w-full h-full object-cover"
                     loading="eager"
                   />
                 </div>
@@ -169,18 +185,14 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </section>
 
       {/* 2. CATEGORY GRID (Exactly 2 columns on mobile as requested) */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={fadeUpVariants}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6"
+      <section 
+        className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6"
       >
         <div className="text-center space-y-1.5">
           <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#FF9933]">
@@ -194,36 +206,33 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
 
         {/* 2 columns mobile grid, 3 col tablet, 5 col desktop */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-6">
-          {categories.map((category) => {
+          {categories.map((category, idx) => {
             const productCount = products.filter(p => p.category === category.id).length;
             return (
               <CategoryCard
                 key={category.id}
                 category={category}
                 productCount={productCount}
+                delayIndex={idx}
                 onClick={() => handleCategorySelect(category.id)}
               />
             );
           })}
         </div>
-      </motion.section>
+      </section>
 
       {/* 3. TRUST STATISTICS */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={fadeUpVariants}
-        className="bg-gradient-to-br from-[#3E2723] to-[#251307] text-[#FAF6EE] py-12 px-4 rounded-3xl mx-4 max-w-7xl lg:mx-auto relative overflow-hidden"
+      <section 
+        className="reveal-section bg-gradient-to-br from-[#3E2723] to-[#251307] text-[#FAF6EE] py-12 px-4 rounded-3xl mx-4 max-w-7xl lg:mx-auto relative overflow-hidden"
       >
         {/* Subtle geometric overlay decoration */}
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#FAF6EE_1px,transparent_1px)] [background-size:12px_12px]" />
         
-        <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 text-center">
           
           <div className="space-y-1">
             <p className="text-3xl sm:text-4xl font-black text-[#FF9933] font-mono">
-              {yearsActive}+
+              <AnimatedCounter target={30} suffix="+" />
             </p>
             <p className="text-xs sm:text-sm font-bold text-[#F5EFE6]/80">Years of Trusted Quality</p>
             <p className="text-[10px] text-[#FAF6EE]/50">Established in 1996</p>
@@ -231,40 +240,42 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
 
           <div className="space-y-1">
             <p className="text-3xl sm:text-4xl font-black text-[#FF9933] font-mono">
-              100%
+              <AnimatedCounter target={50} suffix="+" />
             </p>
-            <p className="text-xs sm:text-sm font-bold text-[#F5EFE6]/80">Pure Cow & Buffalo Milk</p>
+            <p className="text-xs sm:text-sm font-bold text-[#F5EFE6]/80">Pure Dairy Products</p>
+            <p className="text-[10px] text-[#FAF6EE]/50">Guaranteed Fresh Daily</p>
+          </div>
+
+          <div className="space-y-1">
+            <p className="text-3xl sm:text-4xl font-black text-[#FF9933] font-mono">
+              <AnimatedCounter target={100} suffix="%" />
+            </p>
+            <p className="text-xs sm:text-sm font-bold text-[#F5EFE6]/80">Guaranteed Purity</p>
             <p className="text-[10px] text-[#FAF6EE]/50">Zero Chemical Additives</p>
           </div>
 
           <div className="space-y-1">
             <p className="text-3xl sm:text-4xl font-black text-[#FF9933] font-mono">
-              15+
+              <AnimatedCounter target={25} suffix="+" />
             </p>
-            <p className="text-xs sm:text-sm font-bold text-[#F5EFE6]/80">Signature Sweet Varieties</p>
-            <p className="text-[10px] text-[#FAF6EE]/50">Crafted by Traditional Halwais</p>
+            <p className="text-xs sm:text-sm font-bold text-[#F5EFE6]/80">Signature Sweets</p>
+            <p className="text-[10px] text-[#FAF6EE]/50">Traditional Gujarati Taste</p>
           </div>
 
-          <div className="space-y-1">
+          <div className="space-y-1 col-span-2 sm:col-span-1">
             <p className="text-3xl sm:text-4xl font-black text-[#FF9933] font-mono">
-              10K+
+              <AnimatedCounter target={500} suffix="+" />
             </p>
-            <p className="text-xs sm:text-sm font-bold text-[#F5EFE6]/80">Happy Local Families</p>
-            <p className="text-[10px] text-[#FAF6EE]/50">In Babra and Surrounding Villages</p>
+            <p className="text-xs sm:text-sm font-bold text-[#F5EFE6]/80">Happy Customers</p>
+            <p className="text-[10px] text-[#FAF6EE]/50">Babra & Surrounding Families</p>
           </div>
 
         </div>
-      </motion.section>
+      </section>
 
       {/* 4. FEATURED PRODUCTS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={fadeUpVariants}
-          className="flex items-end justify-between"
-        >
+      <section className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex items-end justify-between">
           <div className="space-y-1.5 text-left">
             <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#FF9933]">
               Handpicked Delicacies
@@ -286,7 +297,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             See All Products 
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </motion.button>
-        </motion.div>
+        </div>
 
         {/* 2 columns mobile, 3 tablet, 4 desktop */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
@@ -297,12 +308,8 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
       </section>
 
       {/* 5. BEST SELLER BANNER */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={fadeUpVariants}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      <section 
+        className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
       >
         <div className="bg-gradient-to-br from-[#FFF8E1] to-[#FAF6EE] border-2 border-[#F0EAD6] rounded-3xl p-6 sm:p-10 flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-hidden shadow-xs">
           
@@ -335,7 +342,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
 
           <div className="flex flex-col items-center gap-4 shrink-0 w-full lg:w-auto">
             {/* Elegant vector display */}
-            <div className="w-44 h-44 rounded-2xl bg-[#FAF6EE] p-1.5 border border-[#F0EAD6] overflow-hidden flex items-center justify-center">
+            <div className="w-44 h-44 rounded-2xl bg-[#FAF6EE] p-1.5 border border-[#F0EAD6] overflow-hidden flex items-center justify-center animate-float-slow">
               <img
                 src={getCandidateImageUrls(bestSellerProduct, 1)[0]}
                 alt={bestSellerProduct.name}
@@ -361,15 +368,11 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
           </div>
 
         </div>
-      </motion.section>
+      </section>
 
       {/* 6. GALLERY TEASER */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={fadeUpVariants}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6"
+      <section 
+        className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6"
       >
         <div className="flex items-end justify-between">
           <div className="space-y-1.5 text-left">
@@ -396,11 +399,12 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
 
         {/* 3 columns gallery teaser */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-6">
-          {galleryItems.slice(0, 3).map((item) => (
+          {galleryItems.slice(0, 3).map((item, idx) => (
             <motion.div 
               key={item.id}
               whileHover={{ y: -5, boxShadow: "0 10px 25px rgba(62, 39, 35, 0.06)" }}
-              className="group relative bg-white rounded-2xl border border-[#F0EAD6] p-3 overflow-hidden transition-all duration-300 w-full"
+              className="group relative bg-white rounded-2xl border border-[#F0EAD6] p-3 overflow-hidden transition-all duration-300 w-full animate-float-subtle"
+              style={{ animationDelay: `${idx * 0.4}s` }}
             >
               <ProductIllustration type={item.illustrationType} size="sm" className="h-32 sm:h-40 w-full rounded-xl" />
               <div className="mt-2 text-center">
@@ -409,15 +413,11 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             </motion.div>
           ))}
         </div>
-      </motion.section>
+      </section>
 
       {/* 7. TESTIMONIALS */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={fadeUpVariants}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8"
+      <section 
+        className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8"
       >
         <div className="text-center space-y-1.5">
           <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#FF9933]">
@@ -468,7 +468,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             </motion.div>
           ))}
         </div>
-      </motion.section>
+      </section>
 
       {/* 8. PREMIUM FOOTER */}
       <footer className="border-t border-[#F0EAD6] bg-[#FAF6EE] pt-12 pb-8">
@@ -477,7 +477,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
           {/* Col 1: About Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <Logo size={42} />
+              <Logo size={44} />
               <span className="text-base font-black text-[#3E2723]">Shree Khodiyar Dairy</span>
             </div>
             
