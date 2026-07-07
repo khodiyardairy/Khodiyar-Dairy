@@ -1,0 +1,35 @@
+========================================================================
+             KHODIYAR DAIRY & PRODUCTS - VIDEO UPLOAD INSTRUCTIONS
+========================================================================
+
+To complete the premium video hero implementation on your website, you must 
+manually upload your video and fallback poster image to the following paths 
+in your project:
+
+1. VIDEO FILE:
+   - Target location in project: public/videos/khodiyar-dairy-hero.mp4
+   - Content: A beautiful, lightweight MP4 video showing premium dairy and 
+     sweets visuals (such as fresh milk pouring, penda, sweets being 
+     prepared, ghee, dry fruits, and elegant product close-ups).
+   - Format: MP4 (.mp4) only.
+   - Recommended settings: Highly compressed (aim for under 3MB) to keep 
+     the website blazing fast on mobile networks.
+
+2. POSTER/FALLBACK IMAGE:
+   - Target location in project: public/images/hero-poster.jpeg
+   - Content: A beautiful static high-quality snapshot representing your 
+     dairy brand to display while the video is loading, on slow connections, 
+     reduced-motion users, or if the video cannot load.
+   - Format: JPEG (.jpeg / .jpg).
+
+------------------------------------------------------------------------
+WHY MANUALLY?
+------------------------------------------------------------------------
+To respect the high performance of your free Vercel hosting, we do not auto-generate, 
+convert, or bundle heavy mock video files into your codebase. You retain absolute 
+control over the final video quality, compression, and visual presentation!
+
+The website has been fully coded with modern network-aware performance logic:
+- Automatically detects and disables autoplay on slow mobile connections (2G, 3G).
+- Automatically respects users with "Data Saver" or "Reduced Motion" preferences.
+- Gracefully displays your poster image if any load errors or browser restrictions occur.

@@ -135,7 +135,16 @@ html {
   }
 }
 
-/* 9. Respect prefers-reduced-motion OS preference */
+/* 9. Video Gentle Zoom Animation */
+@keyframes gentleZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+.animate-gentle-zoom {
+  animation: gentleZoom 20s ease-in-out infinite alternate;
+}
+
+/* 10. Respect prefers-reduced-motion OS preference */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-delay: 0s !important;

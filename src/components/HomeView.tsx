@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { categories, products, testimonials, galleryItems, getGeneralWhatsAppUrl, getWhatsAppUrl } from '../data/dairyData';
 import { ShoppingBag, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone } from 'lucide-react';
@@ -19,6 +19,10 @@ interface HomeViewProps {
 }
 
 export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCart, onViewDetail }: HomeViewProps) {
+  const [shouldAutoplay, setShouldAutoplay] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+
   // Filter featured products (e.g., first 4 marked as featured)
   const featuredProducts = products.filter(p => p.isFeatured).slice(0, 4);
   const bestSellerProduct = products.find(p => p.id === 'kesar-pista-shrikhand-1kg') || products[4]; // Kesar Pista Shrikhand as Best Seller
@@ -33,6 +37,29 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
 
   const currentYear = new Date().getFullYear();
   const yearsActive = currentYear - 1996;
+
+  // Determine if video should autoplay based on connections, reduced motion, and data saver
+  useEffect(() => {
+    try {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      const conn = (navigator as any).connection || 
+                   (navigator as any).mozConnection || 
+                   (navigator as any).webkitConnection;
+      
+      const isSlowOrDataSaver = conn ? (
+        conn.saveData || 
+        ['slow-2g', '2g', '3g'].includes(conn.effectiveType)
+      ) : false;
+
+      if (!prefersReducedMotion && !isSlowOrDataSaver) {
+        setShouldAutoplay(true);
+      }
+    } catch (e) {
+      // Graceful fallback if matchMedia or connection API is not supported
+      setShouldAutoplay(false);
+    }
+  }, []);
 
   // Set up scroll reveal effect using native IntersectionObserver
   useEffect(() => {
@@ -304,6 +331,45 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} onViewDetail={onViewDetail} />
           ))}
+        </div>
+      </section>
+
+      {/* 4.5 PREMIUM DAIRY SHOWCASE VIDEO SECTION */}
+      <section className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative w-full h-[240px] xs:h-[280px] sm:h-[380px] md:h-[480px] lg:h-[520px] rounded-3xl overflow-hidden shadow-md bg-[#FAF6EE] border border-[#F0EAD6]/60">
+          
+          {/* Fallback & Video Container */}
+          <div className="absolute inset-0 w-full h-full select-none overflow-hidden rounded-3xl">
+            {/* Poster Image Fallback */}
+            {!videoLoaded && (
+              <img
+                src="/images/hero-poster.jpeg"
+                alt="Khodiyar Dairy Showcase Fallback"
+                referrerPolicy="no-referrer"
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+              />
+            )}
+            {/* Background Video */}
+            {!videoError && (
+              <video
+                src="/videos/khodiyar-dairy-hero.mp4"
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                autoPlay={shouldAutoplay}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                  videoLoaded ? 'opacity-100' : 'opacity-0'
+                } ${shouldAutoplay ? 'animate-gentle-zoom' : ''}`}
+                onLoadedData={() => setVideoLoaded(true)}
+                onError={() => setVideoError(true)}
+              />
+            )}
+          </div>
+
         </div>
       </section>
 
