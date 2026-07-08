@@ -1,7 +1,7 @@
 import { Category, Product, Testimonial, GalleryItem } from '../types';
 
 export const WHATSAPP_NUMBER = '916354691080';
-export const STORE_ADDRESS = 'Amreli Road, Opp. Bus Station, Babra, Gujarat 365421';
+export const STORE_ADDRESS = 'Babra,Amreli-365421, Gujarat, India';
 export const STORE_PHONE = '+91 63546 91080';
 export const STORE_EMAIL = 'khodiyardairybabra@gmail.com';
 export const MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3701.3804868019743!2d71.3005822!3d21.8436578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39589be7e6b7d7cb%3A0xc0768b5774a974b6!2sBabra%2C%20Gujarat%20365421!5e0!3m2!1sen!2sin!4v1719918201010!5m2!1sen!2sin';
@@ -606,7 +606,8 @@ export const galleryItems: GalleryItem[] = [
     gujaratiTitle: 'દેશી મીઠાઈ બનાવવાની પરંપરાગત કળા',
     category: 'sweets',
     description: 'Slow-cooking our fresh milk solids over direct heat to get the signature granular texture.',
-    illustrationType: 'sweet'
+    illustrationType: 'sweet',
+    imageUrl: '/images/mohanthal.jpg'
   },
   {
     id: 'g2',
@@ -614,7 +615,8 @@ export const galleryItems: GalleryItem[] = [
     gujaratiTitle: 'શ્રીખંડ માટે મલાઈદાર ચક્કો તૈયાર કરવો',
     category: 'production',
     description: 'Hygienic straining of full-fat yogurt in traditional muslin cloths to prepare fresh base for matho.',
-    illustrationType: 'shrikhand'
+    illustrationType: 'shrikhand',
+    imageUrl: '/images/k-d-special-matho-top-down.jpg'
   },
   {
     id: 'g3',
@@ -622,7 +624,8 @@ export const galleryItems: GalleryItem[] = [
     gujaratiTitle: 'બાબરા બસ સ્ટેન્ડ સામેનું આઉટલેટ',
     category: 'store',
     description: 'Our sanitized showcase where batches of fresh sweets are packed daily under strict hygiene protocols.',
-    illustrationType: 'sweet'
+    illustrationType: 'sweet',
+    imageUrl: '/images/kaju-katri2.jpg'
   }
 ];
 

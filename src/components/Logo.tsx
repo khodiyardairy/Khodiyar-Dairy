@@ -6,7 +6,7 @@ interface LogoProps {
 }
 
 export default function Logo({ size, className = '' }: LogoProps) {
-  const [imgSrc, setImgSrc] = useState('/images/khodiyar-dairy-logo.jpeg');
+  const [imgSrc, setImgSrc] = useState('/images/khodiyar-dairy-logo.png');
   const [hasFailed, setHasFailed] = useState(false);
 
   const style = size ? { 
@@ -17,9 +17,9 @@ export default function Logo({ size, className = '' }: LogoProps) {
   } : undefined;
 
   const handleImageError = () => {
-    if (imgSrc === '/images/khodiyar-dairy-logo.jpeg') {
+    if (imgSrc === '/images/khodiyar-dairy-logo.png') {
       // Try .jpg extension as a secondary candidate
-      setImgSrc('/images/khodiyar-dairy-logo.jpg');
+      setImgSrc('/images/khodiyar-dairy-logo.png');
     } else {
       // Both failed, fallback to elegant brand vector
       setHasFailed(true);

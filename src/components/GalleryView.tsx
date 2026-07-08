@@ -3,6 +3,50 @@ import { galleryItems } from '../data/dairyData';
 import ProductIllustration from './ProductIllustration';
 import { Sparkles, ShieldCheck, Heart, Award } from 'lucide-react';
 
+interface GalleryItemCardProps {
+  item: any;
+  key?: any;
+}
+
+function GalleryItemCard({ item }: GalleryItemCardProps) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div
+      className="group bg-white rounded-2xl border border-[#F0EAD6] p-3.5 flex flex-col justify-between hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+    >
+      <div>
+        {/* Illustration or Image container */}
+        <div className="relative rounded-xl overflow-hidden mb-3 h-32 sm:h-40 w-full bg-gradient-to-br from-[#FFFDF9] via-[#FAF6EE] to-[#F1E8D9] border border-[#F2E5D0] flex items-center justify-center">
+          {item.imageUrl && !imgError ? (
+            <img 
+              src={item.imageUrl} 
+              alt={item.title} 
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              referrerPolicy="no-referrer"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <ProductIllustration type={item.illustrationType} size="md" className="w-full h-full" />
+          )}
+          <span className="absolute bottom-2.5 left-2.5 px-2 py-0.5 rounded-md bg-[#3E2723]/80 text-white text-[9px] font-bold tracking-wider uppercase backdrop-blur-xs">
+            {item.category}
+          </span>
+        </div>
+
+        {/* Text info */}
+        <h3 className="text-xs sm:text-sm font-extrabold text-[#3E2723] leading-tight">
+          {item.title}
+        </h3>
+      </div>
+
+      <p className="text-[10px] sm:text-xs text-[#3E2723]/70 leading-relaxed mt-2 pt-2 border-t border-[#F0EAD6]">
+        {item.description}
+      </p>
+    </div>
+  );
+}
+
 export default function GalleryView() {
   const [activeFilter, setActiveFilter] = useState<'all' | 'production' | 'sweets' | 'store' | 'festivals'>('all');
 
@@ -52,30 +96,7 @@ export default function GalleryView() {
       {/* Gallery Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
         {filteredItems.map((item) => (
-          <div
-            key={item.id}
-            className="group bg-white rounded-2xl border border-[#F0EAD6] p-3.5 flex flex-col justify-between hover:shadow-md transition-all duration-300 hover:-translate-y-1"
-          >
-            <div>
-              {/* Illustration container */}
-              <div className="relative rounded-xl overflow-hidden mb-3">
-                <ProductIllustration type={item.illustrationType} size="md" />
-                <span className="absolute bottom-2.5 left-2.5 px-2 py-0.5 rounded-md bg-[#3E2723]/80 text-white text-[9px] font-bold tracking-wider uppercase backdrop-blur-xs">
-                  {item.category}
-                </span>
-              </div>
-
-              {/* Text info */}
-              <h3 className="text-xs sm:text-sm font-extrabold text-[#3E2723] leading-tight">
-                {item.title}
-              </h3>
-              {/* Removed Gujarati title */}
-            </div>
-
-            <p className="text-[10px] sm:text-xs text-[#3E2723]/70 leading-relaxed mt-2 pt-2 border-t border-[#F0EAD6]">
-              {item.description}
-            </p>
-          </div>
+          <GalleryItemCard key={item.id} item={item} />
         ))}
       </div>
 

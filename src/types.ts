@@ -41,6 +41,7 @@ export interface GalleryItem {
   category: 'production' | 'sweets' | 'store' | 'festivals';
   description: string;
   illustrationType: string;
+  imageUrl?: string;
 }
 
 export interface CartItem {
