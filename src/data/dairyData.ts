@@ -17,7 +17,7 @@ export const categories: Category[] = [
     bgColor: 'bg-[#FFF8E1]',
     textColor: 'text-[#FF9933]',
     illustrationType: 'sweet',
-    imageUrl: '/images/kaju-katri.jpg'
+    imageUrl: '/images/kaju-katri.png'
   },
   {
     id: 'liquid',
@@ -28,7 +28,7 @@ export const categories: Category[] = [
     bgColor: 'bg-[#F5EFE6]',
     textColor: 'text-[#C5A059]',
     illustrationType: 'milk',
-    imageUrl: '/images/kesar-badam-matho-3-4-overhead_430x.jpg'
+    imageUrl: '/images/liquid.png'
   },
   {
     id: 'shrikhand_matho',
@@ -39,7 +39,7 @@ export const categories: Category[] = [
     bgColor: 'bg-[#FAF6EE]',
     textColor: 'text-[#3E2723]',
     illustrationType: 'shrikhand',
-    imageUrl: '/images/kesar-pista-shikhand.jpg'
+    imageUrl: '/images/kesar-pista-shikhand.png'
   }
 ];
 

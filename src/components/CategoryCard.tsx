@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Category } from '../types';
 import ProductIllustration from './ProductIllustration';
@@ -13,6 +13,7 @@ interface CategoryCardProps {
 }
 
 export default function CategoryCard({ category, productCount, onClick, delayIndex = 0 }: CategoryCardProps) {
+  const [imgError, setImgError] = useState(false);
   // Dynamically resolve Lucide icons if available
   const IconComponent = (LucideIcons as any)[category.iconName] || LucideIcons.Sparkles;
 
@@ -32,13 +33,14 @@ export default function CategoryCard({ category, productCount, onClick, delayInd
           className="relative mb-3 rounded-xl overflow-hidden animate-float-subtle"
           style={{ animationDelay: `${delayIndex * 0.4}s` }}
         >
-          {category.imageUrl ? (
+          {category.imageUrl && !imgError ? (
             <div className="relative overflow-hidden bg-gradient-to-br from-[#FFFDF9] via-[#FAF6EE] to-[#F1E8D9] border border-[#F2E5D0] flex items-center justify-center rounded-xl h-24 md:h-28 w-full">
               <img 
                 src={category.imageUrl} 
                 alt={category.name} 
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 referrerPolicy="no-referrer"
+                onError={() => setImgError(true)}
               />
             </div>
           ) : (

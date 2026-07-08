@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface LogoProps {
   size?: number | string;
@@ -6,6 +6,9 @@ interface LogoProps {
 }
 
 export default function Logo({ size, className = '' }: LogoProps) {
+  const [imgSrc, setImgSrc] = useState('/images/khodiyar-dairy-logo.jpeg');
+  const [hasFailed, setHasFailed] = useState(false);
+
   const style = size ? { 
     width: typeof size === 'number' ? `${size}px` : size, 
     height: typeof size === 'number' ? `${size}px` : size,
@@ -13,17 +16,35 @@ export default function Logo({ size, className = '' }: LogoProps) {
     minHeight: typeof size === 'number' ? `${size}px` : size
   } : undefined;
 
+  const handleImageError = () => {
+    if (imgSrc === '/images/khodiyar-dairy-logo.jpeg') {
+      // Try .jpg extension as a secondary candidate
+      setImgSrc('/images/khodiyar-dairy-logo.jpg');
+    } else {
+      // Both failed, fallback to elegant brand vector
+      setHasFailed(true);
+    }
+  };
+
   return (
     <div 
       className={`inline-block bg-white rounded-full p-0.5 shadow-xs shrink-0 select-none overflow-hidden ${className}`}
       style={style}
     >
-      <img
-        src="/images/khodiyar-dairy-logo.jpeg"
-        alt="Shree Khodiyar Dairy & Products"
-        referrerPolicy="no-referrer"
-        className="w-full h-full object-contain"
-      />
+      {!hasFailed ? (
+        <img
+          src={imgSrc}
+          alt="Shree Khodiyar Dairy & Products"
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-contain rounded-full"
+          onError={handleImageError}
+        />
+      ) : (
+        /* Gorgeous vector emblem backup */
+        <div className="w-full h-full rounded-full bg-gradient-to-br from-[#FF9933] to-[#E65100] flex items-center justify-center text-white font-serif font-black shadow-inner">
+          <span className="text-[55%] tracking-tighter leading-none select-none">KD</span>
+        </div>
+      )}
     </div>
   );
 }

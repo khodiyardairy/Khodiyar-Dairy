@@ -52,7 +52,7 @@ kerinoras2.jpeg
 kesar pista shikhand2.jpeg
 kesar pista.jpeg
 kesar pista2.jpeg
-kesar-badam-matho-3-4-overhead_430x.jpeg
+liquid.png
 kesar-badam-matho2.jpeg
 kesar-pista-shikhand.jpeg
 khajur-pak.jpeg
@@ -95,4 +95,4 @@ white-barfi.jpeg
 white-barfi2.jpeg
 white-ilachi-shikhand.jpeg
 white-ilachi-shikhkand2.jpeg
-khodiyar-dairy-logo.jpeg
+khodiyar-dairy-logo.jpg
