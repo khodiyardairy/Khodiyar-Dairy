@@ -50,15 +50,14 @@ export default function ProductDetailView({
     setIsMainFallback(false);
     setFailedImageIndices({});
 
-    // Initialize candidates for images 1, 2, and 3
+    // Initialize candidates for images 1 and 2
     const initialUrlsMap: Record<number, string[]> = {
       1: getCandidateImageUrls(product, 1),
-      2: getCandidateImageUrls(product, 2),
-      3: getCandidateImageUrls(product, 3)
+      2: getCandidateImageUrls(product, 2)
     };
     setCandidateUrlsMap(initialUrlsMap);
 
-    const initialIndicesMap: Record<number, number> = { 1: 0, 2: 0, 3: 0 };
+    const initialIndicesMap: Record<number, number> = { 1: 0, 2: 0 };
     setUrlIndicesMap(initialIndicesMap);
 
     setMainImgUrl(initialUrlsMap[1]?.[0] || '');
@@ -136,7 +135,7 @@ export default function ProductDetailView({
   const whatsappUrl = getCustomWhatsAppUrl(finalName, finalPrice, finalQuantity, quantity);
 
   // We show thumbnails only if they are not marked as failed
-  const showThumbnails = !failedImageIndices[2] || !failedImageIndices[3];
+  const showThumbnails = !failedImageIndices[2];
 
   return (
     <div className="max-w-md mx-auto bg-[#FDFBF7] min-h-screen pb-32">
@@ -184,7 +183,7 @@ export default function ProductDetailView({
         {/* Horizontal Image Thumbnails */}
         {showThumbnails && (
           <div className="flex gap-3 justify-center">
-            {[1, 2, 3].map((num) => {
+            {[1, 2].map((num) => {
               // Get current URL for this thumbnail
               const candidateList = candidateUrlsMap[num] || [];
               const urlIdx = urlIndicesMap[num] || 0;
