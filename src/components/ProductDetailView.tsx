@@ -12,7 +12,7 @@ import { WHATSAPP_NUMBER } from '../data/dairyData';
 
 function getCustomWhatsAppUrl(productNameGu: string, price: number, unit: string, qty: number): string {
   const totalPrice = price * qty;
-  const baseText = `*Shree Khodiyar Dairy (Babra)*\n\nHello, I would like to order this product:\n\n• *Product:* ${productNameGu}\n• *Quantity:* ${qty}\n• *Packing:* ${unit}\n• *Total Price:* ₹${totalPrice}\n\nPlease confirm this order. Thank you!`;
+  const baseText = `*Khodiyar Dairy (Babra)*\n\nHello, I would like to order this product:\n\n• *Product:* ${productNameGu}\n• *Quantity:* ${qty}\n• *Packing:* ${unit}\n• *Total Price:* ₹${totalPrice}\n\nPlease confirm this order. Thank you!`;
   const encodedText = encodeURIComponent(baseText);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
 }

@@ -34,7 +34,7 @@ export default function Logo({ size, className = '' }: LogoProps) {
       {!hasFailed ? (
         <img
           src={imgSrc}
-          alt="Shree Khodiyar Dairy & Products"
+          alt="Khodiyar Dairy & Products"
           referrerPolicy="no-referrer"
           className="w-full h-full object-contain rounded-full"
           onError={handleImageError}

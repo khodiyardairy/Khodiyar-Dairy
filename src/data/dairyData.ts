@@ -575,7 +575,7 @@ export const testimonials: Testimonial[] = [
     name: 'Rajeshbhai Patel',
     gujaratiName: 'રાજેશભાઈ પટેલ',
     rating: 5,
-    text: "Shree Khodiyar Dairy's Thabdi and Ghee are the absolute best in Amreli district. The quality has remained top-tier since my childhood.",
+    text: "Khodiyar Dairy's Thabdi and Ghee are the absolute best in Amreli district. The quality has remained top-tier since my childhood.",
     location: 'Babra',
     date: 'June 2026'
   },
@@ -631,7 +631,7 @@ export const galleryItems: GalleryItem[] = [
 
 // Helper to generate custom WhatsApp order text
 export function getWhatsAppUrl(productName: string, price: number, unit: string): string {
-  const baseText = `*Shree Khodiyar Dairy (Babra)*\n\nHello, I would like to order this product:\n\n• *Product:* ${productName}\n• *Packing:* ${unit}\n• *Price:* ₹${price}\n\nPlease confirm this order. Thank you!`;
+  const baseText = `*Khodiyar Dairy (Babra)*\n\nHello, I would like to order this product:\n\n• *Product:* ${productName}\n• *Packing:* ${unit}\n• *Price:* ₹${price}\n\nPlease confirm this order. Thank you!`;
   const encodedText = encodeURIComponent(baseText);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
 }

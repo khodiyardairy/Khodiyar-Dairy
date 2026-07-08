@@ -13,7 +13,7 @@ export default function ContactView() {
     if (!name.trim() || !message.trim()) return;
 
     // Prefill custom enquiry WhatsApp link
-    const baseText = `*Shree Khodiyar Dairy (Enquiry)*\n\nHello, I have an enquiry regarding:\n\n• *Name:* ${name}\n• *Topic:* ${topic}\n• *Message:* ${message}\n\nThank you!`;
+    const baseText = `*Khodiyar Dairy (Enquiry)*\n\nHello, I have an enquiry regarding:\n\n• *Name:* ${name}\n• *Topic:* ${topic}\n• *Message:* ${message}\n\nThank you!`;
     const encodedText = encodeURIComponent(baseText);
     const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
 

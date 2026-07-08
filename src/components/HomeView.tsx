@@ -188,7 +188,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                 <div className="w-full h-56 md:h-64 rounded-2xl overflow-hidden bg-[#FAF6EE] border border-[#F0EAD6]/50 flex items-center justify-center">
                   <img
                     src="/images/banner.jpeg"
-                    alt="Shree Khodiyar Dairy"
+                    alt=" Khodiyar Dairy"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
                     loading="eager"
@@ -545,7 +545,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
               <Logo size={44} />
-              <span className="text-base font-black text-[#3E2723]">Shree Khodiyar Dairy</span>
+              <span className="text-base font-black text-[#3E2723]">Khodiyar Dairy</span>
             </div>
             
             <p className="text-xs text-[#3E2723]/90 leading-relaxed">
@@ -626,7 +626,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
         {/* Footer bottom bar */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-[#F0EAD6] flex flex-col sm:flex-row items-center justify-between gap-4 text-center">
           <p className="text-xs text-[#C5A059] font-medium">
-            &copy; {currentYear} Shree Khodiyar Dairy & Products. All rights reserved.
+            &copy; {currentYear}Khodiyar Dairy & Products. All rights reserved.
           </p>
           <div className="flex items-center gap-1.5 text-xs text-[#C5A059]">
             <span>Designed Premium</span>

@@ -1,6 +1,6 @@
 {
   "name": "Khodiyar Dairy & Products",
-  "description": "Premium product catalogue and WhatsApp ordering website for Shree Khodiyar Dairy & Products, Babra. Authentic sweets, live paneer, pure ghee, and fresh dairy products since 1996.",
+  "description": "Premium product catalogue and WhatsApp ordering website for Khodiyar Dairy & Products, Babra. Authentic sweets, live paneer, pure ghee, and fresh dairy products since 1996.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
