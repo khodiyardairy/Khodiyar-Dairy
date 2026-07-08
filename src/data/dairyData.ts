@@ -16,7 +16,8 @@ export const categories: Category[] = [
     iconName: 'Sparkles',
     bgColor: 'bg-[#FFF8E1]',
     textColor: 'text-[#FF9933]',
-    illustrationType: 'sweet'
+    illustrationType: 'sweet',
+    imageUrl: '/images/kaju-katri.jpg'
   },
   {
     id: 'liquid',
@@ -26,7 +27,8 @@ export const categories: Category[] = [
     iconName: 'Droplet',
     bgColor: 'bg-[#F5EFE6]',
     textColor: 'text-[#C5A059]',
-    illustrationType: 'milk'
+    illustrationType: 'milk',
+    imageUrl: '/images/kesar-badam-matho-3-4-overhead_430x.jpg'
   },
   {
     id: 'shrikhand_matho',
@@ -36,7 +38,8 @@ export const categories: Category[] = [
     iconName: 'Award',
     bgColor: 'bg-[#FAF6EE]',
     textColor: 'text-[#3E2723]',
-    illustrationType: 'shrikhand'
+    illustrationType: 'shrikhand',
+    imageUrl: '/images/kesar-pista-shikhand.jpg'
   }
 ];
 

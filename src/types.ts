@@ -21,6 +21,7 @@ export interface Category {
   bgColor: string; // e.g., warm cream/gold variations
   textColor: string;
   illustrationType: 'milk' | 'ghee' | 'paneer' | 'shrikhand' | 'sweet' | 'buttermilk' | 'dahi';
+  imageUrl?: string;
 }
 
 export interface Testimonial {

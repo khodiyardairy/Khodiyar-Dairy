@@ -131,7 +131,7 @@ html {
     transition: box-shadow 0.3s ease, background-color 0.3s ease;
   }
   .product-card-hover:hover .button-glow-hover {
-    box-shadow: 0 0 16px rgba(255, 153, 51, 0.45);
+    box-shadow: 0 0 16px rgba(159, 90, 20, 0.721);
   }
 }
 

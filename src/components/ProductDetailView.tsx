@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Product } from '../types';
-import { ChevronLeft, Plus, Minus, ShoppingCart, MessageSquare } from 'lucide-react';
+import { ChevronLeft, Plus, Minus, ShoppingCart } from 'lucide-react';
+import WhatsAppIcon from './WhatsAppIcon';
 import { getCandidateImageUrls } from '../utils/imageHelper';
 import { categories } from '../data/dairyData';
 
@@ -288,7 +289,7 @@ export default function ProductDetailView({
             rel="noopener noreferrer"
             className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#128C7E] text-white text-xs sm:text-sm font-black tracking-wider uppercase flex items-center justify-center gap-2 shadow-md shadow-[#25D366]/10"
           >
-            <MessageSquare className="w-4 h-4" />
+            <WhatsAppIcon className="w-4 h-4 text-white fill-current" />
             Buy on WhatsApp
           </motion.a>
         </div>

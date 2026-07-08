@@ -10,9 +10,10 @@ interface ProductCardProps {
   onAddToCart?: (product: Product) => void;
   onViewDetail?: (product: Product) => void;
   key?: React.Key;
+  onlyEnglish?: boolean;
 }
 
-export default function ProductCard({ product, onAddToCart, onViewDetail }: ProductCardProps) {
+export default function ProductCard({ product, onAddToCart, onViewDetail, onlyEnglish }: ProductCardProps) {
   const [isAdded, setIsAdded] = useState(false);
   const [candidateUrls, setCandidateUrls] = useState<string[]>([]);
   const [urlIndex, setUrlIndex] = useState(0);
@@ -25,7 +26,7 @@ export default function ProductCard({ product, onAddToCart, onViewDetail }: Prod
     setIsImageFallback(false);
   }, [product]);
 
-  const finalName = product.gujaratiName || product.name;
+  const finalName = onlyEnglish ? product.name : (product.gujaratiName || product.name);
   const finalPrice = product.price;
   const finalCategory = product.category;
   const finalQuantity = product.unit || '';

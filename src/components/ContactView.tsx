@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MAP_EMBED_URL, STORE_ADDRESS, STORE_PHONE, STORE_EMAIL, WHATSAPP_NUMBER } from '../data/dairyData';
-import { MapPin, Phone, Mail, Clock, Send, MessageSquare, AlertCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, AlertCircle } from 'lucide-react';
+import WhatsAppIcon from './WhatsAppIcon';
 
 export default function ContactView() {
   const [name, setName] = useState('');
@@ -165,7 +166,7 @@ export default function ContactView() {
               type="submit"
               className="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#128C7E] text-white text-xs font-black transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer"
             >
-              <MessageSquare className="w-4 h-4 fill-white text-[#25D366]" />
+              <WhatsAppIcon className="w-4 h-4 text-white fill-current" />
               Send via WhatsApp Message
             </button>
 

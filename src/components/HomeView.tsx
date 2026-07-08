@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { categories, products, testimonials, galleryItems, getGeneralWhatsAppUrl, getWhatsAppUrl } from '../data/dairyData';
 import { ShoppingBag, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone } from 'lucide-react';
+import WhatsAppIcon from './WhatsAppIcon';
 import CategoryCard from './CategoryCard';
 import ProductCard from './ProductCard';
 import ProductIllustration from './ProductIllustration';
@@ -153,7 +154,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white border-2 border-[#F0EAD6] text-[#3E2723] hover:bg-[#F5EFE6] font-bold text-sm transition-all duration-200"
               >
-                <MessageSquare className="w-4 h-4 text-[#25D366]" />
+                <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
                 WhatsApp Enquiry
               </motion.a>
             </div>
@@ -329,7 +330,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
         {/* 2 columns mobile, 3 tablet, 4 desktop */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
           {featuredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} onViewDetail={onViewDetail} />
+            <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} onViewDetail={onViewDetail} onlyEnglish={true} />
           ))}
         </div>
       </section>
@@ -387,8 +388,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
               ★ NO.1 BEST SELLER IN BABRA ★
             </span>
             <h3 className="text-2xl sm:text-3xl font-black text-[#3E2723] leading-tight">
-              {bestSellerProduct.name} <br />
-              <span className="text-[#FF9933] font-sans">{bestSellerProduct.gujaratiName}</span>
+              {bestSellerProduct.name}
             </h3>
             <p className="text-xs sm:text-sm text-[#3E2723]/70 leading-relaxed">
               Our gold-standard Sajavan Ghee is prized for its rich, authentic, granular structure ("granular ghee") and unforgettable aromatic fragrance. Traditionally slow-boiled in small batches using pure hand-churned dairy butter.
@@ -429,6 +429,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
               rel="noopener noreferrer"
               className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#128C7E] text-white text-xs font-bold transition-all shadow-sm"
             >
+              <WhatsAppIcon className="w-4 h-4 text-white fill-current" />
               Order on WhatsApp (₹{bestSellerProduct.price})
             </motion.a>
           </div>

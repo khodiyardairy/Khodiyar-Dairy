@@ -32,7 +32,18 @@ export default function CategoryCard({ category, productCount, onClick, delayInd
           className="relative mb-3 rounded-xl overflow-hidden animate-float-subtle"
           style={{ animationDelay: `${delayIndex * 0.4}s` }}
         >
-          <ProductIllustration type={category.illustrationType} size="sm" className="h-24 md:h-28 w-full animate-fade-in" />
+          {category.imageUrl ? (
+            <div className="relative overflow-hidden bg-gradient-to-br from-[#FFFDF9] via-[#FAF6EE] to-[#F1E8D9] border border-[#F2E5D0] flex items-center justify-center rounded-xl h-24 md:h-28 w-full">
+              <img 
+                src={category.imageUrl} 
+                alt={category.name} 
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          ) : (
+            <ProductIllustration type={category.illustrationType} size="sm" className="h-24 md:h-28 w-full animate-fade-in" />
+          )}
           <div className="absolute bottom-2 right-2 p-1.5 rounded-lg bg-white/90 shadow-sm backdrop-blur-xs">
             <IconComponent className="w-4 h-4 text-[#FF9933]" />
           </div>
