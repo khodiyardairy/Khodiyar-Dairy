@@ -9,7 +9,7 @@ export interface Product {
   isBestSeller?: boolean;
   isFeatured?: boolean;
   badge?: string; // e.g. "Pure A2", "Live Kitchen", "Festival Special"
-  illustrationType: 'milk' | 'ghee' | 'paneer' | 'shrikhand' | 'sweet' | 'buttermilk' | 'dahi' | 'pedha' | 'kaju-katli';
+  illustrationType: 'milk' |  'shrikhand' | 'sweet' | 'buttermilk' | 'dahi' | 'pedha' | 'kaju-katli';
 }
 
 export interface Category {

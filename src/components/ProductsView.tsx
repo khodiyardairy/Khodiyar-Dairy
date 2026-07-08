@@ -69,7 +69,7 @@ export default function ProductsView({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search sweets, ghee, paneer..."
+            placeholder="Search sweets, drinks ,ice creams..."
             className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#F0EAD6] bg-[#FDFBF7] text-xs font-bold text-[#3E2723] placeholder-[#C5A059]/70 focus:outline-none focus:ring-2 focus:ring-[#FF9933]/30"
           />
           {searchQuery && (
