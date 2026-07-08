@@ -139,7 +139,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                   setActiveTab('products');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#FF9933] hover:bg-[#E68A00] text-white font-black text-sm transition-all duration-200 cursor-pointer shadow-md shadow-[#FF9933]/10"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#58412a] hover:bg-[#E68A00] text-white font-black text-sm transition-all duration-200 cursor-pointer shadow-md shadow-[#4b2f13]/10"
               >
                 <ShoppingBag className="w-4 h-4" />
                 Shop Products Catalog
