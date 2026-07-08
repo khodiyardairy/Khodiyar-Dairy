@@ -93,7 +93,7 @@ export default function ContactView() {
                 <div className="space-y-0.5">
                   <p className="text-xs text-[#C5A059] font-bold">Store Hours</p>
                   <p className="text-xs sm:text-sm text-[#3E2723] font-semibold">
-                    Mon - Sun: 07:00 AM - 10:00 PM
+                    Mon - Sun: 8:00 AM - 9:00 PM
                   </p>
                 </div>
               </div>

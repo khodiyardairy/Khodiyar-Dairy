@@ -549,7 +549,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             </div>
             
             <p className="text-xs text-[#3E2723]/90 leading-relaxed">
-              Established in 1996, Shree Khodiyar Dairy is Babra's premier brand for authentic milk products, sweets, and fresh paneer. Keeping traditional flavor alive with modern hygiene.
+              Established in 1996, Khodiyar Dairy is Babra's premier brand for authentic milk products, sweets, and fresh paneer. Keeping traditional flavor alive with modern hygiene.
             </p>
 
             <div className="text-xs font-bold text-[#FF9933] font-sans">
@@ -591,7 +591,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                 <Clock className="w-4 h-4 text-[#FF9933] shrink-0" />
                 <div>
                   <p className="font-bold">Monday - Sunday</p>
-                  <p className="text-[11px] text-[#C5A059]">07:00 AM - 10:00 PM</p>
+                  <p className="text-[11px] text-[#C5A059]">8:00 AM - 9:00 PM</p>
                 </div>
               </div>
               <div className="p-2.5 rounded-lg bg-[#FFF8E1] border border-[#F0EAD6] text-[11px] text-[#FF9933] font-medium">
@@ -608,7 +608,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             <ul className="space-y-2.5 text-xs text-[#3E2723]/90">
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#FF9933] shrink-0 mt-0.5" />
-                <span>Amreli Road, Opp. Bus Station, Babra, Gujarat 365421</span>
+                <span>Babra,Amreli-365421, Gujarat, India</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#FF9933] shrink-0" />
