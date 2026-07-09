@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { categories, products, testimonials, galleryItems, getGeneralWhatsAppUrl, getWhatsAppUrl } from '../data/dairyData';
-import { ShoppingBag, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone } from 'lucide-react';
+import { ShoppingBag, ShoppingCart, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 import CategoryCard from './CategoryCard';
 import ProductCard from './ProductCard';
@@ -46,12 +46,31 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
     .map(id => products.find(p => p.id === id))
     .filter((p): p is Product => !!p);
 
-  const bestSellerProduct = products.find(p => p.id === 'kesar-pista-shrikhand-1kg') || products[4]; // Kesar Pista Shrikhand as Best Seller
+  const bestSellerProduct = products.find(p => p.id === 'thabdi-1kg') || products[4]; // Thabdi as Best Seller
 
   const generalWhatsappUrl = getGeneralWhatsAppUrl();
 
+  const homeCategories = [
+    ...categories,
+    {
+      id: 'all',
+      name: 'All Products',
+      gujaratiName: 'બધા પ્રોડક્ટ્સ',
+      description: 'Explore our complete dairy and sweets collection',
+      iconName: 'ShoppingBag',
+      bgColor: 'bg-[#FAF6EE]',
+      textColor: 'text-[#3E2723]',
+      illustrationType: 'sweet' as const,
+      imageUrl: '/images/hero-poster.jpeg'
+    }
+  ];
+
   const handleCategorySelect = (catId: string) => {
-    navigate(`/products?category=${catId}`);
+    if (catId === 'all') {
+      navigate('/products');
+    } else {
+      navigate(`/products?category=${catId}`);
+    }
   };
 
   const currentYear = new Date().getFullYear();
@@ -248,10 +267,12 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
           <div className="h-1 w-12 bg-[#FF9933] mx-auto rounded-full" />
         </div>
 
-        {/* 2 columns mobile grid, 3 col tablet, 5 col desktop */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-6">
-          {categories.map((category, idx) => {
-            const productCount = products.filter(p => p.category === category.id).length;
+        {/* 2 columns mobile grid, 4 col tablet and desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-6">
+          {homeCategories.map((category, idx) => {
+            const productCount = category.id === 'all'
+              ? products.length
+              : products.filter(p => p.category === category.id).length;
             return (
               <CategoryCard
                 key={category.id}
@@ -446,10 +467,10 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
               ★ NO.1 BEST SELLER IN BABRA ★
             </span>
             <h3 className="text-2xl sm:text-3xl font-black text-[#3E2723] leading-tight">
-              {bestSellerProduct.name}
+              Traditional Thabdi / થાબડી
             </h3>
             <p className="text-xs sm:text-sm text-[#3E2723]/70 leading-relaxed">
-              Our gold-standard Sajavan Ghee is prized for its rich, authentic, granular structure ("granular ghee") and unforgettable aromatic fragrance. Traditionally slow-boiled in small batches using pure hand-churned dairy butter.
+              Our signature Thabdi is made with rich milk, slow-cooked tradition, and the authentic taste loved in Babra.
             </p>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
@@ -473,23 +494,37 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover rounded-xl"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/images/thabdi2.png';
+                  (e.target as HTMLImageElement).src = '/images/thabdipenda.jpeg';
                 }}
               />
             </div>
 
-            <motion.a
-              whileHover={{ y: -3, boxShadow: "0 8px 25px rgba(37, 211, 102, 0.25)" }}
-              whileTap={{ scale: 0.98 }}
-              href={getWhatsAppUrl(bestSellerProduct.name, bestSellerProduct.price, bestSellerProduct.unit)}
-              target="_blank"
-              referrerPolicy="no-referrer"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#128C7E] text-white text-xs font-bold transition-all shadow-sm"
-            >
-              <WhatsAppIcon className="w-4 h-4 text-white fill-current" />
-              Order on WhatsApp (₹{bestSellerProduct.price})
-            </motion.a>
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full sm:w-auto">
+              {onAddToCart && (
+                <motion.button
+                  whileHover={{ y: -3, boxShadow: "0 8px 25px rgba(255, 153, 51, 0.25)" }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => onAddToCart(bestSellerProduct)}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#FF9933] hover:bg-[#E68A00] text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
+                >
+                  <ShoppingCart className="w-4 h-4 shrink-0" />
+                  Add to Cart (₹{bestSellerProduct.price})
+                </motion.button>
+              )}
+
+              <motion.a
+                whileHover={{ y: -3, boxShadow: "0 8px 25px rgba(37, 211, 102, 0.25)" }}
+                whileTap={{ scale: 0.98 }}
+                href={getWhatsAppUrl(bestSellerProduct.name, bestSellerProduct.price, bestSellerProduct.unit)}
+                target="_blank"
+                referrerPolicy="no-referrer"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#128C7E] text-white text-xs font-bold transition-all shadow-sm"
+              >
+                <WhatsAppIcon className="w-4 h-4 text-white fill-current" />
+                Order on WhatsApp (₹{bestSellerProduct.price})
+              </motion.a>
+            </div>
           </div>
 
         </div>
