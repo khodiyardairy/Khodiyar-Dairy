@@ -227,9 +227,16 @@ export default function ProductDetailView({
             )}
           </div>
 
-          <h1 className="text-xl sm:text-2xl font-black text-[#3E2723] leading-tight font-sans">
-            {finalName}
-          </h1>
+          <div className="flex flex-col">
+            <h1 className="text-xl sm:text-2xl font-black text-[#3E2723] leading-tight font-sans">
+              {product.name}
+            </h1>
+            {product.gujaratiName && (
+              <p className="text-base sm:text-lg font-bold text-[#C5A059] leading-snug mt-1">
+                {product.gujaratiName}
+              </p>
+            )}
+          </div>
 
           <div className="flex items-baseline gap-1 pt-1">
             <span className="text-xs font-bold text-[#3E2723]">₹</span>

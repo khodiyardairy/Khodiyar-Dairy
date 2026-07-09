@@ -26,7 +26,6 @@ export default function ProductCard({ product, onAddToCart, onViewDetail, onlyEn
     setIsImageFallback(false);
   }, [product]);
 
-  const finalName = onlyEnglish ? product.name : (product.gujaratiName || product.name);
   const finalPrice = product.price;
   const finalCategory = product.category;
   const finalQuantity = product.unit || '';
@@ -118,10 +117,17 @@ export default function ProductCard({ product, onAddToCart, onViewDetail, onlyEn
           )}
         </div>
 
-        {/* Gujarati Title Only (Strict Language Rule) */}
-        <h3 className="text-sm sm:text-base font-black text-[#3E2723] leading-tight group-hover:text-[#FF9933] transition-colors duration-200 line-clamp-2 mb-3">
-          {finalName}
-        </h3>
+        {/* English & Gujarati Product Name */}
+        <div className="mb-3">
+          <h3 className="text-sm sm:text-base font-black text-[#3E2723] leading-tight group-hover:text-[#FF9933] transition-colors duration-200 line-clamp-1">
+            {product.name}
+          </h3>
+          {product.gujaratiName && (
+            <p className="text-xs sm:text-sm font-medium text-[#C5A059] leading-snug mt-0.5 line-clamp-1">
+              {product.gujaratiName}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Price & CTA Section (Stays at the bottom of the card) */}

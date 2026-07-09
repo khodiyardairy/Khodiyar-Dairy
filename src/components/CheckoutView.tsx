@@ -222,8 +222,13 @@ Please confirm my order and let me know the delivery time. Thank you!`;
                 <div key={item.product.id} className="flex justify-between items-center py-2.5 first:pt-0">
                   <div className="max-w-[70%]">
                     <h4 className="text-xs sm:text-sm font-black text-[#3E2723] leading-snug">
-                      {item.product.gujaratiName || item.product.name}
+                      {item.product.name}
                     </h4>
+                    {item.product.gujaratiName && (
+                      <p className="text-[11px] font-bold text-[#C5A059] leading-tight">
+                        {item.product.gujaratiName}
+                      </p>
+                    )}
                     <p className="text-[10px] text-[#C5A059] font-bold font-mono">
                       ₹{item.product.price} / {item.product.unit} • Qty: {item.quantity}
                     </p>

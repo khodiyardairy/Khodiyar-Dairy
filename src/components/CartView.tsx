@@ -119,8 +119,13 @@ export default function CartView({
                   {cat?.name || 'Dairy'} • {item.product.unit}
                 </span>
                 <h3 className="text-sm sm:text-base font-black text-[#3E2723] leading-tight mt-0.5">
-                  {item.product.gujaratiName || item.product.name}
+                  {item.product.name}
                 </h3>
+                {item.product.gujaratiName && (
+                  <p className="text-xs font-bold text-[#C5A059] leading-tight">
+                    {item.product.gujaratiName}
+                  </p>
+                )}
                 <p className="text-xs font-bold text-[#C5A059] mt-0.5">
                   ₹{item.product.price} / {item.product.unit}
                 </p>
