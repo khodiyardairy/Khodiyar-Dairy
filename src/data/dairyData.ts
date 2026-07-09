@@ -604,6 +604,9 @@ export const products: Product[] = [
   }
 ];
 
+// Default sort: highest price first
+products.sort((a, b) => Number(b.price) - Number(a.price));
+
 export const testimonials: Testimonial[] = [
   {
     id: 't1',

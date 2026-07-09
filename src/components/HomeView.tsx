@@ -33,7 +33,8 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
   ];
   const specialProducts = specialProductIds
     .map(id => products.find(p => p.id === id))
-    .filter((p): p is Product => !!p);
+    .filter((p): p is Product => !!p)
+    .sort((a, b) => Number(b.price) - Number(a.price));
 
   // Today's Special Attractions: exactly 4 different seasonal or attractive products
   const attractionsProductIds = [
@@ -44,7 +45,8 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
   ];
   const attractionsProducts = attractionsProductIds
     .map(id => products.find(p => p.id === id))
-    .filter((p): p is Product => !!p);
+    .filter((p): p is Product => !!p)
+    .sort((a, b) => Number(b.price) - Number(a.price));
 
   const bestSellerProduct = products.find(p => p.id === 'thabdi-1kg') || products[4]; // Thabdi as Best Seller
 
@@ -155,15 +157,15 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
 
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#3E2723] leading-tight tracking-tight">
-              The Perfect Union of Purity & Taste <br className="hidden sm:inline" />
+              Babra's Most Favorite  <br className="hidden sm:inline" />
               <span className="text-[#FF9933] bg-gradient-to-r from-[#FF9933] to-[#C5A059] bg-clip-text text-transparent font-sans">
-                Khodiyar Dairy
+                Destination For Sweets & Dairy
               </span>
             </h1>
 
             {/* Description */}
             <p className="text-sm sm:text-base text-[#3E2723]/90 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
-              Experience the absolute pinnacle of fresh dairy, velvety shrikhand, and authentic golden milk pedhas. Prepared daily in Babra using traditional techniques with 100% fresh, farm-sourced buffalo and cow milk.
+              Form Festive Celebrations to Everyday Cravings . We Serve Freshness , Quality and Unforgettable Taste in Every Bite.
             </p>
 
             {/* CTA Buttons */}
@@ -259,10 +261,10 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
       >
         <div className="text-center space-y-1.5">
           <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#FF9933]">
-            Explore by Category
+            Explore our Category
           </p>
           <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-            Our Product Categories
+            Our  Categories
           </h2>
           <div className="h-1 w-12 bg-[#FF9933] mx-auto rounded-full" />
         </div>
@@ -293,7 +295,7 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
         <div className="flex items-end justify-between">
           <div className="space-y-1.5 text-left">
             <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#FF9933]">
-              Premium & Highlighted
+              Premium & Delights
             </p>
             <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
               Our Special Products

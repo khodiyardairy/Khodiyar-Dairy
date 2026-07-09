@@ -100,7 +100,7 @@ export default function GalleryView() {
         ))}
       </div>
 
-      {/* Purity Standards Highlights Section */}
+      {/* Purity Standards Highlights Section 
       <div className="bg-gradient-to-br from-[#FFF8E1] to-[#FAF6EE] border border-[#F0EAD6] rounded-3xl p-6 sm:p-8 space-y-6">
         <div className="text-center space-y-1 max-w-lg mx-auto">
           <Sparkles className="w-5 h-5 text-[#FF9933] mx-auto animate-spin" style={{ animationDuration: '4s' }} />
@@ -139,7 +139,7 @@ export default function GalleryView() {
             </div>
           </div>
         </div>
-      </div>
+      </div>*/}
 
     </div>
   );

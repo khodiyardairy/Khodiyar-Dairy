@@ -28,10 +28,11 @@ export default function ProductsView({
   };
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'price-desc' | 'price-asc' | 'name-asc'>('price-desc');
 
-  // Filter products based on category and search query
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
+  // Filter and sort products based on category, search query, and sorting criteria
+  const sortedAndFilteredProducts = useMemo(() => {
+    const filtered = products.filter((product) => {
       const matchesCategory =
         selectedCategory === 'all' || product.category === selectedCategory;
 
@@ -43,7 +44,18 @@ export default function ProductsView({
 
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+
+    return [...filtered].sort((a, b) => {
+      if (sortBy === 'price-desc') {
+        return Number(b.price) - Number(a.price);
+      } else if (sortBy === 'price-asc') {
+        return Number(a.price) - Number(b.price);
+      } else if (sortBy === 'name-asc') {
+        return a.name.localeCompare(b.name);
+      }
+      return 0;
+    });
+  }, [selectedCategory, searchQuery, sortBy]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 pb-24">
@@ -63,36 +75,57 @@ export default function ProductsView({
         </p>
       </motion.div>
 
-      {/* Filter and Search Bar Container */}
+      {/* Filter, Search, and Sort Bar Container */}
       <motion.div 
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.05 }}
-        className="bg-white rounded-2xl border border-[#F0EAD6] p-4 flex flex-col md:flex-row gap-4 items-center justify-between shadow-xs"
+        className="bg-white rounded-2xl border border-[#F0EAD6] p-4 flex flex-col lg:flex-row gap-4 items-center justify-between shadow-xs"
       >
         
-        {/* Real-time Search Input */}
-        <div className="relative w-full md:max-w-sm">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C5A059]" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search sweets, drinks ,ice creams..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#F0EAD6] bg-[#FDFBF7] text-xs font-bold text-[#3E2723] placeholder-[#C5A059]/70 focus:outline-none focus:ring-2 focus:ring-[#FF9933]/30"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#C5A059] hover:text-[#3E2723] cursor-pointer"
+        {/* Search & Sort Row */}
+        <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto shrink-0">
+          {/* Real-time Search Input */}
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C5A059]" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search sweets, drinks..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#F0EAD6] bg-[#FDFBF7] text-xs font-bold text-[#3E2723] placeholder-[#C5A059]/70 focus:outline-none focus:ring-2 focus:ring-[#FF9933]/30"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#C5A059] hover:text-[#3E2723] cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Compact Sort Dropdown */}
+          <div className="relative w-full sm:w-48">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="w-full pl-3 pr-8 py-2.5 rounded-xl border border-[#F0EAD6] bg-[#FDFBF7] text-xs font-bold text-[#3E2723] focus:outline-none focus:ring-2 focus:ring-[#FF9933]/30 appearance-none cursor-pointer"
             >
-              <X className="w-4 h-4" />
-            </button>
-          )}
+              <option value="price-desc">Price: High to Low</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="name-asc">Name: A to Z</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[#C5A059]">
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+              </svg>
+            </div>
+          </div>
         </div>
 
         {/* Category quick selectors (horizontal scroll list on mobile) */}
-        <div className="w-full flex items-center gap-1.5 overflow-x-auto pb-1.5 md:pb-0 scrollbar-none">
+        <div className="w-full lg:w-auto flex items-center gap-1.5 overflow-x-auto pb-1.5 lg:pb-0 scrollbar-none">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -149,9 +182,9 @@ export default function ProductsView({
       </AnimatePresence>
 
       {/* Catalogue Cards Grid */}
-      {filteredProducts.length > 0 ? (
+      {sortedAndFilteredProducts.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
-          {filteredProducts.map((product) => (
+          {sortedAndFilteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} onViewDetail={onViewDetail} />
           ))}
         </div>

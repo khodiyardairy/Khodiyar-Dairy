@@ -29,7 +29,7 @@ export default function AboutView() {
         <div className="lg:col-span-5 flex justify-center">
           <div className="w-full max-w-[320px] bg-gradient-to-br from-[#FFF8E1] to-[#FDFBF7] p-5 rounded-2xl border border-[#F0EAD6] shadow-xs flex flex-col items-center gap-4">
             <Logo size={140} className="hover:scale-105 transition-transform duration-300" />
-            <ProductIllustration type="pedha" size="md" />
+           {/* <ProductIllustration type="pedha" size="md" /> */}
             <div className="text-center">
               <span className="text-xs font-black text-[#FF9933] tracking-widest uppercase">
                 ★ 30+ YEARS TRUSTED ★
@@ -50,7 +50,7 @@ export default function AboutView() {
 
           <div className="text-xs sm:text-sm text-[#3E2723]/90 space-y-4 leading-relaxed font-medium">
             <p>
-              In <span className="text-[#3E2723] font-extrabold">1996</span>, Shree Khodiyar Dairy opened its very first small milk-collection outlet in the historic town of <span className="text-[#3E2723] font-extrabold">Babra, Amreli district</span>. Founded with a single mission: to provide the local families with 100% untampered, high-fat cow and buffalo milk directly from healthy village farms.
+              In <span className="text-[#3E2723] font-extrabold">1996</span>,Khodiyar Dairy opened its very first small milk-collection outlet in the historic town of <span className="text-[#3E2723] font-extrabold">Babra, Amreli district</span>. Founded with a single mission: to provide the local families with 100% untampered, high-fat cow and buffalo milk directly from healthy village farms.
             </p>
             <p>
               As families tasted the natural density and sweetness of our milk, word spread. We expanded our kitchen to create traditional milk solids (<span className="text-[#FF9933] font-extrabold">Mawa / Khoya</span>), leading to our legendary <span className="text-[#FF9933] font-extrabold">Special Khodiyar Milk Pedha</span>. Today, we stand proud as a hallmark of premium Gujarati dairy products.
@@ -70,6 +70,10 @@ export default function AboutView() {
               <p className="text-lg sm:text-xl font-black text-[#FF9933] font-mono">100%</p>
               <p className="text-[10px] text-[#C5A059]">Natural Farming</p>
             </div>
+            <div>
+              <p className="text-lg sm:text-xl font-black text-[#FF9933] font-mono">100%</p>
+              <p className="text-[10px] text-[#C5A059]">Happinees</p>
+            </div>
           </div>
 
         </div>
@@ -86,38 +90,44 @@ export default function AboutView() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           {/* Card 1: 100% Pure Sourcing */}
-          <div className="bg-white p-6 rounded-2xl border border-[#F0EAD6] space-y-3.5 hover:shadow-md transition-all">
-            <div className="w-10 h-10 rounded-xl bg-[#FFF8E1] border border-[#F0EAD6] flex items-center justify-center text-[#FF9933]">
-              <Calendar className="w-5 h-5" />
-            </div>
-            <h5 className="text-sm font-black text-[#3E2723]">Fresh Daily Batches</h5>
-            <p className="text-xs text-[#3E2723]/90 leading-relaxed">
-              We never stock stale products. Our Live Paneer and thick Dahi are set fresh twice everyday—at 6 AM and 5 PM—aligned with milk arrival schedules.
-            </p>
-          </div>
+          {/* Card 1: Fresh Daily Batches */}
+<div className="bg-white p-6 rounded-2xl border border-[#F0EAD6] space-y-3.5 hover:shadow-md transition-all">
+  <div className="flex items-center gap-3">
+    <div className="w-10 h-10 rounded-xl bg-[#FFF8E1] border border-[#F0EAD6] flex items-center justify-center text-[#FF9933] shrink-0">
+      <Calendar className="w-5 h-5" />
+    </div>
+    <h5 className="text-sm font-black text-[#3E2723]">Fresh Daily Batches</h5>
+  </div>
+  <p className="text-xs text-[#3E2723]/90 leading-relaxed">
+    We never stock stale products. Our Live Paneer and thick Dahi are set fresh twice everyday—at 6 AM and 5 PM—aligned with milk arrival schedules.
+  </p>
+</div>
 
-          {/* Card 2: No Adulteration */}
-          <div className="bg-white p-6 rounded-2xl border border-[#F0EAD6] space-y-3.5 hover:shadow-md transition-all">
-            <div className="w-10 h-10 rounded-xl bg-[#FFF8E1] border border-[#F0EAD6] flex items-center justify-center text-[#FF9933]">
-              <ShieldAlert className="w-5 h-5" />
-            </div>
-            <h5 className="text-sm font-black text-[#3E2723]">Zero Preservatives</h5>
-            <p className="text-xs text-[#3E2723]/90 leading-relaxed">
-              We reject synthetic milk thickeners, artificial souring acids, and flavor boosters. Our buttermilk and shrikhand contain only organic spices and real saffron.
-            </p>
-          </div>
+{/* Card 2: No Adulteration */}
+<div className="bg-white p-6 rounded-2xl border border-[#F0EAD6] space-y-3.5 hover:shadow-md transition-all">
+  <div className="flex items-center gap-3">
+    <div className="w-10 h-10 rounded-xl bg-[#FFF8E1] border border-[#F0EAD6] flex items-center justify-center text-[#FF9933] shrink-0">
+      <ShieldAlert className="w-5 h-5" />
+    </div>
+    <h5 className="text-sm font-black text-[#3E2723]">Zero Preservatives</h5>
+  </div>
+  <p className="text-xs text-[#3E2723]/90 leading-relaxed">
+    We reject synthetic milk thickeners, artificial souring acids, and flavor boosters. Our buttermilk and shrikhand contain only organic spices and real saffron.
+  </p>
+</div>
 
-          {/* Card 3: Empowering Local Farmers */}
-          <div className="bg-white p-6 rounded-2xl border border-[#F0EAD6] space-y-3.5 hover:shadow-md transition-all">
-            <div className="w-10 h-10 rounded-xl bg-[#FFF8E1] border border-[#F0EAD6] flex items-center justify-center text-[#FF9933]">
-              <Users className="w-5 h-5" />
-            </div>
-            <h5 className="text-sm font-black text-[#3E2723]">Local Farm Partnerships</h5>
-            <p className="text-xs text-[#3E2723]/90 leading-relaxed">
-              We purchase raw milk directly from more than 80 independent dairy farmers around Babra, ensuring fair payout rates and support for rural agriculture.
-            </p>
-          </div>
-
+{/* Card 3: Empowering Local Farmers */}
+<div className="bg-white p-6 rounded-2xl border border-[#F0EAD6] space-y-3.5 hover:shadow-md transition-all">
+  <div className="flex items-center gap-3">
+    <div className="w-10 h-10 rounded-xl bg-[#FFF8E1] border border-[#F0EAD6] flex items-center justify-center text-[#FF9933] shrink-0">
+      <Users className="w-5 h-5" />
+    </div>
+    <h5 className="text-sm font-black text-[#3E2723]">Local Farm Partnerships</h5>
+  </div>
+  <p className="text-xs text-[#3E2723]/90 leading-relaxed">
+    We purchase raw milk directly from more than 80 independent dairy farmers around Babra, ensuring fair payout rates and support for rural agriculture.
+  </p>
+</div>
         </div>
       </div>
 
@@ -126,7 +136,7 @@ export default function AboutView() {
         <Heart className="w-8 h-8 text-rose-400 mx-auto fill-rose-400 animate-pulse" />
         <h4 className="text-xl sm:text-2xl font-black">Taste the Purity Yourself</h4>
         <p className="text-xs sm:text-sm text-[#FAF6EE]/80 max-w-lg mx-auto leading-relaxed">
-          Celebrate your family festivals, weddings, and daily health with the golden taste of Shree Khodiyar Dairy. Open our product catalog and send your order via WhatsApp.
+          Celebrate your family festivals, weddings, and daily health with the golden taste of Khodiyar Dairy. Open our product catalog and send your order via WhatsApp.
         </p>
         <button
           onClick={() => {
