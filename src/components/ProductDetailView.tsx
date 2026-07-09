@@ -321,7 +321,7 @@ export default function ProductDetailView({
               </tr>
               <tr className="border-b border-[#F0EAD6]/60">
                 <td className="py-2.5 text-[#C5A059] uppercase tracking-wider">Store</td>
-                <td className="py-2.5 text-[#3E2723]">Shree Khodiyar Dairy, Babra</td>
+                <td className="py-2.5 text-[#3E2723]">Khodiyar Dairy, Babra</td>
               </tr>
               <tr className="border-b border-[#F0EAD6]/60">
                 <td className="py-2.5 text-[#C5A059] uppercase tracking-wider">Status</td>

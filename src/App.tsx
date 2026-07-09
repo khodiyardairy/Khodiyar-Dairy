@@ -11,6 +11,7 @@ import ContactView from './components/ContactView';
 import CartView from './components/CartView';
 import CheckoutView from './components/CheckoutView';
 import ProductDetailView from './components/ProductDetailView';
+import GrandOpening from './components/GrandOpening';
 import { Product, CartItem } from './types';
 import { products } from './data/dairyData';
 import { motion, AnimatePresence } from 'motion/react';
@@ -116,6 +117,8 @@ function AppContent() {
     setCart([]);
   };
 
+  const [isSiteUnlocked, setIsSiteUnlocked] = useState(false);
+
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const handleViewDetail = (product: Product) => {
@@ -123,93 +126,103 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#3E2723] flex flex-col selection:bg-[#FF9933]/10 selection:text-[#FF9933]">
-      <ScrollToTop />
+    <>
+      {!isSiteUnlocked && (
+        <GrandOpening onComplete={() => setIsSiteUnlocked(true)} />
+      )}
 
-      {/* Premium Top Navigation Header */}
-      <Navbar cartCount={totalCartCount} />
+      <div 
+        className={`min-h-screen bg-[#FDFBF7] text-[#3E2723] flex flex-col selection:bg-[#FF9933]/10 selection:text-[#FF9933] transition-opacity duration-1000 ease-out ${
+          isSiteUnlocked ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden pointer-events-none'
+        }`}
+      >
+        <ScrollToTop />
 
-      {/* Main Content Area with elegant fade-up animations on page transit */}
-      <main className="flex-grow">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.22, ease: 'easeOut' }}
-            className="w-full"
-          >
-            <Routes location={location}>
-              <Route
-                path="/"
-                element={
-                  <HomeView
-                    onAddToCart={(prod) => handleAddToCart(prod, 1)}
-                    onViewDetail={handleViewDetail}
-                  />
-                }
-              />
-              <Route
-                path="/products"
-                element={
-                  <ProductsView
-                    onAddToCart={(prod) => handleAddToCart(prod, 1)}
-                    onViewDetail={handleViewDetail}
-                  />
-                }
-              />
-              <Route path="/categories" element={<CategoriesView />} />
-              <Route path="/gallery" element={<GalleryView />} />
-              <Route path="/about" element={<AboutView />} />
-              <Route path="/contact" element={<ContactView />} />
-              <Route
-                path="/cart"
-                element={
-                  <CartView
-                    cart={cart}
-                    onUpdateQuantity={handleUpdateQuantity}
-                    onRemoveFromCart={handleRemoveFromCart}
-                    onClearCart={handleClearCart}
-                  />
-                }
-              />
-              <Route
-                path="/checkout"
-                element={
-                  <CheckoutView
-                    cart={cart}
-                    onClearCart={handleClearCart}
-                  />
-                }
-              />
-              <Route
-                path="/product/:productId"
-                element={
-                  <ProductDetailRouteWrapper
-                    onAddToCart={handleAddToCart}
-                    cart={cart}
-                    onUpdateQuantity={handleUpdateQuantity}
-                  />
-                }
-              />
-              <Route
-                path="*"
-                element={
-                  <HomeView
-                    onAddToCart={(prod) => handleAddToCart(prod, 1)}
-                    onViewDetail={handleViewDetail}
-                  />
-                }
-              />
-            </Routes>
-          </motion.div>
-        </AnimatePresence>
-      </main>
+        {/* Premium Top Navigation Header */}
+        <Navbar cartCount={totalCartCount} />
 
-      {/* Sticky Mobile Bottom Navigation Panel */}
-      <BottomNav cartCount={totalCartCount} />
-    </div>
+        {/* Main Content Area with elegant fade-up animations on page transit */}
+        <main className="flex-grow">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="w-full"
+            >
+              <Routes location={location}>
+                <Route
+                  path="/"
+                  element={
+                    <HomeView
+                      onAddToCart={(prod) => handleAddToCart(prod, 1)}
+                      onViewDetail={handleViewDetail}
+                    />
+                  }
+                />
+                <Route
+                  path="/products"
+                  element={
+                    <ProductsView
+                      onAddToCart={(prod) => handleAddToCart(prod, 1)}
+                      onViewDetail={handleViewDetail}
+                    />
+                  }
+                />
+                <Route path="/categories" element={<CategoriesView />} />
+                <Route path="/gallery" element={<GalleryView />} />
+                <Route path="/about" element={<AboutView />} />
+                <Route path="/contact" element={<ContactView />} />
+                <Route
+                  path="/cart"
+                  element={
+                    <CartView
+                      cart={cart}
+                      onUpdateQuantity={handleUpdateQuantity}
+                      onRemoveFromCart={handleRemoveFromCart}
+                      onClearCart={handleClearCart}
+                    />
+                  }
+                />
+                <Route
+                  path="/checkout"
+                  element={
+                    <CheckoutView
+                      cart={cart}
+                      onClearCart={handleClearCart}
+                    />
+                  }
+                />
+                <Route
+                  path="/product/:productId"
+                  element={
+                    <ProductDetailRouteWrapper
+                      onAddToCart={handleAddToCart}
+                      cart={cart}
+                      onUpdateQuantity={handleUpdateQuantity}
+                    />
+                  }
+                />
+                <Route
+                  path="*"
+                  element={
+                    <HomeView
+                      onAddToCart={(prod) => handleAddToCart(prod, 1)}
+                      onViewDetail={handleViewDetail}
+                    />
+                  }
+                />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
+        </main>
+
+        {/* Sticky Mobile Bottom Navigation Panel */}
+        <BottomNav cartCount={totalCartCount} />
+      </div>
+    </>
   );
 }
 

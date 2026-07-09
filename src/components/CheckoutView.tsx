@@ -49,7 +49,7 @@ export default function CheckoutView({
     });
 
     const waMessage = 
-`*Shree Khodiyar Dairy (Babra) — New Order* 🥣🥛
+`*Khodiyar Dairy (Babra) — New Order* 🥣🥛
 
 • *Customer Name:* ${formData.name}
 • *Phone Number:* ${formData.phone}
@@ -255,7 +255,7 @@ Please confirm my order and let me know the delivery time. Thank you!`;
           <div className="bg-[#FAF6EE] rounded-2xl border border-[#F0EAD6] p-4 text-center">
             <span className="text-xl">✨</span>
             <p className="text-[11px] font-black text-[#3E2723] uppercase tracking-wide mt-1">
-              Shree Khodiyar Dairy & Products
+               Khodiyar Dairy & Products
             </p>
             <p className="text-[10px] font-medium text-[#C5A059] mt-0.5 leading-relaxed">
               Serving purest taste and traditional hygiene standards since 1996 in Babra, Gujarat.

@@ -93,7 +93,7 @@ export default function ProductCard({ product, onAddToCart, onViewDetail, onlyEn
             /* Branded Cream Placeholder (No broken-image icon, NO emoji) */
             <div className="absolute inset-0 bg-gradient-to-br from-[#FFF8E1] to-[#FAF6EE] flex flex-col items-center justify-center p-3 text-center">
               <span className="text-[10px] font-black tracking-wider text-[#FF9933] uppercase">
-                SHREE KHODIYAR
+                 KHODIYAR
               </span>
               <span className="text-[8px] font-medium text-[#C5A059] uppercase tracking-widest mt-0.5">
                 BABRA • ESTD 1996
