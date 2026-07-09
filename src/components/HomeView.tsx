@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { categories, products, testimonials, galleryItems, getGeneralWhatsAppUrl, getWhatsAppUrl } from '../data/dairyData';
-import { ShoppingBag, ShoppingCart, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone } from 'lucide-react';
+import { ShoppingBag, ShoppingCart, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone, Instagram, Facebook } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 import CategoryCard from './CategoryCard';
 import ProductCard from './ProductCard';
@@ -23,6 +23,7 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
   const [shouldAutoplay, setShouldAutoplay] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [activeFooterSection, setActiveFooterSection] = useState<'none' | 'links' | 'contact'>('none');
 
   // Our Special Products: exactly 4 premium products
   const specialProductIds = [
@@ -632,101 +633,224 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
       </section>
 
       {/* 8. PREMIUM FOOTER */}
-      <footer className="border-t border-[#F0EAD6] bg-[#FAF6EE] pt-12 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <footer className="border-t border-[#F0EAD6] bg-[#FAF6EE] pt-6 pb-4 md:pt-12 md:pb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Col 1: About Brand */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2.5">
-              <Logo size={44} />
-              <span className="text-base font-black text-[#3E2723]">Khodiyar Dairy</span>
-            </div>
+          {/* MOBILE FOOTER (md:hidden) */}
+          <div className="md:hidden flex flex-col space-y-4">
             
-            <p className="text-xs text-[#3E2723]/90 leading-relaxed">
-              Established in 1996, Khodiyar Dairy is Babra's premier brand for authentic milk products, sweets, and fresh paneer. Keeping traditional flavor alive with modern hygiene.
-            </p>
-
-            <div className="text-xs font-bold text-[#FF9933] font-sans">
-              Pride of Babra • Since 1996
-            </div>
-          </div>
-
-          {/* Col 2: Quick Links */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-black uppercase tracking-wider text-[#3E2723] border-b border-[#F0EAD6] pb-2">
-              Quick Navigation
-            </h4>
-            <ul className="space-y-2 text-xs font-bold text-[#3E2723]/90">
-              <li>
-                <button onClick={() => navigate('/')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Home Screen</button>
-              </li>
-              <li>
-                <button onClick={() => navigate('/products')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Products Catalog</button>
-              </li>
-              <li>
-                <button onClick={() => navigate('/categories')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">All Categories</button>
-              </li>
-              <li>
-                <button onClick={() => navigate('/gallery')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Kitchen Gallery</button>
-              </li>
-              <li>
-                <button onClick={() => navigate('/about')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Our 1996 Story</button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 3: Outlet Hours */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-black uppercase tracking-wider text-[#3E2723] border-b border-[#F0EAD6] pb-2">
-              Store Timings
-            </h4>
-            <div className="space-y-2.5 text-xs text-[#3E2723]/90">
+            {/* Brand Header */}
+            <div className="flex flex-col items-center text-center space-y-1.5">
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[#FF9933] shrink-0" />
-                <div>
-                  <p className="font-bold">Monday - Sunday</p>
-                  <p className="text-[11px] text-[#C5A059]">8:00 AM - 9:00 PM</p>
+                <Logo size={36} className="object-contain max-h-[36px]" />
+                <span className="text-sm font-black text-[#3E2723] tracking-tight">Khodiyar Dairy</span>
+              </div>
+              <p className="text-[11px] text-[#3E2723]/80 leading-relaxed max-w-[280px]">
+                Established in 1996, Babra's premier brand for authentic milk products, sweets, and fresh paneer.
+              </p>
+              <div className="text-[10px] font-black text-[#FF9933] uppercase tracking-wider">
+                Pride of Babra • Since 1996
+              </div>
+
+              {/* Compact WhatsApp Button (one line only) */}
+              <div className="pt-0.5">
+                <a
+                  href={generalWhatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#25D366] text-white text-[11px] font-bold hover:bg-[#20ba59] active:scale-95 transition-all shadow-xs"
+                  aria-label="Contact us on WhatsApp"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5 fill-current text-white" />
+                  <span>Order on WhatsApp</span>
+                </a>
+              </div>
+
+              {/* Social Icons (small and in one row) */}
+              <div className="flex items-center gap-3 pt-0.5">
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1.5 rounded-full bg-[#FFF8E1] border border-[#F0EAD6]/60 text-[#3E2723] hover:text-[#FF9933] transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1.5 rounded-full bg-[#FFF8E1] border border-[#F0EAD6]/60 text-[#3E2723] hover:text-[#FF9933] transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href={generalWhatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1.5 rounded-full bg-[#FFF8E1] border border-[#F0EAD6]/60 text-[#3E2723] hover:text-[#FF9933] transition-colors"
+                  aria-label="WhatsApp"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5 fill-current text-[#3E2723]" />
+                </a>
+              </div>
+            </div>
+
+            {/* Info Grid (No accordion/dropdown, clean 2-column or stacked layout) */}
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3 border-t border-[#F0EAD6]/60 pt-3">
+              
+              {/* Quick Navigation column */}
+              <div className="space-y-1">
+                <p className="text-[10px] font-black uppercase tracking-wider text-[#3E2723]">
+                  Quick Links
+                </p>
+                <ul className="space-y-1 text-[11px] font-bold text-[#3E2723]/95">
+                  <li>
+                    <button onClick={() => navigate('/')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer py-0.5">Home Screen</button>
+                  </li>
+                  <li>
+                    <button onClick={() => navigate('/products')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer py-0.5">Products Catalog</button>
+                  </li>
+                  <li>
+                    <button onClick={() => navigate('/categories')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer py-0.5">All Categories</button>
+                  </li>
+                  <li>
+                    <button onClick={() => navigate('/gallery')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer py-0.5">Kitchen Gallery</button>
+                  </li>
+                  <li>
+                    <button onClick={() => navigate('/about')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer py-0.5">Our Story</button>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Store Timings & Contact Details column */}
+              <div className="space-y-1">
+                <p className="text-[10px] font-black uppercase tracking-wider text-[#3E2723]">
+                  Store & Contact
+                </p>
+                <ul className="space-y-1 text-[10px] text-[#3E2723]/95">
+                  <li className="flex items-start gap-1 font-bold">
+                    <MapPin className="w-3 h-3 text-[#FF9933] shrink-0 mt-0.5" />
+                    <span>Babra, Amreli, Gujarat</span>
+                  </li>
+                  <li className="flex items-center gap-1 font-bold font-mono">
+                    <Phone className="w-3 h-3 text-[#FF9933] shrink-0" />
+                    <a href="tel:+916354691080" className="hover:underline">+91 63546 91080</a>
+                  </li>
+                  <li className="flex items-center gap-1 font-bold">
+                    <Clock className="w-3 h-3 text-[#FF9933] shrink-0" />
+                    <span>8:00 AM - 9:00 PM</span>
+                  </li>
+                  <li className="text-[9px] text-[#C5A059] font-medium pt-0.5 leading-snug">
+                    Saffron Shrikhand & Live Paneer prepared daily.
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* DESKTOP FOOTER (hidden md:grid) */}
+          <div className="hidden md:grid grid-cols-4 gap-8">
+            
+            {/* Col 1: About Brand */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2.5">
+                <Logo size={44} />
+                <span className="text-base font-black text-[#3E2723]">Khodiyar Dairy</span>
+              </div>
+              
+              <p className="text-xs text-[#3E2723]/90 leading-relaxed">
+                Established in 1996, Khodiyar Dairy is Babra's premier brand for authentic milk products, sweets, and fresh paneer. Keeping traditional flavor alive with modern hygiene.
+              </p>
+
+              <div className="text-xs font-bold text-[#FF9933] font-sans">
+                Pride of Babra • Since 1996
+              </div>
+            </div>
+
+            {/* Col 2: Quick Links */}
+            <div className="space-y-4">
+              <h4 className="text-xs font-black uppercase tracking-wider text-[#3E2723] border-b border-[#F0EAD6] pb-2">
+                Quick Navigation
+              </h4>
+              <ul className="space-y-2 text-xs font-bold text-[#3E2723]/90">
+                <li>
+                  <button onClick={() => navigate('/')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Home Screen</button>
+                </li>
+                <li>
+                  <button onClick={() => navigate('/products')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Products Catalog</button>
+                </li>
+                <li>
+                  <button onClick={() => navigate('/categories')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">All Categories</button>
+                </li>
+                <li>
+                  <button onClick={() => navigate('/gallery')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Kitchen Gallery</button>
+                </li>
+                <li>
+                  <button onClick={() => navigate('/about')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Our 1996 Story</button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 3: Outlet Hours */}
+            <div className="space-y-4">
+              <h4 className="text-xs font-black uppercase tracking-wider text-[#3E2723] border-b border-[#F0EAD6] pb-2">
+                Store Timings
+              </h4>
+              <div className="space-y-2.5 text-xs text-[#3E2723]/90">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-[#FF9933] shrink-0" />
+                  <div>
+                    <p className="font-bold">Monday - Sunday</p>
+                    <p className="text-[11px] text-[#C5A059]">8:00 AM - 9:00 PM</p>
+                  </div>
+                </div>
+                <div className="p-2.5 rounded-lg bg-[#FFF8E1] border border-[#F0EAD6] text-[11px] text-[#FF9933] font-medium">
+                  Note: Saffron Shrikhand and Live Paneer batches are prepared fresh every morning and evening.
                 </div>
               </div>
-              <div className="p-2.5 rounded-lg bg-[#FFF8E1] border border-[#F0EAD6] text-[11px] text-[#FF9933] font-medium">
-                Note: Saffron Shrikhand and Live Paneer batches are prepared fresh every morning and evening.
-              </div>
+            </div>
+
+            {/* Col 4: Contact info */}
+            <div className="space-y-4">
+              <h4 className="text-xs font-black uppercase tracking-wider text-[#3E2723] border-b border-[#F0EAD6] pb-2">
+                Contact Desk
+              </h4>
+              <ul className="space-y-2.5 text-xs text-[#3E2723]/90">
+                <li className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 text-[#FF9933] shrink-0 mt-0.5" />
+                  <span>Babra,Amreli-365421, Gujarat, India</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-[#FF9933] shrink-0" />
+                  <a href="tel:+916354691080" className="hover:underline font-mono font-bold">+91 63546 91080</a>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-[#FF9933] shrink-0" />
+                  <a href="mailto:khodiyardairybabra@gmail.com" className="hover:underline font-mono truncate">khodiyardairybabra@gmail.com</a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Footer bottom bar */}
+          <div className="mt-6 md:mt-12 pt-4 md:pt-6 border-t border-[#F0EAD6] flex flex-col sm:flex-row items-center justify-between gap-3 text-center">
+            <p className="text-xs text-[#C5A059] font-medium">
+              &copy; {currentYear} Khodiyar Dairy & Products. All rights reserved.
+            </p>
+            <div className="flex items-center justify-center gap-1.5 text-xs text-[#C5A059]">
+              <span>Made with love in Gujarat</span>
+              <span className="text-[#FF9933]">♥</span>
+              <span>•</span>
+              <span>Babra's Quality Standard</span>
             </div>
           </div>
 
-          {/* Col 4: Contact info */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-black uppercase tracking-wider text-[#3E2723] border-b border-[#F0EAD6] pb-2">
-              Contact Desk
-            </h4>
-            <ul className="space-y-2.5 text-xs text-[#3E2723]/90">
-              <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-[#FF9933] shrink-0 mt-0.5" />
-                <span>Babra,Amreli-365421, Gujarat, India</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#FF9933] shrink-0" />
-                <a href="tel:+916354691080" className="hover:underline font-mono font-bold">+91 63546 91080</a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#FF9933] shrink-0" />
-                <a href="mailto:khodiyardairybabra@gmail.com" className="hover:underline font-mono truncate">khodiyardairybabra@gmail.com</a>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-        {/* Footer bottom bar */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-[#F0EAD6] flex flex-col sm:flex-row items-center justify-between gap-4 text-center">
-          <p className="text-xs text-[#C5A059] font-medium">
-            &copy; {currentYear}Khodiyar Dairy & Products. All rights reserved.
-          </p>
-          <div className="flex items-center gap-1.5 text-xs text-[#C5A059]">
-            <span>Designed Premium</span>
-            <span className="text-[#FF9933]">★</span>
-            <span>Babra's Quality Standard</span>
-          </div>
         </div>
       </footer>
 

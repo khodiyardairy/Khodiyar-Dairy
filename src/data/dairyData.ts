@@ -4,8 +4,7 @@ export const WHATSAPP_NUMBER = '916354691080';
 export const STORE_ADDRESS = 'Babra,Amreli-365421, Gujarat, India';
 export const STORE_PHONE = '+91 63546 91080';
 export const STORE_EMAIL = 'khodiyardairybabra@gmail.com';
-export const MAP_EMBED_URL = 'https://maps.app.goo.gl/djx6BBY5tRPJ5hoQ6https://maps.app.goo.gl/8jQ9d8zqTg2i8npw5?g_st=ac';
-
+export const MAP_EMBED_URL = 'https://maps.app.goo.gl/djx6BBY5tRPJ5hoQ6';
 // Exactly 3 main product categories as requested
 export const categories: Category[] = [
   {

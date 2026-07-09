@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { products, categories } from '../data/dairyData';
 import { Product } from '../types';
 import ProductCard from './ProductCard';
-import { Search, X } from 'lucide-react';
+import { Search, X, ChevronDown, ArrowUpDown, Check } from 'lucide-react';
 
 interface ProductsViewProps {
   onAddToCart?: (product: Product) => void;
@@ -29,6 +29,15 @@ export default function ProductsView({
 
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'price-desc' | 'price-asc' | 'name-asc'>('price-desc');
+  const [isSortOpen, setIsSortOpen] = useState(false);
+
+  const sortOptions = [
+    { value: 'price-desc', label: 'Price: High to Low' },
+    { value: 'price-asc', label: 'Price: Low to High' },
+    { value: 'name-asc', label: 'Name: A to Z' }
+  ] as const;
+
+  const currentSortLabel = sortOptions.find(opt => opt.value === sortBy)?.label || 'Price: High to Low';
 
   // Filter and sort products based on category, search query, and sorting criteria
   const sortedAndFilteredProducts = useMemo(() => {
@@ -105,22 +114,65 @@ export default function ProductsView({
             )}
           </div>
 
-          {/* Compact Sort Dropdown */}
-          <div className="relative w-full sm:w-48">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="w-full pl-3 pr-8 py-2.5 rounded-xl border border-[#F0EAD6] bg-[#FDFBF7] text-xs font-bold text-[#3E2723] focus:outline-none focus:ring-2 focus:ring-[#FF9933]/30 appearance-none cursor-pointer"
+          {/* Premium Custom Sort Dropdown */}
+          <div className="relative w-full sm:w-52">
+            <button
+              type="button"
+              onClick={() => setIsSortOpen(!isSortOpen)}
+              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-[#F0EAD6] bg-[#FDFBF7] text-xs font-bold text-[#3E2723] hover:bg-[#FAF6EE] focus:outline-none focus:ring-2 focus:ring-[#FF9933]/30 transition-colors cursor-pointer select-none"
+              aria-haspopup="listbox"
+              aria-expanded={isSortOpen}
             >
-              <option value="price-desc">Price: High to Low</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="name-asc">Name: A to Z</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[#C5A059]">
-              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-              </svg>
-            </div>
+              <div className="flex items-center gap-2">
+                <ArrowUpDown className="w-3.5 h-3.5 text-[#C5A059]" />
+                <span>{currentSortLabel}</span>
+              </div>
+              <ChevronDown className={`w-3.5 h-3.5 text-[#C5A059] transition-transform duration-200 ${isSortOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            <AnimatePresence>
+              {isSortOpen && (
+                <>
+                  {/* Click-outside backdrop wrapper */}
+                  <div 
+                    className="fixed inset-0 z-40" 
+                    onClick={() => setIsSortOpen(false)}
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                    transition={{ duration: 0.12 }}
+                    className="absolute right-0 left-0 mt-2 z-50 bg-white rounded-xl border border-[#F0EAD6] shadow-lg overflow-hidden py-1"
+                    role="listbox"
+                  >
+                    {sortOptions.map((option) => {
+                      const isSelected = sortBy === option.value;
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => {
+                            setSortBy(option.value);
+                            setIsSortOpen(false);
+                          }}
+                          className={`w-full flex items-center justify-between px-4 py-2.5 text-left text-xs font-bold transition-colors cursor-pointer ${
+                            isSelected 
+                              ? 'bg-[#FFF8E1] text-[#FF9933]' 
+                              : 'text-[#3E2723] hover:bg-[#FAF6EE]'
+                          }`}
+                          role="option"
+                          aria-selected={isSelected}
+                        >
+                          <span>{option.label}</span>
+                          {isSelected && <Check className="w-3.5 h-3.5 text-[#FF9933] shrink-0" />}
+                        </button>
+                      );
+                    })}
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
