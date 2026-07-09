@@ -1,87 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { STORE_ADDRESS, STORE_PHONE, STORE_EMAIL, WHATSAPP_NUMBER } from '../data/dairyData';
 import { MapPin, Phone, Mail, Clock, Send, AlertCircle } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 
 export default function ContactView() {
   const [name, setName] = useState('');
   const [topic, setTopic] = useState('Product Sourcing');
   const [message, setMessage] = useState('');
-
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<L.Map | null>(null);
-
-  useEffect(() => {
-    if (!mapRef.current) return;
-
-    // Prevent double initialization
-    if (mapInstance.current) {
-      mapInstance.current.remove();
-      mapInstance.current = null;
-    }
-
-    const position: [number, number] = [21.8461802, 71.3048567];
-
-    const map = L.map(mapRef.current, {
-      zoomControl: true,
-      scrollWheelZoom: false,
-      dragging: !L.Browser.mobile,
-    }).setView(position, 17);
-
-    mapInstance.current = map;
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
-      maxZoom: 19,
-    }).addTo(map);
-
-    // Premium Red Pin Marker Icon
-    const redPinIcon = L.divIcon({
-      html: `
-        <div class="relative -top-3 -left-3 flex items-center justify-center">
-          <div class="relative">
-            <div class="absolute -top-7 -left-3.5 bg-[#FF3333] text-white rounded-full w-7 h-7 shadow-md flex items-center justify-center border-2 border-white animate-bounce">
-              <svg class="w-4 h-4 fill-current text-white" viewBox="0 0 24 24">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-              </svg>
-            </div>
-            <div class="absolute -top-1 -left-1 w-2 h-2 bg-[#3E2723] rounded-full opacity-40" />
-          </div>
-        </div>
-      `,
-      className: 'custom-leaflet-pin',
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
-      popupAnchor: [0, -28]
-    });
-
-    const marker = L.marker(position, { icon: redPinIcon }).addTo(map);
-
-    const popupContent = `
-      <div class="p-1.5 text-center font-sans space-y-1">
-        <h4 class="font-black text-[#3E2723] text-xs m-0 leading-tight">Shree Khodiyar Dairy</h4>
-        <p class="text-[10px] text-[#C5A059] font-bold m-0 leading-tight">Babra, Gujarat, India</p>
-        <p class="text-[11px] text-[#FF9933] font-black m-0 leading-tight">બાબરા, ગુજરાત</p>
-      </div>
-    `;
-
-    marker.bindPopup(popupContent).openPopup();
-
-    const resizeObserver = new ResizeObserver(() => {
-      map.invalidateSize();
-    });
-    resizeObserver.observe(mapRef.current);
-
-    return () => {
-      resizeObserver.disconnect();
-      if (mapInstance.current) {
-        mapInstance.current.remove();
-        mapInstance.current = null;
-      }
-    };
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -250,7 +175,7 @@ export default function ContactView() {
 
       </div>
 
-      {/* Interactive Map Section */}
+      {/* Google Maps Embed Section */}
       <div className="bg-white rounded-2xl border border-[#F0EAD6] p-4 sm:p-6 shadow-xs space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#F0EAD6] pb-3">
           <div>
@@ -266,17 +191,22 @@ export default function ContactView() {
           </p>
         </div>
 
-        {/* Leaflet Map Div */}
-        <div 
-          ref={mapRef} 
-          className="w-full rounded-xl overflow-hidden border border-[#F0EAD6] shadow-inner bg-[#FDFBF7] relative z-10 h-[260px] md:h-[340px]"
-          style={{ touchAction: 'pan-y' }}
-        />
+        {/* Embedded Google Maps iFrame */}
+        <div className="w-full rounded-xl overflow-hidden border border-[#F0EAD6] shadow-sm bg-[#FDFBF7] relative z-10 h-[320px] md:h-[450px]">
+          <iframe
+            src="https://www.google.com/maps?q=Khodiyar%20Dairy%2C%20Babra%2C%20Gujarat%2C%20India&z=15&output=embed"
+            className="w-full h-full border-0 absolute inset-0"
+            allowFullScreen={true}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Shree Khodiyar Dairy Babra Location Map"
+          />
+        </div>
 
         {/* Get Directions Button Below */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
           <div className="text-center sm:text-left">
-            <h4 className="text-sm font-black text-[#3E2723]">Shree Khodiyar Dairy</h4>
+            <h4 className="text-sm font-black text-[#3E2723]">Khodiyar Dairy</h4>
             <p className="text-xs text-[#C5A059] font-bold">Babra, Gujarat, India (બાબરા, ગુજરાત)</p>
           </div>
           <a
