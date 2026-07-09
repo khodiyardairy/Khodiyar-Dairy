@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { categories, products, testimonials, galleryItems, getGeneralWhatsAppUrl, getWhatsAppUrl } from '../data/dairyData';
-import { ShoppingBag, ShoppingCart, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone, Instagram, Facebook } from 'lucide-react';
+import { ShoppingBag, ShoppingCart, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone, Instagram, Facebook, Scissors } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 import CategoryCard from './CategoryCard';
 import ProductCard from './ProductCard';
@@ -24,6 +24,70 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [activeFooterSection, setActiveFooterSection] = useState<'none' | 'links' | 'contact'>('none');
+
+  // Ribbon cutting animation states
+  const [showIntro, setShowIntro] = useState(false);
+  const [isCut, setIsCut] = useState(false);
+  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+
+  useEffect(() => {
+    const hasPlayed = sessionStorage.getItem('khodiyar-intro-played');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (hasPlayed) {
+      setShowIntro(false);
+      setIsAnimationComplete(true);
+      return;
+    }
+
+    if (prefersReducedMotion) {
+      sessionStorage.setItem('khodiyar-intro-played', 'true');
+      setShowIntro(false);
+      setIsAnimationComplete(true);
+      return;
+    }
+
+    setShowIntro(true);
+
+    const scissorsMoveTimer = setTimeout(() => {
+      setIsCut(true);
+    }, 1500);
+
+    const fadeOutTimer = setTimeout(() => {
+      sessionStorage.setItem('khodiyar-intro-played', 'true');
+    }, 2500);
+
+    const removeIntroTimer = setTimeout(() => {
+      setShowIntro(false);
+      setIsAnimationComplete(true);
+      
+      setTimeout(() => {
+        const target = document.getElementById('special-attractions-section');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    }, 3200);
+
+    return () => {
+      clearTimeout(scissorsMoveTimer);
+      clearTimeout(fadeOutTimer);
+      clearTimeout(removeIntroTimer);
+    };
+  }, []);
+
+  const handleSkipIntro = () => {
+    sessionStorage.setItem('khodiyar-intro-played', 'true');
+    setShowIntro(false);
+    setIsAnimationComplete(true);
+    
+    setTimeout(() => {
+      const target = document.getElementById('special-attractions-section');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+  };
 
   // Our Special Products: exactly 4 premium products
   const specialProductIds = [
@@ -139,6 +203,103 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
 
   return (
     <div className="space-y-16 pb-20 overflow-x-hidden">
+      
+      {/* Premium Ribbon-Cutting Reveal Animation Intro */}
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
+            className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center overflow-hidden"
+          >
+            {/* Skip Intro Button */}
+            <button
+              onClick={handleSkipIntro}
+              className="absolute bottom-6 right-6 px-4 py-2 text-[11px] font-black uppercase tracking-wider text-[#3E2723]/60 hover:text-[#3E2723] bg-[#FAF6EE] border border-[#F0EAD6] hover:bg-[#FFF8E1] hover:border-[#FF9933] rounded-full transition-all cursor-pointer z-50 shadow-xs"
+            >
+              Skip Intro
+            </button>
+
+            {/* Intro Content Container */}
+            <div className="relative w-full max-w-lg px-4 flex flex-col items-center justify-center">
+              
+              {/* Welcome Text above the ribbon */}
+              <motion.p
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="text-xs sm:text-sm font-black uppercase tracking-[0.25em] text-[#3E2723] mb-16 text-center select-none animate-pulse"
+              >
+                WELCOME TO SHREE KHODIYAR DAIRY
+              </motion.p>
+
+              {/* Left Ribbon Half */}
+              <motion.div
+                initial={{ x: 0 }}
+                animate={isCut ? { x: '-100%' } : { x: 0 }}
+                transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1] }}
+                className="absolute left-0 top-1/2 -translate-y-1/2 w-1/2 h-10 sm:h-12 bg-gradient-to-r from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center justify-end overflow-hidden"
+              >
+                <div className="w-full h-1 bg-[#D4AF37] opacity-30 my-auto" />
+              </motion.div>
+
+              {/* Right Ribbon Half */}
+              <motion.div
+                initial={{ x: 0 }}
+                animate={isCut ? { x: '100%' } : { x: 0 }}
+                transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1] }}
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-10 sm:h-12 bg-gradient-to-l from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center justify-start overflow-hidden"
+              >
+                <div className="w-full h-1 bg-[#D4AF37] opacity-30 my-auto" />
+              </motion.div>
+
+              {/* Gold Bow */}
+              <motion.div
+                initial={{ scale: 1, opacity: 1, rotate: 0 }}
+                animate={isCut ? { scale: 0, opacity: 0, rotate: 45 } : { scale: 1, opacity: 1, rotate: 0 }}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center select-none pointer-events-none"
+              >
+                <div className="relative flex items-center justify-center">
+                  {/* Left Loop */}
+                  <div className="w-10 h-10 border-4 border-[#D4AF37] rounded-full bg-gradient-to-tr from-[#AA7C11] via-[#FBF5B7] to-[#AA7C11] transform -rotate-45 translate-x-2 shadow-md" />
+                  {/* Right Loop */}
+                  <div className="w-10 h-10 border-4 border-[#D4AF37] rounded-full bg-gradient-to-tl from-[#AA7C11] via-[#FBF5B7] to-[#AA7C11] transform rotate-45 -translate-x-2 shadow-md" />
+                  {/* Center Knot */}
+                  <div className="absolute w-6 h-6 rounded-md bg-gradient-to-r from-[#AA7C11] via-[#FBF5B7] to-[#AA7C11] border-2 border-[#D4AF37] shadow-lg flex items-center justify-center z-10" />
+                  
+                  {/* Hanging tails */}
+                  <div className="absolute top-6 left-1 w-2.5 h-10 bg-[#D4AF37] transform -rotate-12 origin-top" />
+                  <div className="absolute top-6 right-1 w-2.5 h-10 bg-[#D4AF37] transform rotate-12 origin-top" />
+                </div>
+              </motion.div>
+
+              {/* Scissors Icon */}
+              <motion.div
+                initial={{ y: -100, opacity: 0, rotate: -20 }}
+                animate={
+                  isCut
+                    ? { y: 0, opacity: [1, 1, 0], rotate: [0, -10, 0], scale: [1, 1.1, 0.9] }
+                    : { y: -15, opacity: 1, rotate: [10, -5, 10] }
+                }
+                transition={{
+                  y: { duration: 0.8, ease: 'easeOut' },
+                  rotate: { duration: 1, repeat: isCut ? 0 : Infinity, repeatType: 'reverse', ease: 'easeInOut' },
+                  opacity: isCut ? { delay: 0.4, duration: 0.3 } : { duration: 0.3 },
+                }}
+                className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                style={{ marginTop: isCut ? '-15px' : '-45px' }}
+              >
+                <div className="p-3 bg-[#3E2723] rounded-full text-[#D4AF37] border-2 border-[#D4AF37] shadow-xl flex items-center justify-center">
+                  <Scissors className="w-6 h-6 rotate-90" />
+                </div>
+              </motion.div>
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden animate-hero-gradient pt-8 pb-12 sm:pb-16 px-4">
@@ -381,9 +542,12 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
       </section>
 
       {/* 4. TODAY'S SPECIAL ATTRACTIONS */}
-      <section className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <section id="special-attractions-section" className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 scroll-mt-20">
         <div className="flex items-end justify-between">
-          <div className="space-y-1.5 text-left">
+          <div className="space-y-1.5 text-left flex flex-col items-start">
+            <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#C5A059] bg-[#FFF8E1] px-2.5 py-1 rounded-full border border-[#F0EAD6]/80 inline-block mb-1 shadow-2xs select-none">
+              ★ SPECIAL GUEST ATTRACTIONS ★
+            </span>
             <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#FF9933]">
               Handpicked Delicacies
             </p>

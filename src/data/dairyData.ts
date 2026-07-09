@@ -674,6 +674,6 @@ export function getWhatsAppUrl(productName: string, price: number, unit: string)
 }
 
 export function getGeneralWhatsAppUrl(): string {
-  const baseText = `*Shree Khodiyar Dairy (Babra)*\n\nHello, please provide more information about your products and special order delivery.`;
+  const baseText = `*Khodiyar Dairy (Babra)*\n\nHello, please provide more information about your products and special order delivery.`;
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(baseText)}`;
 }

@@ -168,7 +168,7 @@ export default function ProductDetailView({
             /* Branded Cream Placeholder (No broken-image icon, NO emoji) */
             <div className="absolute inset-0 bg-gradient-to-br from-[#FFF8E1] to-[#FAF6EE] flex flex-col items-center justify-center p-6 text-center">
               <span className="text-sm font-black tracking-widest text-[#FF9933] uppercase">
-                SHREE KHODIYAR DAIRY
+                 KHODIYAR DAIRY
               </span>
               <span className="text-xs font-bold text-[#C5A059] uppercase tracking-widest mt-1">
                 BABRA • ESTD 1996

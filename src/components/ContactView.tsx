@@ -199,7 +199,7 @@ export default function ContactView() {
             allowFullScreen={true}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title="Shree Khodiyar Dairy Babra Location Map"
+            title=" Khodiyar Dairy Babra Location Map"
           />
         </div>
 
