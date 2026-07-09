@@ -1,17 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { categories, products } from '../data/dairyData';
 import CategoryCard from './CategoryCard';
 
-interface CategoriesViewProps {
-  setActiveTab: (tab: string) => void;
-  setSelectedCategory: (catId: string) => void;
-}
+export default function CategoriesView() {
+  const navigate = useNavigate();
 
-export default function CategoriesView({ setActiveTab, setSelectedCategory }: CategoriesViewProps) {
   const handleCategorySelect = (catId: string) => {
-    setSelectedCategory(catId);
-    setActiveTab('products');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate(`/products?category=${catId}`);
   };
 
   return (

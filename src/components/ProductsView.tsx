@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { products, categories } from '../data/dairyData';
 import { Product } from '../types';
@@ -6,18 +7,26 @@ import ProductCard from './ProductCard';
 import { Search, X } from 'lucide-react';
 
 interface ProductsViewProps {
-  selectedCategory: string;
-  setSelectedCategory: (catId: string) => void;
   onAddToCart?: (product: Product) => void;
   onViewDetail?: (product: Product) => void;
 }
 
 export default function ProductsView({
-  selectedCategory,
-  setSelectedCategory,
   onAddToCart,
   onViewDetail
 }: ProductsViewProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategory = searchParams.get('category') || 'all';
+
+  const setSelectedCategory = (catId: string) => {
+    if (catId === 'all') {
+      searchParams.delete('category');
+    } else {
+      searchParams.set('category', catId);
+    }
+    setSearchParams(searchParams);
+  };
+
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter products based on category and search query

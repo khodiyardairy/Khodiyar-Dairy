@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { categories, products, testimonials, galleryItems, getGeneralWhatsAppUrl, getWhatsAppUrl } from '../data/dairyData';
 import { ShoppingBag, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone } from 'lucide-react';
@@ -13,27 +14,44 @@ import AnimatedCounter from './AnimatedCounter';
 import { Product } from '../types';
 
 interface HomeViewProps {
-  setActiveTab: (tab: string) => void;
-  setSelectedCategory: (catId: string) => void;
   onAddToCart?: (product: Product) => void;
   onViewDetail?: (product: Product) => void;
 }
 
-export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCart, onViewDetail }: HomeViewProps) {
+export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
+  const navigate = useNavigate();
   const [shouldAutoplay, setShouldAutoplay] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
 
-  // Filter featured products (e.g., first 4 marked as featured)
-  const featuredProducts = products.filter(p => p.isFeatured).slice(0, 4);
+  // Our Special Products: exactly 4 premium products
+  const specialProductIds = [
+    'kesar-pista-shrikhand-1kg',
+    'kaju-katli-1kg',
+    'penda-thabdi-1kg',
+    'adadiya-1kg'
+  ];
+  const specialProducts = specialProductIds
+    .map(id => products.find(p => p.id === id))
+    .filter((p): p is Product => !!p);
+
+  // Today's Special Attractions: exactly 4 different seasonal or attractive products
+  const attractionsProductIds = [
+    'kd-special-shrikhand-1kg',
+    'sangam-katri-1kg',
+    'gulkand-katori-1kg',
+    'kaju-maisup-pak-1kg'
+  ];
+  const attractionsProducts = attractionsProductIds
+    .map(id => products.find(p => p.id === id))
+    .filter((p): p is Product => !!p);
+
   const bestSellerProduct = products.find(p => p.id === 'kesar-pista-shrikhand-1kg') || products[4]; // Kesar Pista Shrikhand as Best Seller
 
   const generalWhatsappUrl = getGeneralWhatsAppUrl();
 
   const handleCategorySelect = (catId: string) => {
-    setSelectedCategory(catId);
-    setActiveTab('products');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate(`/products?category=${catId}`);
   };
 
   const currentYear = new Date().getFullYear();
@@ -135,9 +153,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                 whileHover={{ y: -3, boxShadow: "0 8px 25px rgba(255, 153, 51, 0.25)" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
-                  setSelectedCategory('all');
-                  setActiveTab('products');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  navigate('/products');
                 }}
                 className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#58412a] hover:bg-[#E68A00] text-white font-black text-sm transition-all duration-200 cursor-pointer shadow-md shadow-[#4b2f13]/10"
               >
@@ -227,7 +243,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             Explore by Category
           </p>
           <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
-            Our Special Products
+            Our Product Categories
           </h2>
           <div className="h-1 w-12 bg-[#FF9933] mx-auto rounded-full" />
         </div>
@@ -246,6 +262,45 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
               />
             );
           })}
+        </div>
+      </section>
+
+      {/* 2.5 OUR SPECIAL PRODUCTS */}
+      <section 
+        className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6"
+      >
+        <div className="flex items-end justify-between">
+          <div className="space-y-1.5 text-left">
+            <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#FF9933]">
+              Premium & Highlighted
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#3E2723]">
+              Our Special Products
+            </h2>
+          </div>
+          
+          <motion.button
+            whileHover={{ x: 3 }}
+            onClick={() => {
+              navigate('/products');
+            }}
+            className="flex items-center gap-1 text-xs font-black text-[#FF9933] hover:text-[#E68A00] group transition-all"
+          >
+            See All Products 
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+          </motion.button>
+        </div>
+
+        {/* 2 columns mobile, 4 columns tablet and desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-6">
+          {specialProducts.map((product) => (
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+              onAddToCart={onAddToCart} 
+              onViewDetail={onViewDetail} 
+            />
+          ))}
         </div>
       </section>
 
@@ -301,7 +356,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
         </div>
       </section>
 
-      {/* 4. FEATURED PRODUCTS */}
+      {/* 4. TODAY'S SPECIAL ATTRACTIONS */}
       <section className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex items-end justify-between">
           <div className="space-y-1.5 text-left">
@@ -316,9 +371,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
           <motion.button
             whileHover={{ x: 3 }}
             onClick={() => {
-              setSelectedCategory('all');
-              setActiveTab('products');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              navigate('/products');
             }}
             className="flex items-center gap-1 text-xs font-black text-[#FF9933] hover:text-[#E68A00] group transition-all"
           >
@@ -327,10 +380,15 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
           </motion.button>
         </div>
 
-        {/* 2 columns mobile, 3 tablet, 4 desktop */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
-          {featuredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} onViewDetail={onViewDetail} onlyEnglish={true} />
+        {/* 2 columns mobile, 4 columns tablet and desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-6">
+          {attractionsProducts.map((product) => (
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+              onAddToCart={onAddToCart} 
+              onViewDetail={onViewDetail} 
+            />
           ))}
         </div>
       </section>
@@ -415,7 +473,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover rounded-xl"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/images/kesar-pista-shikhand.jpeg';
+                  (e.target as HTMLImageElement).src = '/images/thabdi2.png';
                 }}
               />
             </div>
@@ -454,8 +512,7 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
           <motion.button
             whileHover={{ x: 3 }}
             onClick={() => {
-              setActiveTab('gallery');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              navigate('/gallery');
             }}
             className="flex items-center gap-1 text-xs font-black text-[#FF9933] hover:text-[#E68A00] group transition-all"
           >
@@ -564,19 +621,19 @@ export default function HomeView({ setActiveTab, setSelectedCategory, onAddToCar
             </h4>
             <ul className="space-y-2 text-xs font-bold text-[#3E2723]/90">
               <li>
-                <button onClick={() => { setActiveTab('home'); window.scrollTo(0,0); }} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Home Screen</button>
+                <button onClick={() => navigate('/')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Home Screen</button>
               </li>
               <li>
-                <button onClick={() => { setSelectedCategory('all'); setActiveTab('products'); window.scrollTo(0,0); }} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Products Catalog</button>
+                <button onClick={() => navigate('/products')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Products Catalog</button>
               </li>
               <li>
-                <button onClick={() => { setActiveTab('categories'); window.scrollTo(0,0); }} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">All Categories</button>
+                <button onClick={() => navigate('/categories')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">All Categories</button>
               </li>
               <li>
-                <button onClick={() => { setActiveTab('gallery'); window.scrollTo(0,0); }} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Kitchen Gallery</button>
+                <button onClick={() => navigate('/gallery')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Kitchen Gallery</button>
               </li>
               <li>
-                <button onClick={() => { setActiveTab('about'); window.scrollTo(0,0); }} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Our 1996 Story</button>
+                <button onClick={() => navigate('/about')} className="hover:text-[#FF9933] transition-colors text-left cursor-pointer">Our 1996 Story</button>
               </li>
             </ul>
           </div>

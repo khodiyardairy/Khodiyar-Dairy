@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { CartItem } from '../types';
 import { ShoppingBag, ArrowLeft, Send } from 'lucide-react';
@@ -7,14 +8,13 @@ import { WHATSAPP_NUMBER } from '../data/dairyData';
 interface CheckoutViewProps {
   cart: CartItem[];
   onClearCart: () => void;
-  setActiveTab: (tab: string) => void;
 }
 
 export default function CheckoutView({
   cart,
-  onClearCart,
-  setActiveTab
+  onClearCart
 }: CheckoutViewProps) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -72,7 +72,7 @@ Please confirm my order and let me know the delivery time. Thank you!`;
     // Clear cart and go back home after checkout
     setTimeout(() => {
       onClearCart();
-      setActiveTab('home');
+      navigate('/');
       setIsSubmitting(false);
     }, 1500);
   };
@@ -97,7 +97,7 @@ Please confirm my order and let me know the delivery time. Thank you!`;
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => setActiveTab('products')}
+            onClick={() => navigate('/products')}
             className="w-full py-3.5 px-6 rounded-2xl bg-[#FF9933] hover:bg-[#E68A00] text-white text-sm font-black uppercase tracking-wider shadow-md shadow-[#FF9933]/15 transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <ShoppingBag className="w-4 h-4" />
@@ -112,7 +112,7 @@ Please confirm my order and let me know the delivery time. Thank you!`;
     <div className="py-6 px-4 max-w-4xl mx-auto pb-24">
       {/* Back to Cart Action */}
       <button
-        onClick={() => setActiveTab('cart')}
+        onClick={() => navigate('/cart')}
         className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#C5A059] hover:text-[#FF9933] mb-6 transition-colors focus:outline-none"
       >
         <ArrowLeft className="w-4 h-4" />

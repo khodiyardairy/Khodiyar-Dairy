@@ -1,35 +1,50 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Menu, X, Phone, ShoppingCart, Search } from 'lucide-react';
 import Logo from './Logo';
 
 interface NavbarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
   cartCount: number;
 }
 
-export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarProps) {
+export default function Navbar({ cartCount }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Determine active tab based on path
+  const getActiveTab = () => {
+    const path = location.pathname;
+    if (path === '/') return 'home';
+    if (path.startsWith('/product/')) return 'products';
+    if (path.startsWith('/products')) return 'products';
+    if (path.startsWith('/categories')) return 'categories';
+    if (path.startsWith('/gallery')) return 'gallery';
+    if (path.startsWith('/about')) return 'about';
+    if (path.startsWith('/contact')) return 'contact';
+    if (path.startsWith('/cart')) return 'cart';
+    return 'home';
+  };
+
+  const activeTab = getActiveTab();
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'products', label: 'Products' },
-    { id: 'categories', label: 'Categories' },
-    { id: 'gallery', label: 'Gallery' },
-    { id: 'about', label: 'About Us' },
-    { id: 'contact', label: 'Contact Us' }
+    { id: 'home', label: 'Home', path: '/' },
+    { id: 'products', label: 'Products', path: '/products' },
+    { id: 'categories', label: 'Categories', path: '/categories' },
+    { id: 'gallery', label: 'Gallery', path: '/gallery' },
+    { id: 'about', label: 'About Us', path: '/about' },
+    { id: 'contact', label: 'Contact Us', path: '/contact' }
   ];
 
-  const handleNavClick = (tabId: string) => {
-    setActiveTab(tabId);
+  const handleNavClick = (path: string) => {
+    navigate(path);
     setIsOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSearchClick = () => {
-    setActiveTab('products');
+    navigate('/products');
     setIsOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Lock body scroll when drawer is open
@@ -76,8 +91,8 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
               </button>
 
               {/* Brand Logo & Info (Clickable to Home) */}
-              <button
-                onClick={() => handleNavClick('home')}
+              <Link
+                to="/"
                 className="flex items-center gap-2 xs:gap-3 focus:outline-none text-left cursor-pointer"
               >
                 <Logo className="h-[44px] w-[44px] xs:h-[46px] xs:w-[46px] md:h-[56px] md:w-[56px] hover:scale-105 transition-transform duration-300" />
@@ -89,15 +104,15 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
                     બાબરાનું ગૌરવ • <span className="font-mono font-medium">Since 1996</span>
                   </p>
                 </div>
-              </button>
+              </Link>
             </div>
 
             {/* Center Section: Desktop Navigation Links */}
             <nav className="hidden md:flex items-center gap-1">
               {navItems.map((item) => (
-                <button
+                <Link
                   key={item.id}
-                  onClick={() => handleNavClick(item.id)}
+                  to={item.path}
                   className={`px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                     activeTab === item.id
                       ? 'bg-[#FF9933] text-white shadow-xs'
@@ -105,15 +120,15 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
                   }`}
                 >
                   {item.label}
-                </button>
+                </Link>
               ))}
             </nav>
 
             {/* Right Section: Action Icons & Helpline */}
             <div className="flex items-center gap-1.5 xs:gap-3">
               {/* Search Icon */}
-              <button
-                onClick={handleSearchClick}
+              <Link
+                to="/products"
                 className={`p-2.5 rounded-xl border transition-all duration-200 cursor-pointer flex items-center justify-center ${
                   activeTab === 'products'
                     ? 'bg-[#FF9933] text-white border-[#FF9933] shadow-xs'
@@ -122,11 +137,11 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
                 aria-label="Search Catalog"
               >
                 <Search className="w-5 h-5 text-current" />
-              </button>
+              </Link>
 
               {/* Shopping Bag / Cart Icon with Live Circular Badge */}
-              <button
-                onClick={() => handleNavClick('cart')}
+              <Link
+                to="/cart"
                 className={`relative p-2.5 rounded-xl border transition-all duration-200 cursor-pointer flex items-center justify-center ${
                   activeTab === 'cart'
                     ? 'bg-[#FF9933] text-white border-[#FF9933] shadow-xs'
@@ -140,7 +155,7 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
                     {cartCount}
                   </span>
                 )}
-              </button>
+              </Link>
 
               {/* Quick Contact Helpline (Desktop only) */}
               <div className="hidden lg:flex items-center shrink-0">
@@ -211,7 +226,7 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
               <Search className="w-4 h-4 text-[#3E2723]" />
             </button>
             <button
-              onClick={() => handleNavClick('cart')}
+              onClick={() => handleNavClick('/cart')}
               className="relative p-2 rounded-xl text-[#3E2723] hover:bg-[#F5EFE6] active:scale-95 transition-all focus:outline-none cursor-pointer flex items-center justify-center border border-[#F0EAD6]/50 bg-[#FDFBF7]"
               aria-label="View Cart"
             >
@@ -232,7 +247,7 @@ export default function Navbar({ activeTab, setActiveTab, cartCount }: NavbarPro
             return (
               <button
                 key={item.id}
-                onClick={() => handleNavClick(item.id)}
+                onClick={() => handleNavClick(item.path)}
                 className={`w-full text-left px-6 py-5 flex items-center justify-between border-b border-[#F0EAD6]/30 transition-colors cursor-pointer ${
                   isActive
                     ? 'bg-[#FAF6EE] text-[#FF9933] font-bold'

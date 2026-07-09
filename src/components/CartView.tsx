@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { CartItem } from '../types';
 import { Minus, Plus, Trash2, ArrowRight, ShoppingBag } from 'lucide-react';
@@ -10,16 +11,15 @@ interface CartViewProps {
   onUpdateQuantity: (productId: string, quantity: number) => void;
   onRemoveFromCart: (productId: string) => void;
   onClearCart: () => void;
-  setActiveTab: (tab: string) => void;
 }
 
 export default function CartView({
   cart,
   onUpdateQuantity,
   onRemoveFromCart,
-  onClearCart,
-  setActiveTab
+  onClearCart
 }: CartViewProps) {
+  const navigate = useNavigate();
   const subtotal = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -51,7 +51,7 @@ export default function CartView({
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => setActiveTab('products')}
+            onClick={() => navigate('/products')}
             className="w-full py-3.5 px-6 rounded-2xl bg-[#FF9933] hover:bg-[#E68A00] text-white text-sm font-black uppercase tracking-wider shadow-md shadow-[#FF9933]/15 transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <ShoppingBag className="w-4 h-4" />
@@ -187,7 +187,7 @@ export default function CartView({
         <motion.button
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
-          onClick={() => setActiveTab('checkout')}
+          onClick={() => navigate('/checkout')}
           className="w-full py-4 px-6 rounded-2xl bg-[#FF9933] hover:bg-[#E68A00] text-white text-sm font-black uppercase tracking-wider shadow-md shadow-[#FF9933]/15 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           Proceed to Order

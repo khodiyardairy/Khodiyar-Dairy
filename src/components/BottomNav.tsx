@@ -1,19 +1,30 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Home, ShoppingBag, Phone, ShoppingCart } from 'lucide-react';
 import { getGeneralWhatsAppUrl, STORE_PHONE } from '../data/dairyData';
 import WhatsAppIcon from './WhatsAppIcon';
 
 interface BottomNavProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
   cartCount: number;
 }
 
-export default function BottomNav({ activeTab, setActiveTab, cartCount }: BottomNavProps) {
-  const handleNavClick = (tabId: string) => {
-    setActiveTab(tabId);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+export default function BottomNav({ cartCount }: BottomNavProps) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const getActiveTab = () => {
+    const path = location.pathname;
+    if (path === '/') return 'home';
+    if (path.startsWith('/products') || path.startsWith('/product/')) return 'products';
+    if (path.startsWith('/cart')) return 'cart';
+    return '';
+  };
+
+  const activeTab = getActiveTab();
+
+  const handleNavClick = (path: string) => {
+    navigate(path);
   };
 
   const whatsappUrl = getGeneralWhatsAppUrl();
@@ -26,7 +37,7 @@ export default function BottomNav({ activeTab, setActiveTab, cartCount }: Bottom
         {/* Home Button */}
         <motion.button
           whileTap={{ scale: 0.9 }}
-          onClick={() => handleNavClick('home')}
+          onClick={() => handleNavClick('/')}
           className={`flex flex-col items-center justify-center w-12 py-1 transition-colors cursor-pointer ${
             activeTab === 'home' ? 'text-[#FF9933]' : 'text-[#C5A059] hover:text-[#3E2723]'
           }`}
@@ -38,7 +49,7 @@ export default function BottomNav({ activeTab, setActiveTab, cartCount }: Bottom
         {/* Shop Button */}
         <motion.button
           whileTap={{ scale: 0.9 }}
-          onClick={() => handleNavClick('products')}
+          onClick={() => handleNavClick('/products')}
           className={`flex flex-col items-center justify-center w-12 py-1 transition-colors cursor-pointer ${
             activeTab === 'products' ? 'text-[#FF9933]' : 'text-[#C5A059] hover:text-[#3E2723]'
           }`}
@@ -82,7 +93,7 @@ export default function BottomNav({ activeTab, setActiveTab, cartCount }: Bottom
         {/* Cart Button */}
         <motion.button
           whileTap={{ scale: 0.9 }}
-          onClick={() => handleNavClick('cart')}
+          onClick={() => handleNavClick('/cart')}
           className={`flex flex-col items-center justify-center w-12 py-1 transition-colors cursor-pointer relative ${
             activeTab === 'cart' ? 'text-[#FF9933]' : 'text-[#C5A059] hover:text-[#3E2723]'
           }`}

@@ -1,13 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Award, ShieldAlert, Heart, Calendar, Users, ShoppingBag } from 'lucide-react';
 import ProductIllustration from './ProductIllustration';
 import Logo from './Logo';
 
-interface AboutViewProps {
-  setActiveTab: (tab: string) => void;
-}
-
-export default function AboutView({ setActiveTab }: AboutViewProps) {
+export default function AboutView() {
+  const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
   const yearsActive = currentYear - 1996;
 
@@ -72,10 +70,6 @@ export default function AboutView({ setActiveTab }: AboutViewProps) {
               <p className="text-lg sm:text-xl font-black text-[#FF9933] font-mono">100%</p>
               <p className="text-[10px] text-[#C5A059]">Natural Farming</p>
             </div>
-            <div>
-              <p className="text-lg sm:text-xl font-black text-[#FF9933] font-mono">15+</p>
-              <p className="text-[10px] text-[#C5A059]">Expert Halwais</p>
-            </div>
           </div>
 
         </div>
@@ -136,8 +130,7 @@ export default function AboutView({ setActiveTab }: AboutViewProps) {
         </p>
         <button
           onClick={() => {
-            setActiveTab('products');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            navigate('/products');
           }}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FF9933] text-white text-xs font-black hover:bg-[#E68A00] transition-all shadow-md shadow-[#FF9933]/10"
         >

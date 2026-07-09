@@ -263,7 +263,7 @@ export const products: Product[] = [
   {
     id: 'white-elaichi-shrikhand-1kg',
     name: 'White Elaichi Shrikhand',
-    gujaratiName: 'વ્હાઇટ એલાઇચી શ્રીખંડ',
+    gujaratiName: 'વ્હાઇટ એલચી શ્રીખંડ',
     price: 240,
     category: 'shrikhand_matho',
     unit: '1 Kg',
@@ -317,7 +317,7 @@ export const products: Product[] = [
   {
     id: 'gajar-halvo-1kg',
     name: 'Gajar Halvo',
-    gujaratiName: 'ગાજર હલ્વો',
+    gujaratiName: 'ગાજર હલવો',
     price: 440,
     category: 'mithai',
     unit: '1 Kg',
@@ -409,7 +409,7 @@ export const products: Product[] = [
   {
     id: 'dudhi-halvo-1kg',
     name: 'Dudhi Halvo',
-    gujaratiName: 'દૂધી હલ્વો',
+    gujaratiName: 'દુધી હલવો',
     price: 440,
     category: 'mithai',
     unit: '1 Kg',
@@ -439,7 +439,7 @@ export const products: Product[] = [
   {
     id: 'khajur-pak-1kg',
     name: 'Khajur Pak',
-    gujaratiName: 'ખજૂર પાક',
+    gujaratiName: 'ખજુર પાક',
     price: 340,
     category: 'mithai',
     unit: '1 Kg',
@@ -519,6 +519,88 @@ export const products: Product[] = [
     unit: '1 Kg',
     description: 'Soft melt-in-mouth pedha made from the finest slow-cooked milk solids and sugar.',
     illustrationType: 'pedha'
+  },
+  {
+    id: 'kaju-maisup-pak-1kg',
+    name: 'Kaju Maisup Pak',
+    gujaratiName: 'કાજુ મૈસૂર પાક',
+    price: 900,
+    category: 'mithai',
+    unit: '1 Kg',
+    description: "Khodiyar Dairy's Kaju Maisup Pak is a premium upgrade on the classic Mysore Pak — rich, golden and melt-in-mouth squares made with generous amounts of pure ghee, besan and loaded with premium whole cashew nuts. Each piece has a beautiful porous honeycomb interior that simply dissolves on the tongue.",
+    illustrationType: 'sweet'
+  },
+  {
+    id: 'kalakand-premium-1kg',
+    name: 'Kalakand',
+    gujaratiName: 'કલાકંદ',
+    price: 850,
+    category: 'mithai',
+    unit: '1 Kg',
+    description: "Khodiyar Dairy's Kalakand | કલાકંદ is a premium Indian milk cake — a beautiful double-layer sweet with a golden grainy base and a pure white creamy top layer made from slow-cooked fresh milk and paneer. Soft, moist and melt-in-mouth, decorated with silver varq, saffron strands and chopped pistachios. Rich in milk solids and delicately sweet.",
+    illustrationType: 'sweet'
+  },
+  {
+    id: 'gundar-pak-1kg',
+    name: 'Gundar Pak',
+    gujaratiName: 'ગુંદર પાક',
+    price: 680,
+    category: 'mithai',
+    unit: '1 Kg',
+    description: "Khodiyar Dairy's Gundar Pak | ગુંદર પાક is a traditional Gujarati winter specialty — rich, dense and deeply nourishing sweet made from edible gum (gundar/gond), pure ghee, wheat flour and jaggery, generously loaded with mixed dry fruits including almonds, cashews, pistachios and more. A powerhouse of warmth, energy and nutrition.",
+    illustrationType: 'sweet',
+    badge: 'Winter Special'
+  },
+  {
+    id: 'rava-mava-dryfruit-modak-1kg',
+    name: 'Rava Mava Dryfruit Modak',
+    gujaratiName: 'રવા માવા ડ્રાઇફ્રૂટ મોદક',
+    price: 300,
+    category: 'mithai',
+    unit: '1 Kg',
+    description: "Khodiyar Dairy's Rava Mava Dryfruit Modak | રવા માવા ડ્રાઇફ્રૂટ મોદક is a premium Gujarati modak — beautifully shaped golden yellow modak made from fine semolina (rava) and rich khoya (mava), generously topped with mixed dry fruits including cashews, almonds, pistachios and raisins. Soft, fragrant and deeply satisfying — a perfect festive offering.",
+    illustrationType: 'sweet'
+  },
+  {
+    id: 'kd-special-shrikhand-1kg',
+    name: 'K&D Special Shrikhand',
+    gujaratiName: 'K&D સ્પેશ્યલ શ્રીખંડ',
+    price: 400,
+    category: 'shrikhand_matho',
+    unit: '1 Kg',
+    description: "Khodiyar Dairy signature shrikhand — thick, creamy premium saffron shrikhand loaded with mixed dry fruits, garnished with saffron strands, pistachio slivers and rose petals.",
+    illustrationType: 'shrikhand',
+    badge: 'Signature'
+  },
+  {
+    id: 'bonbon-laddu-1kg',
+    name: 'Bonbon Laddu',
+    gujaratiName: 'બોનબોન લાડુ',
+    price: 540,
+    category: 'mithai',
+    unit: '1 Kg',
+    description: "Khodiyar Dairy's Bonbon Laddu | બોનબોન લાડુ is a premium festive laddu — beautiful golden round laddus made from rich khoya and besan, decorated with silver varq and garnished with pistachio slivers. Neatly packed in our signature KD box, making it the perfect festive gift.",
+    illustrationType: 'sweet'
+  },
+  {
+    id: 'gulkand-katori-1kg',
+    name: 'Gulkand Katori',
+    gujaratiName: 'ગુલકંદ કટોરી',
+    price: 480,
+    category: 'mithai',
+    unit: '1 Kg',
+    description: "Unique elegant edible katori bowls filled with rich fragrant rose gulkand, topped with rose petals, pistachio slivers and silver varq.",
+    illustrationType: 'sweet'
+  },
+  {
+    id: 'sangam-katri-1kg',
+    name: 'Sangam Katri',
+    gujaratiName: 'સંગમ કતરી',
+    price: 440,
+    category: 'mithai',
+    unit: '1 Kg',
+    description: "Khodiyar Dairy's Sangam Katri | સંગમ કતરી is a spectacular premium multi-layer barfi — a beautiful union (sangam) of three distinct flavored layers: pure white milk layer, golden saffron (kesar) layer and vibrant green pistachio (pista) layer. Cut into elegant diamond pieces and decorated with silver varq and pistachio slivers. Visually stunning and richly flavored.",
+    illustrationType: 'sweet'
   }
 ];
 
@@ -569,7 +651,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'production',
     description: 'Hygienic straining of full-fat yogurt in traditional muslin cloths to prepare fresh base for matho.',
     illustrationType: 'shrikhand',
-    imageUrl: '/images/k-d-special-matho-top-down.jpg'
+    imageUrl: '/images/k-d-special-matho-top-down_1.jpg'
   },
   {
     id: 'g3',

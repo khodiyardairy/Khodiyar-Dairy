@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import BottomNav from './components/BottomNav';
 import HomeView from './components/HomeView';
@@ -11,12 +12,59 @@ import CartView from './components/CartView';
 import CheckoutView from './components/CheckoutView';
 import ProductDetailView from './components/ProductDetailView';
 import { Product, CartItem } from './types';
+import { products } from './data/dairyData';
 import { motion, AnimatePresence } from 'motion/react';
 
-export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('home');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+// Scroll to top on route change
+function ScrollToTop() {
+  const { pathname, search } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname, search]);
+
+  return null;
+}
+
+// Product detail lookup and route wrapper
+interface ProductDetailRouteWrapperProps {
+  onAddToCart: (product: Product, quantity?: number) => void;
+  cart: CartItem[];
+  onUpdateQuantity: (productId: string, quantity: number) => void;
+}
+
+function ProductDetailRouteWrapper({
+  onAddToCart,
+  cart,
+  onUpdateQuantity
+}: ProductDetailRouteWrapperProps) {
+  const { productId } = useParams<{ productId: string }>();
+  const navigate = useNavigate();
+
+  const product = products.find((p) => p.id === productId);
+
+  useEffect(() => {
+    if (!product && productId) {
+      navigate('/products', { replace: true });
+    }
+  }, [product, productId, navigate]);
+
+  if (!product) return null;
+
+  return (
+    <ProductDetailView
+      product={product}
+      onBack={() => navigate(-1)}
+      onAddToCart={onAddToCart}
+      cart={cart}
+      onUpdateQuantity={onUpdateQuantity}
+    />
+  );
+}
+
+function AppContent() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // Load cart state from localStorage
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -32,11 +80,6 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('khodiyar_cart', JSON.stringify(cart));
   }, [cart]);
-
-  const handleTabChange = (tabId: string) => {
-    setSelectedProduct(null);
-    setActiveTab(tabId);
-  };
 
   // Cart helper functions
   const handleAddToCart = (product: Product, quantity: number = 1) => {
@@ -75,107 +118,105 @@ export default function App() {
 
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-  // Render current tab content with smooth transitions
-  const renderContent = () => {
-    if (selectedProduct) {
-      return (
-        <ProductDetailView
-          product={selectedProduct}
-          onBack={() => setSelectedProduct(null)}
-          onAddToCart={handleAddToCart}
-          cart={cart}
-          onUpdateQuantity={handleUpdateQuantity}
-        />
-      );
-    }
-
-    switch (activeTab) {
-      case 'home':
-        return (
-          <HomeView
-            setActiveTab={handleTabChange}
-            setSelectedCategory={setSelectedCategory}
-            onAddToCart={(prod) => handleAddToCart(prod, 1)}
-            onViewDetail={setSelectedProduct}
-          />
-        );
-      case 'products':
-        return (
-          <ProductsView
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            onAddToCart={(prod) => handleAddToCart(prod, 1)}
-            onViewDetail={setSelectedProduct}
-          />
-        );
-      case 'categories':
-        return (
-          <CategoriesView
-            setActiveTab={handleTabChange}
-            setSelectedCategory={setSelectedCategory}
-          />
-        );
-      case 'gallery':
-        return <GalleryView />;
-      case 'about':
-        return <AboutView setActiveTab={handleTabChange} />;
-      case 'contact':
-        return <ContactView />;
-      case 'cart':
-        return (
-          <CartView
-            cart={cart}
-            onUpdateQuantity={handleUpdateQuantity}
-            onRemoveFromCart={handleRemoveFromCart}
-            onClearCart={handleClearCart}
-            setActiveTab={handleTabChange}
-          />
-        );
-      case 'checkout':
-        return (
-          <CheckoutView
-            cart={cart}
-            onClearCart={handleClearCart}
-            setActiveTab={handleTabChange}
-          />
-        );
-      default:
-        return (
-          <HomeView
-            setActiveTab={handleTabChange}
-            setSelectedCategory={setSelectedCategory}
-            onAddToCart={(prod) => handleAddToCart(prod, 1)}
-            onViewDetail={setSelectedProduct}
-          />
-        );
-    }
+  const handleViewDetail = (product: Product) => {
+    navigate(`/product/${product.id}`);
   };
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#3E2723] flex flex-col selection:bg-[#FF9933]/10 selection:text-[#FF9933]">
-      
+      <ScrollToTop />
+
       {/* Premium Top Navigation Header */}
-      <Navbar activeTab={activeTab} setActiveTab={handleTabChange} cartCount={totalCartCount} />
+      <Navbar cartCount={totalCartCount} />
 
       {/* Main Content Area with elegant fade-up animations on page transit */}
       <main className="flex-grow">
         <AnimatePresence mode="wait">
           <motion.div
-            key={selectedProduct ? `detail-${selectedProduct.id}` : activeTab}
+            key={location.pathname}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}
             className="w-full"
           >
-            {renderContent()}
+            <Routes location={location}>
+              <Route
+                path="/"
+                element={
+                  <HomeView
+                    onAddToCart={(prod) => handleAddToCart(prod, 1)}
+                    onViewDetail={handleViewDetail}
+                  />
+                }
+              />
+              <Route
+                path="/products"
+                element={
+                  <ProductsView
+                    onAddToCart={(prod) => handleAddToCart(prod, 1)}
+                    onViewDetail={handleViewDetail}
+                  />
+                }
+              />
+              <Route path="/categories" element={<CategoriesView />} />
+              <Route path="/gallery" element={<GalleryView />} />
+              <Route path="/about" element={<AboutView />} />
+              <Route path="/contact" element={<ContactView />} />
+              <Route
+                path="/cart"
+                element={
+                  <CartView
+                    cart={cart}
+                    onUpdateQuantity={handleUpdateQuantity}
+                    onRemoveFromCart={handleRemoveFromCart}
+                    onClearCart={handleClearCart}
+                  />
+                }
+              />
+              <Route
+                path="/checkout"
+                element={
+                  <CheckoutView
+                    cart={cart}
+                    onClearCart={handleClearCart}
+                  />
+                }
+              />
+              <Route
+                path="/product/:productId"
+                element={
+                  <ProductDetailRouteWrapper
+                    onAddToCart={handleAddToCart}
+                    cart={cart}
+                    onUpdateQuantity={handleUpdateQuantity}
+                  />
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <HomeView
+                    onAddToCart={(prod) => handleAddToCart(prod, 1)}
+                    onViewDetail={handleViewDetail}
+                  />
+                }
+              />
+            </Routes>
           </motion.div>
         </AnimatePresence>
       </main>
 
       {/* Sticky Mobile Bottom Navigation Panel */}
-      <BottomNav activeTab={activeTab} setActiveTab={handleTabChange} cartCount={totalCartCount} />
-
+      <BottomNav cartCount={totalCartCount} />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }
