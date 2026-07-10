@@ -16,7 +16,7 @@ export const categories: Category[] = [
     bgColor: 'bg-[#FFF8E1]',
     textColor: 'text-[#FF9933]',
     illustrationType: 'sweet',
-    imageUrl: '/images/kaju-katri.png'
+    imageUrl: '/images/kaju-katri.jpeg'
   },
   {
     id: 'liquid',
@@ -644,7 +644,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'sweets',
     description: 'Slow-cooking our fresh milk solids over direct heat to get the signature granular texture.',
     illustrationType: 'sweet',
-    imageUrl: '/images/mohanthal.jpg'
+    imageUrl: '/images/allmithai.jpeg'
   },
   {
     id: 'g2',
@@ -653,7 +653,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'production',
     description: 'Hygienic straining of full-fat yogurt in traditional muslin cloths to prepare fresh base for matho.',
     illustrationType: 'shrikhand',
-    imageUrl: '/images/k-d-special-matho-top-down_1.jpg'
+    imageUrl: '/images/Live-Straining-Process.png'
   },
   {
     id: 'g3',
@@ -662,7 +662,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'store',
     description: 'Our sanitized showcase where batches of fresh sweets are packed daily under strict hygiene protocols.',
     illustrationType: 'sweet',
-    imageUrl: '/images/kaju-katri2.jpg'
+    imageUrl: '/images/Live-Straining-Process'
   }
 ];
 

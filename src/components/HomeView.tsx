@@ -128,7 +128,7 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
       bgColor: 'bg-[#FAF6EE]',
       textColor: 'text-[#3E2723]',
       illustrationType: 'sweet' as const,
-      imageUrl: '/images/hero-poster.jpeg'
+      imageUrl: '/images/allmithai.jpeg'
     }
   ];
 

@@ -8,7 +8,7 @@ import { Product } from '../types';
 // Explicit mapping of product ID to real jpeg image files in public/images/
 const PRODUCT_IMAGE_MAP: Record<string, string[]> = {
   'kaju-maisup-pak-1kg': ['kaju-maisup.jpeg', 'kaju-maisup2.jpeg'],
-  'kalakand-Barfi-1kg': ['kalalkandbarfi2.jpeg', 'kalkandbarfi.jpeg'],
+  'kalakand-Barfi-1kg': ['kalkandbarfi.jpeg', 'kalkandbarfi.jpeg'],
   'gundar-pak-1kg': ['gundarpak.jpeg', 'gundarpak2.jpeg'],
   'rava-mava-dryfruit-modak-1kg': ['ravamavadryfruitsmodak2.jpeg', 'ravamavadryfruitsmodak.jpeg'],
   'kd-special-shrikhand-1kg': ['shikhandbox.jpeg', 'shikhandbox2.jpeg'],
