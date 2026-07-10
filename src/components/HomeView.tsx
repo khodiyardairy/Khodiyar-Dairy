@@ -55,19 +55,62 @@ interface HomeViewProps {
 
 export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
   const navigate = useNavigate();
-  const [shouldAutoplay, setShouldAutoplay] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(() => {
+    const saved = localStorage.getItem('khodiyar-video-muted');
+    return saved !== null ? saved === 'true' : true;
+  });
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Sync muted state
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
+
+  // Intersection Observer for smart play/pause based on viewport visibility
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.target === video) {
+            const ratio = entry.intersectionRatio;
+            if (ratio >= 0.60) {
+              // Start playing only when at least 60% of the video is visible
+              video.play().catch(err => {
+                console.log("Autoplay on scroll prevented:", err);
+              });
+            } else if (ratio < 0.30) {
+              // Pause automatically when less than 30% of the video is visible
+              video.pause();
+            }
+          }
+        }
+      },
+      {
+        threshold: [0.30, 0.60]
+      }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.unobserve(video);
+      observer.disconnect();
+    };
+  }, []);
 
   const toggleMute = () => {
     if (videoRef.current) {
-      const newMuteState = !videoRef.current.muted;
+      const newMuteState = !isMuted;
       videoRef.current.muted = newMuteState;
       setIsMuted(newMuteState);
-    } else {
-      setIsMuted(prev => !prev);
+      localStorage.setItem('khodiyar-video-muted', String(newMuteState));
     }
   };
 
@@ -191,28 +234,7 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
   const currentYear = new Date().getFullYear();
   const yearsActive = currentYear - 1996;
 
-  // Determine if video should autoplay based on connections, reduced motion, and data saver
-  useEffect(() => {
-    try {
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      
-      const conn = (navigator as any).connection || 
-                   (navigator as any).mozConnection || 
-                   (navigator as any).webkitConnection;
-      
-      const isSlowOrDataSaver = conn ? (
-        conn.saveData || 
-        ['slow-2g', '2g', '3g'].includes(conn.effectiveType)
-      ) : false;
 
-      if (!prefersReducedMotion && !isSlowOrDataSaver) {
-        setShouldAutoplay(true);
-      }
-    } catch (e) {
-      // Graceful fallback if matchMedia or connection API is not supported
-      setShouldAutoplay(false);
-    }
-  }, []);
 
   // Set up scroll reveal effect using native IntersectionObserver
   useEffect(() => {
@@ -630,9 +652,14 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
       </section>
 
       {/* 4.5 PREMIUM DAIRY SHOWCASE VIDEO SECTION */}
-      <section className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative w-full h-[240px] xs:h-[280px] sm:h-[380px] md:h-[480px] lg:h-[520px] rounded-3xl overflow-hidden shadow-md bg-[#FAF6EE] border border-[#F0EAD6]/60">
-          
+      <section className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 sm:my-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative w-full aspect-video max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-xl bg-black border border-[#F0EAD6]/60 group"
+        >
           {/* Fallback & Video Container */}
           <div className="absolute inset-0 w-full h-full select-none overflow-hidden rounded-3xl">
             {/* Poster Image Fallback */}
@@ -656,43 +683,33 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
                 loop
                 playsInline
                 preload="metadata"
-                autoPlay={shouldAutoplay}
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
                   videoLoaded ? 'opacity-100' : 'opacity-0'
-                } ${shouldAutoplay ? 'animate-gentle-zoom' : ''}`}
+                }`}
                 onLoadedData={() => setVideoLoaded(true)}
                 onError={() => setVideoError(true)}
               />
             )}
           </div>
 
-          {/* Volume Control Button overlay - placed exactly at bottom right to align with/cover Gemini logo area */}
+          {/* Custom Premium Minimalist Volume Control Button */}
           {videoLoaded && !videoError && (
             <motion.button
               id="video-volume-toggle"
               onClick={toggleMute}
-              className="absolute bottom-5 right-5 z-20 flex items-center gap-2 px-4 py-2.5 bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/25 text-white rounded-full shadow-lg transition-all cursor-pointer select-none"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
+              className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-black/50 hover:bg-black/75 backdrop-blur-md border border-white/20 text-white rounded-full shadow-lg transition-all cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-[#FF9933]"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label={isMuted ? "Unmute Video" : "Mute Video"}
             >
               {isMuted ? (
-                <>
-                  <VolumeX className="w-4 h-4 text-white/90" />
-                  <span className="text-[10px] font-bold tracking-wider uppercase text-white/90 hidden sm:inline">Play Audio</span>
-                </>
+                <VolumeX className="w-5 h-5 sm:w-6 sm:h-6 text-white/90" />
               ) : (
-                <>
-                  <Volume2 className="w-4 h-4 text-[#FF9933] animate-bounce" />
-                  <span className="text-[10px] font-black tracking-wider uppercase text-[#FF9933] hidden sm:inline">Mute Audio</span>
-                </>
+                <Volume2 className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF9933] drop-shadow-[0_0_8px_rgba(255,153,51,0.5)]" />
               )}
             </motion.button>
           )}
-
-        </div>
+        </motion.div>
       </section>
 
       {/* 5. BEST SELLER BANNER */}

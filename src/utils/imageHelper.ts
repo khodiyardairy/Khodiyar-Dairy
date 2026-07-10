@@ -15,7 +15,7 @@ const PRODUCT_IMAGE_MAP: Record<string, string[]> = {
   'kalakand-Barfi-1kg': ['kalkandbarfi.jpeg', 'kalkandbarfi.jpeg'],
   'gundar-pak-1kg': ['gundarpak.jpeg', 'gundarpak2.jpeg'],
   'rava-mava-dryfruit-modak-1kg': ['ravamavadryfruitsmodak2.jpeg', 'ravamavadryfruitsmodak.jpeg'],
-  'kd-special-shrikhand-1kg': ['shikhandbox.jpeg', 'shikhandbox2.jpeg'],
+  'kd-special-shrikhand-1kg': ['shikhand box2.png', 'shikhandbox2.jpeg'],
   'bonbon-laddu-1kg': ['bonbonladdu.jpeg', 'bonbonladdu1.jpeg'],
   'gulkand-katori-1kg': ['gulkandkatori.jpeg', 'gulkandkatori1.jpeg'],
   'sangam-katri-1kg': ['sangamkatri.jpeg', 'sangamkatri2.jpeg'],
