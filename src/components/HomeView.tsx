@@ -138,7 +138,7 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
 
   // Today's Special Attractions: exactly 4 different seasonal or attractive products
   const attractionsProductIds = [
-    'kd-special-shrikhand-1kg',
+    'cham-cham-1kg',
     'sangam-katri-1kg',
     'gulkand-katori-1kg',
     'kaju-maisup-pak-1kg'
