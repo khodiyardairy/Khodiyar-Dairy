@@ -45,34 +45,94 @@ export default function AboutView() {
           </span>
           
           <h3 className="text-xl sm:text-2xl font-black text-[#3E2723] leading-tight">
-            Preserving Gujarati Taste & Dairy Purity for {yearsActive} Years
+            A Legacy of Purity, Crafted Since 1996
           </h3>
 
-          <div className="text-xs sm:text-sm text-[#3E2723]/90 space-y-4 leading-relaxed font-medium">
+          <div className="text-xs sm:text-sm text-[#3E2723]/90 space-y-5 leading-relaxed font-medium">
+            <div className="border-l-4 border-[#FF9933] pl-4 py-1 italic text-[#3E2723]/95 bg-[#FFF8E1]/40 rounded-r-lg font-semibold text-sm">
+              "Some stories are built with investment. Ours was built with faith, hard work, and two brothers who dared to dream."
+            </div>
             <p>
-              In <span className="text-[#3E2723] font-extrabold">1996</span>,Khodiyar Dairy opened its very first small milk-collection outlet in the historic town of <span className="text-[#3E2723] font-extrabold">Babra, Amreli district</span>. Founded with a single mission: to provide the local families with 100% untampered, high-fat cow and buffalo milk directly from healthy village farms.
+              In <span className="text-[#3E2723] font-extrabold">1996</span>, two young brothers laid the foundation of <span className="text-[#FF9933] font-extrabold">Khodiyar Dairy & Products</span> in Babra, Amreli district, with a simple yet powerful vision—to create authentic Indian sweets and dairy products that families could trust without hesitation. Every recipe was prepared with care, every ingredient was chosen with honesty, and every customer was welcomed like family.
             </p>
             <p>
-              As families tasted the natural density and sweetness of our milk, word spread. We expanded our kitchen to create traditional milk solids (<span className="text-[#FF9933] font-extrabold">Mawa / Khoya</span>), leading to our legendary <span className="text-[#FF9933] font-extrabold">Special Khodiyar Milk Pedha</span>. Today, we stand proud as a hallmark of premium Gujarati dairy products.
+              The journey was far from easy. There were moments of uncertainty, financial challenges, changing markets, and countless obstacles. Yet with unwavering determination, integrity, and the blessings of <span className="text-[#FF9933] font-extrabold">Maa Khodiyar</span>, they transformed every challenge into an opportunity to grow.
             </p>
             <p>
-              Under strict family surveillance, we slow-cook our recipes without chemical preservatives or starch fillers. For us, dairy isn't just a business—it is a sacred service of health and festival joy to our loving community.
+              Over the years, what began as a modest dream has become a name trusted by generations. Our commitment has never changed: to preserve the authentic taste of tradition while maintaining uncompromising standards of purity, freshness, and quality.
             </p>
+            <p>
+              Today, as we proudly celebrate <span className="text-[#FF9933] font-extrabold">30 years of excellence</span>, Khodiyar Dairy & Products is more than a business—it is a family legacy built on resilience, passion, and the trust of thousands of customers who have made us a part of their happiest moments and cherished celebrations.
+            </p>
+            <p>
+              Every sweet we craft carries the richness of tradition. Every dairy product reflects our dedication to purity. Every smile from our customers reminds us why this journey began.
+            </p>
+            <div className="relative overflow-hidden bg-gradient-to-br from-[#FFFBF0] to-[#FDF6E2] border border-[#E5C158]/35 rounded-2xl p-5 shadow-2xs mt-6">
+              {/* Elegant oversized quotation mark in background */}
+              <div className="absolute -right-3 -bottom-5 text-[#FF9933]/10 font-serif text-[120px] select-none pointer-events-none leading-none">
+                ”
+              </div>
+              <div className="relative space-y-2">
+                <span className="text-[10px] font-black uppercase tracking-widest text-[#C5A059]">
+                  Our Eternal Promise
+                </span>
+                <p className="text-[#3E2723] text-xs sm:text-sm font-medium leading-relaxed italic pr-4">
+                  "As we look toward the future, our promise remains the same as it was on the very first day:
+                  <span className="block mt-2 text-[#FF9933] font-black not-italic text-sm sm:text-base tracking-wide leading-tight">
+                    To serve every family with authentic taste, uncompromising quality, and heartfelt hospitality."
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="relative overflow-hidden rounded-2xl bg-[#3E2723] text-[#FAF6EE] p-5 text-center border border-[#C5A059]/40 shadow-sm mt-4">
+              <div className="absolute -left-16 -top-16 w-32 h-32 bg-[#FF9933]/10 rounded-full blur-xl"></div>
+              <div className="absolute -right-16 -bottom-16 w-32 h-32 bg-[#FF9933]/15 rounded-full blur-xl"></div>
+              <div className="relative flex flex-col items-center justify-center space-y-2">
+                <span className="text-[#FF9933] text-[9px] font-black tracking-widest uppercase bg-[#FF9933]/15 px-2.5 py-0.5 rounded-full border border-[#FF9933]/30">
+                  ★ 1996 - 2026 ★
+                </span>
+                <h4 className="font-serif italic text-base sm:text-lg text-white font-black tracking-wide">
+                  30 Years of Trust • 30 Years of Tradition
+                </h4>
+                <div className="h-[1px] w-1/3 bg-gradient-to-r from-transparent via-[#C5A059] to-transparent"></div>
+                <p className="text-[10px] font-black tracking-widest text-[#FAF6EE]/90 uppercase">
+                  A Lifetime of Sweet Memories
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Quick Metrics */}
-          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-[#F0EAD6]">
-            <div>
-              <p className="text-lg sm:text-xl font-black text-[#FF9933] font-mono">1996</p>
-              <p className="text-[10px] text-[#C5A059]">Inception Year</p>
+          <div className="grid grid-cols-3 gap-3 pt-5 border-t border-[#F0EAD6]/60">
+            <div className="bg-[#FFFBF0] border border-[#F0EAD6]/60 rounded-xl p-3 text-center shadow-3xs hover:shadow-2xs hover:border-[#FF9933]/35 transition-all">
+              <div className="text-lg sm:text-xl font-black text-[#FF9933] font-mono tracking-tight">
+                1996
+              </div>
+              <p className="text-[9px] font-black text-[#3E2723] uppercase tracking-wider mt-0.5">
+                Est. Year
+              </p>
+              <span className="text-[8px] text-[#C5A059] block mt-0.5 font-bold">Babra, Gujarat</span>
             </div>
-            <div>
-              <p className="text-lg sm:text-xl font-black text-[#FF9933] font-mono">100%</p>
-              <p className="text-[10px] text-[#C5A059]">Natural Farming</p>
+            
+            <div className="bg-[#FFFBF0] border border-[#F0EAD6]/60 rounded-xl p-3 text-center shadow-3xs hover:shadow-2xs hover:border-[#FF9933]/35 transition-all">
+              <div className="text-lg sm:text-xl font-black text-[#FF9933] font-mono tracking-tight">
+                100%
+              </div>
+              <p className="text-[9px] font-black text-[#3E2723] uppercase tracking-wider mt-0.5">
+                Pure Quality
+              </p>
+              <span className="text-[8px] text-[#C5A059] block mt-0.5 font-bold">No Preservatives</span>
             </div>
-            <div>
-              <p className="text-lg sm:text-xl font-black text-[#FF9933] font-mono">100%</p>
-              <p className="text-[10px] text-[#C5A059]">Happinees</p>
+
+            <div className="bg-[#FFFBF0] border border-[#F0EAD6]/60 rounded-xl p-3 text-center shadow-3xs hover:shadow-2xs hover:border-[#FF9933]/35 transition-all">
+              <div className="text-lg sm:text-xl font-black text-[#FF9933] font-mono tracking-tight">
+                30K+
+              </div>
+              <p className="text-[9px] font-black text-[#3E2723] uppercase tracking-wider mt-0.5">
+                Happy Families
+              </p>
+              <span className="text-[8px] text-[#C5A059] block mt-0.5 font-bold">Trusted Legacy</span>
             </div>
           </div>
 

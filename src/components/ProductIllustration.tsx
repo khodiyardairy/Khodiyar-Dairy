@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ProductIllustrationProps {
-  type: 'milk' | 'ghee' | 'paneer' | 'shrikhand' | 'sweet' | 'buttermilk' | 'dahi' | 'pedha' | 'kaju-katli' | string;
+  type: 'milk' | 'ghee' | 'paneer' | 'shrikhand' | 'sweet' | 'buttermilk' | 'dahi' | 'pedha' | 'kaju-katri' | string;
   className?: string;
   size?: 'sm' | 'md' | 'lg';
 }
@@ -213,7 +213,7 @@ export default function ProductIllustration({ type, className = '', size = 'md' 
           </svg>
         );
 
-      case 'kaju-katli':
+      case 'kaju-katri':
         return (
           <svg className="w-1/2 h-1/2 text-[#D97706] drop-shadow-md z-10" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Traditional brass plate */}

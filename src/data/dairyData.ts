@@ -90,7 +90,7 @@ export const products: Product[] = [
   {
     id: 'kesar-badam-matho-1kg',
     name: 'Kesar Badam Matho',
-    gujaratiName: 'કેસર બાદામ મઠો',
+    gujaratiName: 'કેસર બદામ મઠો',
     price: 340,
     category: 'shrikhand_matho',
     unit: '1 Kg',
@@ -132,7 +132,7 @@ export const products: Product[] = [
   {
     id: 'panch-ratna-halvo-1kg',
     name: 'Panch Ratna Halvo',
-    gujaratiName: 'પંચ રત્ન હલવો',
+    gujaratiName: 'પંચરત્ન હલવો',
     price: 480,
     category: 'mithai',
     unit: '1 Kg',
@@ -489,7 +489,7 @@ export const products: Product[] = [
   },
   {
     id: 'kaju-katli-1kg',
-    name: 'Kaju Katli',
+    name: 'Kaju Katri',
     gujaratiName: 'કાજુ કતરી',
     price: 1000,
     category: 'mithai',
@@ -653,7 +653,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'production',
     description: 'Hygienic straining of full-fat yogurt in traditional muslin cloths to prepare fresh base for matho.',
     illustrationType: 'shrikhand',
-    imageUrl: '/images/Live-Straining-Process.png'
+    imageUrl: '/images/Live-Straining-Process.jpeg'
   },
   {
     id: 'g3',
@@ -662,7 +662,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'store',
     description: 'Our sanitized showcase where batches of fresh sweets are packed daily under strict hygiene protocols.',
     illustrationType: 'sweet',
-    imageUrl: '/images/Live-Straining-Process'
+    imageUrl: '/images/counter.jpeg'
   }
 ];
 
