@@ -39,7 +39,7 @@ const PRODUCT_IMAGE_MAP: Record<string, string[]> = {
   'gulab-jambu-1kg': ['gulab-jambu.jpeg', 'gulab-jambu2.jpeg'],
   'panch-ratna-halvo-1kg': ['halvo-in-glass-bowl.jpeg', 'halvo1.jpeg'],
   'jalebi-1kg': ['jalebi.jpeg', 'jalebi2.jpeg'],
-  'kaju-katli-1kg': ['kaju-katri.jpeg', 'kaju-katri2.jpeg'],
+  'kaju-katli-1kg': ['kaju-katli.jpeg', 'kaju-katrl2.jpeg'],
   'kala-jambu-1kg': ['kala-jambu.jpeg', 'kala-jambu2.jpeg'],
   'kalakand-1kg': ['kalakand.jpeg', 'kalakand2.jpeg'],
   'kd-special-matho-1kg': ['k-d-special-matho-top-down_1.jpeg', 'k-d-special-matho-2.jpeg'],
