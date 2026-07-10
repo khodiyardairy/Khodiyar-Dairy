@@ -16,7 +16,7 @@ export const categories: Category[] = [
     bgColor: 'bg-[#FFF8E1]',
     textColor: 'text-[#FF9933]',
     illustrationType: 'sweet',
-    imageUrl: '/images/kaju-katri.jpeg'
+    imageUrl: '/images/kaju-katli.jpeg'
   },
   {
     id: 'liquid',
