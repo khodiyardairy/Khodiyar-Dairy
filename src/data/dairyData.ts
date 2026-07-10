@@ -89,7 +89,7 @@ export const products: Product[] = [
   },
   {
     id: 'kd-special-matho-1kg',
-    name: 'K-D Special Matho',
+    name: 'K&D Special Matho',
     gujaratiName: 'K&D સ્પેશ્યલ મઠો',
     price: 380,
     category: 'shrikhand_matho',
