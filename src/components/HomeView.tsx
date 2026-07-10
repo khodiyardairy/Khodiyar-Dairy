@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { categories, products, testimonials, galleryItems, getGeneralWhatsAppUrl, getWhatsAppUrl } from '../data/dairyData';
-import { ShoppingBag, ShoppingCart, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone, Instagram, Facebook, Scissors } from 'lucide-react';
+import { ShoppingBag, ShoppingCart, MessageSquare, Award, ShieldCheck, Heart, ArrowRight, Star, Clock, MapPin, Mail, Phone, Instagram, Facebook, Scissors, Volume2, VolumeX } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 import CategoryCard from './CategoryCard';
 import ProductCard from './ProductCard';
@@ -58,6 +58,19 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
   const [shouldAutoplay, setShouldAutoplay] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      const newMuteState = !videoRef.current.muted;
+      videoRef.current.muted = newMuteState;
+      setIsMuted(newMuteState);
+    } else {
+      setIsMuted(prev => !prev);
+    }
+  };
+
   const [activeFooterSection, setActiveFooterSection] = useState<'none' | 'links' | 'contact'>('none');
 
   // Ribbon cutting animation states
@@ -637,8 +650,9 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
             {/* Background Video */}
             {!videoError && (
               <video
+                ref={videoRef}
                 src="/videos/khodiyar-dairy-hero.mp4"
-                muted
+                muted={isMuted}
                 loop
                 playsInline
                 preload="metadata"
@@ -651,6 +665,32 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
               />
             )}
           </div>
+
+          {/* Volume Control Button overlay - placed exactly at bottom right to align with/cover Gemini logo area */}
+          {videoLoaded && !videoError && (
+            <motion.button
+              id="video-volume-toggle"
+              onClick={toggleMute}
+              className="absolute bottom-5 right-5 z-20 flex items-center gap-2 px-4 py-2.5 bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/25 text-white rounded-full shadow-lg transition-all cursor-pointer select-none"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {isMuted ? (
+                <>
+                  <VolumeX className="w-4 h-4 text-white/90" />
+                  <span className="text-[10px] font-bold tracking-wider uppercase text-white/90 hidden sm:inline">Play Audio</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-4 h-4 text-[#FF9933] animate-bounce" />
+                  <span className="text-[10px] font-black tracking-wider uppercase text-[#FF9933] hidden sm:inline">Mute Audio</span>
+                </>
+              )}
+            </motion.button>
+          )}
 
         </div>
       </section>
