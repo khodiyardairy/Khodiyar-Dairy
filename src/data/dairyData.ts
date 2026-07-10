@@ -550,7 +550,8 @@ export const products: Product[] = [
     category: 'mithai',
     unit: '1 Kg',
     description: "Khodiyar Dairy's Kalakand | કલાકંદ is a premium Indian milk cake — a beautiful double-layer sweet with a golden grainy base and a pure white creamy top layer made from slow-cooked fresh milk and paneer. Soft, moist and melt-in-mouth, decorated with silver varq, saffron strands and chopped pistachios. Rich in milk solids and delicately sweet.",
-    illustrationType: 'sweet'
+    illustrationType: 'sweet',
+    badge: 'Festival Special'
   },
   {
     id: 'gundar-pak-1kg',
