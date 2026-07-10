@@ -20,8 +20,8 @@ export const categories: Category[] = [
   },
   {
     id: 'liquid',
-    name: 'Liquid',
-    gujaratiName: 'પ્રવાહી મીઠાઈ અને પીણાં',
+    name: 'Dairy Bar',
+    gujaratiName: 'ડેરી બાર',
     description: 'Refreshing dairy drinks, milkshakes, rabdi, and natural fruit pulp.',
     iconName: 'Droplet',
     bgColor: 'bg-[#F5EFE6]',
@@ -653,7 +653,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'production',
     description: 'Hygienic straining of full-fat yogurt in traditional muslin cloths to prepare fresh base for matho.',
     illustrationType: 'shrikhand',
-    imageUrl: '/images/Live-Straining-Process.jpeg'
+    imageUrl: '/images/Live-Straining-Process-2.png'
   },
   {
     id: 'g3',

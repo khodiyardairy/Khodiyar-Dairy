@@ -13,6 +13,41 @@ import AnimatedCounter from './AnimatedCounter';
 
 import { Product } from '../types';
 
+interface GalleryTeaserCardProps {
+  item: any;
+  idx: number;
+  key?: any;
+}
+
+function GalleryTeaserCard({ item, idx }: GalleryTeaserCardProps) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <motion.div
+      whileHover={{ y: -5, boxShadow: "0 10px 25px rgba(62, 39, 35, 0.06)" }}
+      className="group relative bg-white rounded-2xl border border-[#F0EAD6] p-3 overflow-hidden transition-all duration-300 w-full animate-float-subtle"
+      style={{ animationDelay: `${idx * 0.4}s` }}
+    >
+      <div className="relative rounded-xl overflow-hidden h-32 sm:h-40 w-full bg-gradient-to-br from-[#FFFDF9] via-[#FAF6EE] to-[#F1E8D9] border border-[#F2E5D0] flex items-center justify-center">
+        {item.imageUrl && !imgError ? (
+          <img
+            src={item.imageUrl}
+            alt={item.title}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            referrerPolicy="no-referrer"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <ProductIllustration type={item.illustrationType} size="sm" className="w-full h-full" />
+        )}
+      </div>
+      <div className="mt-2 text-center">
+        <p className="text-xs font-bold text-[#3E2723] leading-tight truncate">{item.title}</p>
+      </div>
+    </motion.div>
+  );
+}
+
 interface HomeViewProps {
   onAddToCart?: (product: Product) => void;
   onViewDetail?: (product: Product) => void;
@@ -726,17 +761,7 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
         {/* 3 columns gallery teaser */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-6">
           {galleryItems.slice(0, 3).map((item, idx) => (
-            <motion.div 
-              key={item.id}
-              whileHover={{ y: -5, boxShadow: "0 10px 25px rgba(62, 39, 35, 0.06)" }}
-              className="group relative bg-white rounded-2xl border border-[#F0EAD6] p-3 overflow-hidden transition-all duration-300 w-full animate-float-subtle"
-              style={{ animationDelay: `${idx * 0.4}s` }}
-            >
-              <ProductIllustration type={item.illustrationType} size="sm" className="h-32 sm:h-40 w-full rounded-xl" />
-              <div className="mt-2 text-center">
-                <p className="text-xs font-bold text-[#3E2723] leading-tight truncate">{item.title}</p>
-              </div>
-            </motion.div>
+            <GalleryTeaserCard key={item.id} item={item} idx={idx} />
           ))}
         </div>
       </section>
@@ -908,7 +933,7 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
                     <span>8:00 AM - 9:00 PM</span>
                   </li>
                   <li className="text-[9px] text-[#C5A059] font-medium pt-0.5 leading-snug">
-                    Saffron Shrikhand & Live Paneer prepared daily.
+                    Saffron Shrikhand & Sweets prepared daily.
                   </li>
                 </ul>
               </div>

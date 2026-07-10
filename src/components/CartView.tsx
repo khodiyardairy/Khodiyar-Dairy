@@ -46,7 +46,7 @@ export default function CartView({
             Your Cart is Empty!
           </p>
           <p className="text-xs sm:text-sm text-[#3E2723]/60 mb-8 max-w-xs mx-auto leading-relaxed">
-            Add our fresh, premium milk sweets, shrikhand, or delicious liquid beverages to your cart to order them on WhatsApp.
+            Add our fresh, premium milk sweets, shrikhand, or delicious dairy bar drinks to your cart to order them on WhatsApp.
           </p>
           <motion.button
             whileHover={{ scale: 1.02 }}
