@@ -126,10 +126,10 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
 
   // Our Special Products: exactly 4 premium products
   const specialProductIds = [
-    'kesar-pista-shrikhand-1kg',
-    'kaju-katri-1kg',
-    'penda-thabdi-1kg',
-    'adadiya-1kg'
+    'thabdi-1kg',
+    'kd-special-matho-1kg',
+    'kalakand-Barfi-1kg',
+    'keri-no-ras-1kg'
   ];
   const specialProducts = specialProductIds
     .map(id => products.find(p => p.id === id))

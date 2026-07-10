@@ -76,6 +76,18 @@ export const products: Product[] = [
     isFeatured: true
   },
   {
+    id: 'dryfruit-gulabpak-1kg',
+    name: 'DryFruit GulabPak',
+    gujaratiName: 'ડ્રાયફ્રૂટ ગુલાબપાક',
+    price: 440,
+    category: 'mithai',
+    unit: '1 Kg',
+    description: 'Premium rose-flavored barfi — soft, delicate light pink milk sweet generously loaded with mixed dry fruits including almonds, cashews, and pistachios, beautifully garnished with dried rose petals, silver varq, and pistachio slivers.',
+    illustrationType: 'sweet',
+    isFeatured: true,
+    badge: 'Rose & Dry Fruit'
+  },
+  {
     id: 'kd-special-matho-1kg',
     name: 'K-D Special Matho',
     gujaratiName: 'K&D સ્પેશ્યલ મઠો',
@@ -246,8 +258,9 @@ export const products: Product[] = [
     price: 200,
     category: 'liquid',
     unit: '1 Kg',
-    description: 'Seasonal favorite - thick, fresh and naturally sweet raw mango pulp made from the finest Kesar mangoes.',
-    illustrationType: 'milk'
+    description: 'Thick, fresh and naturally sweet pure Kesar mango pulp - uniquely available 24 months (all year round).',
+    illustrationType: 'milk',
+    badge: 'Summer Special'
   },
   {
     id: 'mix-fruit-shrikhand-1kg',

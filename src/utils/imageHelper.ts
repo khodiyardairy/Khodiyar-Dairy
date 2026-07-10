@@ -7,6 +7,10 @@ import { Product } from '../types';
 
 // Explicit mapping of product ID to real jpeg image files in public/images/
 const PRODUCT_IMAGE_MAP: Record<string, string[]> = {
+  'dryfruit-gulabpak-1kg': [
+    'https://cdn.shopify.com/s/files/1/0756/4194/6303/files/image_14e3e6f0-eb0e-4d9b-beee-45e13bcc5973.png?v=1783709215',
+    'https://cdn.shopify.com/s/files/1/0756/4194/6303/files/image_f70a436f-c4bc-4f61-a07d-f928cdd8ce0d.png?v=1783709215'
+  ],
   'kaju-maisup-pak-1kg': ['kaju-maisup.jpeg', 'kaju-maisup2.jpeg'],
   'kalakand-Barfi-1kg': ['kalkandbarfi.jpeg', 'kalkandbarfi.jpeg'],
   'gundar-pak-1kg': ['gundarpak.jpeg', 'gundarpak2.jpeg'],
@@ -35,7 +39,7 @@ const PRODUCT_IMAGE_MAP: Record<string, string[]> = {
   'gulab-jambu-1kg': ['gulab-jambu.jpeg', 'gulab-jambu2.jpeg'],
   'panch-ratna-halvo-1kg': ['halvo-in-glass-bowl.jpeg', 'halvo1.jpeg'],
   'jalebi-1kg': ['jalebi.jpeg', 'jalebi2.jpeg'],
-  'kaju-katli-1kg': ['kaju-katri.jpeg', 'kaju-katli2.jpeg'],
+  'kaju-katli-1kg': ['kaju-katri.jpeg', 'kaju-katri2.jpeg'],
   'kala-jambu-1kg': ['kala-jambu.jpeg', 'kala-jambu2.jpeg'],
   'kalakand-1kg': ['kalakand.jpeg', 'kalakand2.jpeg'],
   'kd-special-matho-1kg': ['k-d-special-matho-top-down_1.jpeg', 'k-d-special-matho-2.jpeg'],
@@ -115,15 +119,16 @@ export function getCandidateImageUrls(product: Product, imgNumber: number = 1): 
   const mappedList = PRODUCT_IMAGE_MAP[product.id];
   if (mappedList) {
     if (imgNumber === 1) {
-      return [`/images/${mappedList[0]}`];
+      const firstFile = mappedList[0];
+      return firstFile.startsWith('http') ? [firstFile] : [`/images/${firstFile}`];
     } else if (imgNumber === 2) {
       // Find secondary image or fall back
       const secondFile = mappedList[1] || mappedList[0];
-      return [`/images/${secondFile}`];
+      return secondFile.startsWith('http') ? [secondFile] : [`/images/${secondFile}`];
     } else if (imgNumber === 3) {
       // Find tertiary image or fall back
       const thirdFile = mappedList[2] || mappedList[1] || mappedList[0];
-      return [`/images/${thirdFile}`];
+      return thirdFile.startsWith('http') ? [thirdFile] : [`/images/${thirdFile}`];
     }
   }
 
