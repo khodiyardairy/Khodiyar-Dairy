@@ -530,9 +530,9 @@ export const products: Product[] = [
     illustrationType: 'sweet'
   },
   {
-    id: 'kalakand-premium-1kg',
-    name: 'Kalakand',
-    gujaratiName: 'કલાકંદ',
+    id: 'kalakand-Barfi-1kg',
+    name: 'Barfi Kalakand',
+    gujaratiName: 'બરફી કલાકંદ',
     price: 850,
     category: 'mithai',
     unit: '1 Kg',
