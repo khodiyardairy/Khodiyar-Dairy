@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface GrandOpeningProps {
+  initialCutsRemaining: number;
   onComplete: () => void;
 }
 
-export default function GrandOpening({ onComplete }: GrandOpeningProps) {
+export default function GrandOpening({ initialCutsRemaining, onComplete }: GrandOpeningProps) {
   const [isClicked, setIsClicked] = useState(false);
   const [isSplit, setIsSplit] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [scissorsState, setScissorsState] = useState<'idle' | 'entering' | 'cutting' | 'exiting'>('idle');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     // Lock scrolling on mount to prevent scrolling behind the invitation
@@ -78,46 +81,79 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
   };
 
   const handleRibbonClick = () => {
-    if (isClicked) return;
-    setIsClicked(true);
+    if (isClicked || isSubmitting) return;
+    setIsSubmitting(true);
+    setErrorMessage(null);
 
-    try {
-      localStorage.setItem('khodiyar-intro-played', 'true');
-    } catch (e) {
-      console.warn('localStorage not available:', e);
-    }
+    // Call the cut-ribbon API endpoint
+    fetch('/api/cut-ribbon', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('API error or limit exceeded');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data.success) {
+          // Success! Play scissors animation and proceed.
+          setIsClicked(true);
+          try {
+            localStorage.setItem('khodiyar-intro-played', 'true');
+          } catch (e) {
+            console.warn('localStorage not available:', e);
+          }
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      onComplete();
-      return;
-    }
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (prefersReducedMotion) {
+            onComplete();
+            return;
+          }
 
-    // Snappy and precise animation phases
-    // Phase 1: Scissors Enter
-    setScissorsState('entering');
+          // Snappy and precise animation phases
+          // Phase 1: Scissors Enter
+          setScissorsState('entering');
 
-    // Phase 2: Start Cutting
-    setTimeout(() => {
-      setScissorsState('cutting');
-    }, 450);
+          // Phase 2: Start Cutting
+          setTimeout(() => {
+            setScissorsState('cutting');
+          }, 450);
 
-    // Phase 3: Trigger ribbon split, play sound, explode confetti
-    setTimeout(() => {
-      playSnipSound();
-      setIsSplit(true);
-      setShowConfetti(true);
-    }, 700);
+          // Phase 3: Trigger ribbon split, play sound, explode confetti
+          setTimeout(() => {
+            playSnipSound();
+            setIsSplit(true);
+            setShowConfetti(true);
+          }, 700);
 
-    // Phase 4: Scissors exit
-    setTimeout(() => {
-      setScissorsState('exiting');
-    }, 1100);
+          // Phase 4: Scissors exit
+          setTimeout(() => {
+            setScissorsState('exiting');
+          }, 1100);
 
-    // Phase 5: Complete animation and unmount
-    setTimeout(() => {
-      onComplete();
-    }, 1800);
+          // Phase 5: Complete animation and unmount
+          setTimeout(() => {
+            onComplete();
+          }, 1800);
+        } else {
+          // The ribbon has already been cut or opened
+          setErrorMessage('Ribbon has already been cut!');
+          setIsSubmitting(false);
+          // Skip to the main website after 1.5 seconds so user is not blocked
+          setTimeout(() => {
+            onComplete();
+          }, 1500);
+        }
+      })
+      .catch((err) => {
+        console.error('Error reserving ribbon cut:', err);
+        // If API is down or fails, skip directly to prevent blocking the website
+        onComplete();
+      });
   };
 
   // Generate lightweight gold & red celebration particles
@@ -166,6 +202,11 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
           <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.22em] text-[#C5A059] mt-4 bg-[#FFF8E1] px-4 py-1.5 rounded-full border border-[#F0EAD6] shadow-xs">
             PURE • TRADITIONAL • HANDCRAFTED
           </p>
+          
+          {/* Global Cuts Remaining Premium Label */}
+          <div className="mt-3.5 px-4 py-1.5 bg-[#FFF5F5] border border-[#FEB2B2]/40 rounded-full text-[9px] sm:text-[10px] font-extrabold tracking-wider text-[#B91C1C] uppercase animate-pulse">
+            Exclusive opening access — {initialCutsRemaining} ribbon cut{initialCutsRemaining > 1 ? 's' : ''} remaining
+          </div>
         </div>
 
         {/* Card Middle Invite Styling with exact space/gap for the red ribbon */}
@@ -183,33 +224,9 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
           <h2 className="text-4xl sm:text-6xl font-black tracking-[0.06em] text-[#B91C1C] leading-none mb-2 sm:mb-3 drop-shadow-xs font-serif uppercase">
             OPENING
           </h2>
-          <p className="text-xs sm:text-sm font-extrabold tracking-[0.15em] text-[#3E2723] uppercase mb-4 sm:mb-6">
+          <p className="text-xs sm:text-sm font-extrabold tracking-[0.15em] text-[#3E2723] uppercase">
             Of Khodiyar Dairy
           </p>
-
-          {/* Premium Gold Gradient Pill CTA Button (Width: 195px, Height: 48/52px, Fully Rounded) */}
-          <div className="h-14 flex items-center justify-center w-full z-20">
-            <AnimatePresence>
-              {!isClicked && (
-                <motion.button
-                  key="grand-cta-button"
-                  onClick={handleRibbonClick}
-                  initial={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.85, y: 15 }}
-                  animate={{ scale: [1, 1.03, 1] }}
-                  transition={{
-                    scale: { repeat: Infinity, duration: 3, ease: "easeInOut" },
-                    opacity: { duration: 0.35 },
-                    y: { duration: 0.35 }
-                  }}
-                  whileHover={{ scale: 1.03 }}
-                  className="w-[195px] h-[48px] sm:h-[52px] rounded-full bg-gradient-to-r from-[#DFBA73] via-[#F5D798] to-[#C5A059] text-[#3E2723] font-black text-xs sm:text-sm uppercase tracking-wider shadow-md shadow-[#C5A059]/25 hover:shadow-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer border border-[#FAF6EE]/50 select-none focus:outline-none pointer-events-auto"
-                >
-                  <span>✂</span> Tap Ribbon to Enter
-                </motion.button>
-              )}
-            </AnimatePresence>
-          </div>
         </div>
 
         {/* Card Footer Message text */}
@@ -259,13 +276,13 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
           initial={{ scale: 1, opacity: 1, rotate: 0, y: 0 }}
           animate={isSplit ? { y: '60vh', rotate: 45, scale: 0.8, opacity: 0 } : { scale: 1, opacity: 1, rotate: 0, y: 0 }}
           transition={isSplit ? { duration: 1.3, ease: 'easeIn' } : {}}
-          className="absolute z-40 flex items-center justify-center cursor-pointer pointer-events-auto"
+          className="absolute z-40 flex items-center justify-center"
         >
           {/* Main click button wrapper */}
           <button
             onClick={handleRibbonClick}
-            disabled={isClicked}
-            className="group flex flex-col items-center justify-center p-4 focus:outline-none rounded-full active:scale-95 transition-transform"
+            disabled={isClicked || isSubmitting}
+            className={`group flex flex-col items-center justify-center p-4 focus:outline-none rounded-full active:scale-95 transition-transform ${isSubmitting ? 'cursor-wait pointer-events-none' : 'cursor-pointer pointer-events-auto'}`}
           >
             {/* Shimmer backing glow indicator */}
             {!isClicked && (
@@ -375,7 +392,13 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
             className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none z-40 select-none px-5 py-2.5 rounded-full bg-[#1C120C]/95 border border-[#D4AF37]/35 shadow-xl backdrop-blur-xs text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] text-[#D4AF37]"
             style={{ top: '65%' }}
           >
-            Tap the ribbon to cut & enter
+            {errorMessage ? (
+              <span className="text-[#EF4444]">{errorMessage}</span>
+            ) : isSubmitting ? (
+              <span>Reserving your cut...</span>
+            ) : (
+              <span>Tap the ribbon to cut & enter</span>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

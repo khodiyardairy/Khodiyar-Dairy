@@ -117,13 +117,81 @@ function AppContent() {
     setCart([]);
   };
 
-  const [isSiteUnlocked, setIsSiteUnlocked] = useState(() => {
-    try {
-      return localStorage.getItem('khodiyar-intro-played') === 'true';
-    } catch (e) {
-      return false;
+  const [isSiteUnlocked, setIsSiteUnlocked] = useState(false);
+  const [isCheckingStatus, setIsCheckingStatus] = useState(true);
+  const [cutsRemaining, setCutsRemaining] = useState(0);
+  const [showGrandToast, setShowGrandToast] = useState(false);
+
+  useEffect(() => {
+    // Check if the URL requests a reset of the grand opening status
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('reset') || urlParams.has('ribbon')) {
+      try {
+        localStorage.removeItem('khodiyar-intro-played');
+      } catch (e) {}
+      
+      // Clean up the URL query parameter so we don't loop endlessly
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+      
+      // Call the API reset, then fetch the status
+      fetch('/api/reset-grand-opening', { method: 'POST' })
+        .then(() => {
+          fetchStatus();
+        })
+        .catch(() => {
+          fetchStatus();
+        });
+      return;
     }
-  });
+
+    fetchStatus();
+
+    function fetchStatus() {
+      // Check local storage first to prevent API requests for already-unlocked devices
+      try {
+        const hasPlayed = localStorage.getItem('khodiyar-intro-played') === 'true';
+        if (hasPlayed) {
+          setIsSiteUnlocked(true);
+          setIsCheckingStatus(false);
+          return;
+        }
+      } catch (e) {
+        console.warn('localStorage not available:', e);
+      }
+
+      // Check Vercel KV status (or server in-memory fallback)
+      fetch('/api/grand-opening-status')
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('KV API error');
+          }
+          return res.json();
+        })
+        .then((data) => {
+          if (data.cutsRemaining > 0) {
+            setCutsRemaining(data.cutsRemaining);
+            setIsSiteUnlocked(false);
+          } else {
+            // If no cuts remaining (already cut by other devices), directly unlock
+            setIsSiteUnlocked(true);
+            setShowGrandToast(true);
+            // Automatically hide toast after 5 seconds
+            setTimeout(() => {
+              setShowGrandToast(false);
+            }, 5000);
+          }
+        })
+        .catch((err) => {
+          console.error('Error checking grand opening status:', err);
+          // API is down or unavailable: skip the intro and directly unlock
+          setIsSiteUnlocked(true);
+        })
+        .finally(() => {
+          setIsCheckingStatus(false);
+        });
+    }
+  }, []);
 
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -131,10 +199,56 @@ function AppContent() {
     navigate(`/product/${product.id}`);
   };
 
+  if (isCheckingStatus) {
+    return (
+      <div className="fixed inset-0 bg-[#FAF6EE] flex items-center justify-center z-[999999] select-none pointer-events-none">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="w-10 h-10 border-4 border-[#C5A059] border-t-transparent rounded-full animate-spin" />
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#3E2723]/60">
+            Loading...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
+      {/* Toast notification if ribbon was already cut by others */}
+      <AnimatePresence>
+        {showGrandToast && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className="fixed top-20 right-4 sm:right-6 z-[9999] bg-[#3E2723] text-white border border-[#D4AF37] px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 max-w-sm"
+          >
+            <div className="bg-[#D4AF37]/20 p-1.5 rounded-full text-[#D4AF37] text-lg">
+              ✨
+            </div>
+            <div>
+              <h4 className="font-extrabold text-[11px] uppercase tracking-wider text-[#D4AF37]">
+                GRAND OPENING
+              </h4>
+              <p className="text-xs font-medium text-amber-50/90 mt-0.5">
+                The grand opening ribbon has already been cut. Welcome!
+              </p>
+            </div>
+            <button 
+              onClick={() => setShowGrandToast(false)}
+              className="text-white/40 hover:text-white text-xs font-black ml-2 focus:outline-none"
+            >
+              ✕
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {!isSiteUnlocked && (
-        <GrandOpening onComplete={() => setIsSiteUnlocked(true)} />
+        <GrandOpening 
+          initialCutsRemaining={cutsRemaining} 
+          onComplete={() => setIsSiteUnlocked(true)} 
+        />
       )}
 
       <div 
