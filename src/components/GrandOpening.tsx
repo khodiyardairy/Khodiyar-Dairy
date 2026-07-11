@@ -427,7 +427,7 @@ export default function GrandOpening({ initialCutsRemaining, onComplete }: Grand
             ) : isSubmitting ? (
               <span>Reserving your cut...</span>
             ) : (
-            //  <span>Tap the ribbon to cut & enter</span>
+             <span>Tap the ribbon to cut & enter</span>
             )}
           </motion.div>
         )}
