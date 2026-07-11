@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Scissors } from 'lucide-react';
 
 interface GrandOpeningProps {
   onComplete: () => void;
@@ -13,7 +12,7 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
   const [scissorsState, setScissorsState] = useState<'idle' | 'entering' | 'cutting' | 'exiting'>('idle');
 
   useEffect(() => {
-    // Lock scrolling on mount
+    // Lock scrolling on mount to prevent scrolling behind the invitation
     document.body.style.overflow = 'hidden';
     document.body.style.height = '100vh';
 
@@ -24,7 +23,7 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
     };
   }, []);
 
-  // Web Audio API snip sound synthesis
+  // Web Audio API snip sound synthesis for realistic ribbon cutting sound
   const playSnipSound = () => {
     try {
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
@@ -83,9 +82,9 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
     setIsClicked(true);
 
     try {
-      sessionStorage.setItem('khodiyar-intro-played', 'true');
+      localStorage.setItem('khodiyar-intro-played', 'true');
     } catch (e) {
-      console.warn('sessionStorage not available:', e);
+      console.warn('localStorage not available:', e);
     }
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -94,99 +93,128 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
       return;
     }
 
+    // Snappy and precise animation phases
     // Phase 1: Scissors Enter
     setScissorsState('entering');
 
     // Phase 2: Start Cutting
     setTimeout(() => {
       setScissorsState('cutting');
-    }, 850);
+    }, 450);
 
     // Phase 3: Trigger ribbon split, play sound, explode confetti
     setTimeout(() => {
       playSnipSound();
       setIsSplit(true);
       setShowConfetti(true);
-    }, 1100);
+    }, 700);
 
     // Phase 4: Scissors exit
     setTimeout(() => {
       setScissorsState('exiting');
-    }, 1400);
+    }, 1100);
 
     // Phase 5: Complete animation and unmount
     setTimeout(() => {
       onComplete();
-    }, 2800);
+    }, 1800);
   };
 
-  // Generate lightweight particle configurations for celebrate explosion
+  // Generate lightweight gold & red celebration particles
   const colors = ['#B91C1C', '#D4AF37', '#FFF8E1', '#AA7C11', '#EF4444', '#C5A059'];
-  const confettiParticles = Array.from({ length: 26 }).map((_, i) => {
-    const angle = (i * (360 / 26) * Math.PI) / 180 + (Math.random() * 0.2 - 0.1);
-    const distance = Math.random() * 140 + 60;
+  const confettiParticles = Array.from({ length: 32 }).map((_, i) => {
+    const angle = (i * (360 / 32) * Math.PI) / 180 + (Math.random() * 0.2 - 0.1);
+    const distance = Math.random() * 150 + 70;
     const targetX = Math.cos(angle) * distance;
-    const targetY = Math.sin(angle) * distance - 20; // minor float lift
+    const targetY = Math.sin(angle) * distance - 30;
     return {
       id: i,
       color: colors[i % colors.length],
       x: targetX,
       y: targetY,
-      size: Math.random() * 9 + 6,
+      size: Math.random() * 8 + 5,
       delay: Math.random() * 0.08
     };
   });
 
-  // Scissors blade rotation animations
+  // Scissors blade rotation angles for natural snipping motion
   const bladeARotation = scissorsState === 'cutting' ? -4 : 14;
   const bladeBRotation = scissorsState === 'cutting' ? 4 : -14;
 
   return (
-    <div className="fixed inset-0 z-[99999] bg-neutral-950 flex items-center justify-center overflow-hidden font-sans select-none">
+    <div className="fixed inset-0 z-[99999] bg-[#0A0908] flex items-center justify-center overflow-hidden font-sans select-none">
       
-      {/* Tall Premium Invitation Card */}
+      {/* Tall Premium Invitation Card (Fades/Slides away on ribbon split) */}
       <motion.div
-        initial={{ opacity: 1, scale: 1 }}
-        animate={isSplit ? { opacity: 0, scale: 0.94 } : { opacity: 1, scale: 1 }}
-        transition={{ delay: 1.5, duration: 1.0, ease: 'easeInOut' }}
-        className="relative rounded-3xl p-6 sm:p-14 bg-[#FAF5EE] border-4 border-[#D4AF37] shadow-[0_25px_60px_-12px_rgba(0,0,0,0.9)] flex flex-col items-center justify-between min-h-[580px] sm:min-h-[660px] max-w-[620px] w-[calc(100%-36px)] mx-auto overflow-hidden"
+        initial={{ opacity: 1, scale: 1, y: 0 }}
+        animate={isSplit ? { opacity: 0, scale: 0.96, y: -20 } : { opacity: 1, scale: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="relative rounded-[2.5rem] p-6 sm:p-10 bg-gradient-to-b from-[#FAF6EE] to-[#FFFDF9] border-4 border-[#D4AF37] shadow-[0_25px_60px_-12px_rgba(0,0,0,0.85)] flex flex-col items-center justify-between min-h-[570px] sm:min-h-[640px] max-w-[420px] w-[calc(100%-36px)] mx-auto overflow-hidden"
       >
         {/* Absolute Elegant Double Border Lines inside Card */}
-        <div className="absolute inset-3 border border-[#D4AF37]/35 rounded-2xl pointer-events-none" />
-        <div className="absolute inset-4 border border-[#D4AF37]/15 rounded-2xl pointer-events-none" />
+        <div className="absolute inset-3 border border-[#D4AF37]/35 rounded-[2rem] pointer-events-none" />
+        <div className="absolute inset-4 border border-[#D4AF37]/15 rounded-[1.8rem] pointer-events-none" />
 
         {/* Card Header text */}
-        <div className="flex flex-col items-center text-center mt-2 z-10">
-          <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-[0.12em] text-[#3E2723] leading-tight">
+        <div className="flex flex-col items-center text-center mt-2 z-10 w-full">
+          <h1 className="text-3xl sm:text-4xl font-extrabold uppercase tracking-[0.12em] text-[#3E2723] leading-none font-serif">
             Khodiyar Dairy
-            <span className="block text-2xl sm:text-3xl font-bold tracking-[0.08em] text-[#C5A059] mt-0.5">
+            <span className="block text-2xl sm:text-3xl font-bold tracking-[0.08em] text-[#C5A059] mt-1.5 font-serif">
               & Products
             </span>
           </h1>
-          <p className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.25em] text-[#C5A059] mt-3.5 bg-[#FFF8E1] px-4 py-1.5 rounded-full border border-[#F0EAD6] shadow-xs">
+          <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.22em] text-[#C5A059] mt-4 bg-[#FFF8E1] px-4 py-1.5 rounded-full border border-[#F0EAD6] shadow-xs">
             PURE • TRADITIONAL • HANDCRAFTED
           </p>
         </div>
 
-        {/* Card Middle Invite Styling */}
-        <div className="my-auto py-8 sm:py-10 flex flex-col items-center z-10 text-center">
-          <p className="text-xs sm:text-sm italic font-serif text-[#C5A059] mb-2">
+        {/* Card Middle Invite Styling with exact space/gap for the red ribbon */}
+        <div className="my-auto py-4 sm:py-6 flex flex-col items-center z-10 text-center relative w-full">
+          <p className="text-xs sm:text-sm italic font-serif text-[#C5A059] mb-1 sm:mb-2">
             You're invited to the
           </p>
-          <h2 className="text-5xl sm:text-7xl font-black tracking-[0.06em] text-[#B91C1C] leading-none mb-1 drop-shadow-xs">
+          <h2 className="text-4xl sm:text-6xl font-black tracking-[0.06em] text-[#B91C1C] leading-none mb-1 drop-shadow-xs font-serif uppercase">
             GRAND
           </h2>
-          <h2 className="text-5xl sm:text-7xl font-black tracking-[0.06em] text-[#B91C1C] leading-none mb-3 drop-shadow-xs">
+          
+          {/* Sizable gap for the red ribbon height (approx. 50px) */}
+          <div className="h-12 sm:h-16 w-full" />
+          
+          <h2 className="text-4xl sm:text-6xl font-black tracking-[0.06em] text-[#B91C1C] leading-none mb-2 sm:mb-3 drop-shadow-xs font-serif uppercase">
             OPENING
           </h2>
-          <p className="text-xs sm:text-sm font-extrabold tracking-[0.15em] text-[#3E2723] uppercase">
+          <p className="text-xs sm:text-sm font-extrabold tracking-[0.15em] text-[#3E2723] uppercase mb-4 sm:mb-6">
             Of Khodiyar Dairy
           </p>
+
+          {/* Premium Gold Gradient Pill CTA Button (Width: 195px, Height: 48/52px, Fully Rounded) */}
+          <div className="h-14 flex items-center justify-center w-full z-20">
+            <AnimatePresence>
+              {!isClicked && (
+                <motion.button
+                  key="grand-cta-button"
+                  onClick={handleRibbonClick}
+                  initial={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.85, y: 15 }}
+                  animate={{ scale: [1, 1.03, 1] }}
+                  transition={{
+                    scale: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+                    opacity: { duration: 0.35 },
+                    y: { duration: 0.35 }
+                  }}
+                  whileHover={{ scale: 1.03 }}
+                  className="w-[195px] h-[48px] sm:h-[52px] rounded-full bg-gradient-to-r from-[#DFBA73] via-[#F5D798] to-[#C5A059] text-[#3E2723] font-black text-xs sm:text-sm uppercase tracking-wider shadow-md shadow-[#C5A059]/25 hover:shadow-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer border border-[#FAF6EE]/50 select-none focus:outline-none pointer-events-auto"
+                >
+                  <span>✂</span> Tap Ribbon to Enter
+                </motion.button>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         {/* Card Footer Message text */}
-        <div className="flex flex-col items-center text-center mb-2 z-10">
-          <div className="space-y-1.5 max-w-[320px] sm:max-w-[400px] mx-auto mb-7">
+        <div className="flex flex-col items-center text-center mb-2 z-10 w-full">
+          <div className="space-y-1.5 max-w-[280px] sm:max-w-[340px] mx-auto mb-5">
             <p className="text-[10px] sm:text-xs text-[#3E2723]/80 font-bold leading-relaxed">
               Your presence is the sweetest gift to our grand opening.
             </p>
@@ -194,20 +222,20 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
               Thank you for celebrating this special milestone with us.
             </p>
           </div>
-          <p className="text-[10px] sm:text-xs font-black tracking-[0.18em] text-[#C5A059] uppercase">
+          <p className="text-[9px] sm:text-[10px] font-black tracking-[0.18em] text-[#C5A059] uppercase">
             Happiness Is Just One Bite Away.
           </p>
         </div>
       </motion.div>
 
-      {/* Satin Ribbon Visual Elements across the screen */}
+      {/* Satin Ribbon Visual Elements across the screen (Centered perfectly at 52% to overlap card gap) */}
       <div className="absolute inset-x-0 top-[52%] -translate-y-1/2 h-14 sm:h-16 flex items-center justify-center z-40 pointer-events-none">
         
-        {/* Left Half of Ribbon */}
+        {/* Left Half of Ribbon - splits, rotates downwards, and drops naturally off-screen */}
         <motion.div
-          initial={{ x: 0 }}
-          animate={isSplit ? { x: '-110%' } : { x: 0 }}
-          transition={{ duration: 1.3, ease: [0.77, 0, 0.175, 1] }}
+          initial={{ x: 0, y: 0, rotate: 0 }}
+          animate={isSplit ? { x: '-110%', y: '40vh', rotate: -30 } : { x: 0, y: 0, rotate: 0 }}
+          transition={{ duration: 1.3, ease: [0.25, 1, 0.5, 1] }}
           className="absolute left-0 w-1/2 h-11 sm:h-13 bg-gradient-to-r from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_8px_20px_rgba(0,0,0,0.45)] flex items-center justify-end"
         >
           {/* Speckled Satin highlights & shadow line */}
@@ -215,11 +243,11 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
           <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37]/45 to-[#D4AF37]/50" />
         </motion.div>
 
-        {/* Right Half of Ribbon */}
+        {/* Right Half of Ribbon - splits, rotates downwards, and drops naturally off-screen */}
         <motion.div
-          initial={{ x: 0 }}
-          animate={isSplit ? { x: '110%' } : { x: 0 }}
-          transition={{ duration: 1.3, ease: [0.77, 0, 0.175, 1] }}
+          initial={{ x: 0, y: 0, rotate: 0 }}
+          animate={isSplit ? { x: '110%', y: '40vh', rotate: 30 } : { x: 0, y: 0, rotate: 0 }}
+          transition={{ duration: 1.3, ease: [0.25, 1, 0.5, 1] }}
           className="absolute right-0 w-1/2 h-11 sm:h-13 bg-gradient-to-l from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_8px_20px_rgba(0,0,0,0.45)] flex items-center justify-start"
         >
           <div className="w-full h-full bg-gradient-to-b from-white/15 via-transparent to-black/30" />
@@ -228,8 +256,8 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
 
         {/* Central Clickable Bow and Ribbon tails */}
         <motion.div
-          initial={{ scale: 1, opacity: 1, rotate: 0 }}
-          animate={isSplit ? { y: '100vh', rotate: 95, scale: 0.8, opacity: 0 } : { scale: 1, opacity: 1 }}
+          initial={{ scale: 1, opacity: 1, rotate: 0, y: 0 }}
+          animate={isSplit ? { y: '60vh', rotate: 45, scale: 0.8, opacity: 0 } : { scale: 1, opacity: 1, rotate: 0, y: 0 }}
           transition={isSplit ? { duration: 1.3, ease: 'easeIn' } : {}}
           className="absolute z-40 flex items-center justify-center cursor-pointer pointer-events-auto"
         >
@@ -237,7 +265,7 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
           <button
             onClick={handleRibbonClick}
             disabled={isClicked}
-            className="group flex flex-col items-center justify-center p-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded-full active:scale-95 transition-transform"
+            className="group flex flex-col items-center justify-center p-4 focus:outline-none rounded-full active:scale-95 transition-transform"
           >
             {/* Shimmer backing glow indicator */}
             {!isClicked && (
@@ -333,7 +361,7 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
         </motion.div>
       </div>
 
-      {/* Floating Interactive Instructions */}
+      {/* Floating Interactive Instruction Label (Only shown before ribbon tap) */}
       <AnimatePresence>
         {!isClicked && (
           <motion.div
@@ -344,15 +372,15 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
               opacity: { repeat: Infinity, duration: 2, ease: 'easeInOut' },
               y: { duration: 0.5 }
             }}
-            className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none z-40 select-none px-5 py-2.5 rounded-full bg-neutral-900/95 border border-[#D4AF37]/35 shadow-xl backdrop-blur-xs text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] text-[#D4AF37]"
-            style={{ top: '64.5%' }}
+            className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none z-40 select-none px-5 py-2.5 rounded-full bg-[#1C120C]/95 border border-[#D4AF37]/35 shadow-xl backdrop-blur-xs text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] text-[#D4AF37]"
+            style={{ top: '65%' }}
           >
             Tap the ribbon to cut & enter
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Gold/Red Celebratory Confetti Particle System */}
+      {/* Celebratory Gold/Red Confetti System */}
       {showConfetti &&
         confettiParticles.map((particle) => (
           <motion.div
@@ -360,21 +388,21 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
             initial={{ x: 0, y: 0, scale: 1.2, opacity: 1, rotate: 0 }}
             animate={{
               x: particle.x,
-              y: particle.y + 140, // realistic gravity fall drift down
-              scale: 0.4,
+              y: particle.y + 160,
+              scale: 0.3,
               opacity: 0,
               rotate: Math.random() * 540 - 270
             }}
             transition={{
               delay: particle.delay,
-              duration: 2.0,
+              duration: 1.8,
               ease: 'easeOut'
             }}
-            className="absolute z-[45] rounded-xs shadow-xs"
+            className="absolute z-[45] rounded-xs shadow-xs pointer-events-none"
             style={{
               backgroundColor: particle.color,
               width: particle.size,
-              height: particle.size * (Math.random() > 0.5 ? 1.5 : 1), // variable square/rectangle shape
+              height: particle.size * (Math.random() > 0.5 ? 1.5 : 1),
               left: '50%',
               top: '52%'
             }}
@@ -395,8 +423,8 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
             }
             exit={{ x: '60vw', y: '60vh', rotate: 20, opacity: 0 }}
             transition={{
-              default: { duration: 0.8, ease: 'easeOut' },
-              exit: { duration: 0.6, ease: 'easeIn' }
+              default: { duration: 0.5, ease: 'easeOut' },
+              exit: { duration: 0.4, ease: 'easeIn' }
             }}
             className="absolute left-1/2 top-[52%] z-50 pointer-events-none"
             style={{ marginLeft: '-60px', marginTop: '-60px' }}
@@ -406,7 +434,7 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
               {/* Blade A (Top rotating blade + Bottom ring handle) */}
               <motion.div
                 animate={{ rotate: bladeARotation }}
-                transition={{ duration: 0.25, ease: 'easeInOut' }}
+                transition={{ duration: 0.22, ease: 'easeInOut' }}
                 style={{ transformOrigin: '60px 60px' }}
                 className="absolute inset-0"
               >
@@ -438,7 +466,7 @@ export default function GrandOpening({ onComplete }: GrandOpeningProps) {
               {/* Blade B (Bottom rotating blade + Top ring handle) */}
               <motion.div
                 animate={{ rotate: bladeBRotation }}
-                transition={{ duration: 0.25, ease: 'easeInOut' }}
+                transition={{ duration: 0.22, ease: 'easeInOut' }}
                 style={{ transformOrigin: '60px 60px' }}
                 className="absolute inset-0"
               >

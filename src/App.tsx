@@ -117,7 +117,13 @@ function AppContent() {
     setCart([]);
   };
 
-  const [isSiteUnlocked, setIsSiteUnlocked] = useState(false);
+  const [isSiteUnlocked, setIsSiteUnlocked] = useState(() => {
+    try {
+      return localStorage.getItem('khodiyar-intro-played') === 'true';
+    } catch (e) {
+      return false;
+    }
+  });
 
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
