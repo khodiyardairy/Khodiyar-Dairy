@@ -667,7 +667,7 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
       <GoogleReviewsSection />
 
       {/* 8. PREMIUM FOOTER */}
-      <footer className="border-t border-[#F0EAD6] bg-[#FAF6EE] pt-6 pb-4 md:pt-12 md:pb-8">
+      <footer className="!mt-0 border-t border-[#F0EAD6] bg-[#FAF6EE] pt-6 pb-4 md:pt-12 md:pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* MOBILE FOOTER (md:hidden) */}

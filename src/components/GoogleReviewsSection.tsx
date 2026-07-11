@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, CheckCircle2 } from 'lucide-react';
+import { Star, CheckCircle2, ArrowUpRight } from 'lucide-react';
 
 interface GoogleReview {
   id: string;
@@ -102,9 +102,9 @@ export default function GoogleReviewsSection() {
   return (
     <section 
       id="testimonials" 
-      className="relative bg-gradient-to-b from-[#FFFDF9] via-[#FAF6EE] to-[#FFFDF9] py-10 px-4 sm:px-6 lg:px-8 overflow-hidden select-none border-t border-b border-[#F0EAD6]/40"
+      className="relative bg-gradient-to-b from-[#FFFDF9] via-[#FAF6EE] to-[#FFFDF9] pt-10 pb-0 px-4 sm:px-6 lg:px-8 overflow-hidden select-none border-t border-b border-[#F0EAD6]/40"
     >
-      {/* Dynamic Keyframes for seamless looping */}
+      {/* Dynamic Keyframes for seamless looping & premium animations */}
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes marquee {
           0% {
@@ -121,6 +121,45 @@ export default function GoogleReviewsSection() {
         }
         .marquee-track-paused {
           animation-play-state: paused !important;
+        }
+        @keyframes luxury-shine {
+          0% {
+            left: -150%;
+          }
+          50% {
+            left: 150%;
+          }
+          100% {
+            left: 150%;
+          }
+        }
+        @keyframes luxury-pulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.45), 0 0 0 0 rgba(212, 175, 55, 0.45);
+          }
+          70% {
+            box-shadow: 0 0 0 12px rgba(185, 28, 28, 0), 0 0 0 18px rgba(212, 175, 55, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(185, 28, 28, 0), 0 0 0 0 rgba(212, 175, 55, 0);
+          }
+        }
+        .animate-luxury-shine {
+          position: relative;
+          overflow: hidden;
+        }
+        .animate-luxury-shine::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          height: 100%;
+          width: 200%;
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.4) 50%, transparent);
+          transform: skewX(-25deg);
+          animation: luxury-shine 4s ease-in-out infinite;
+        }
+        .btn-luxury-pulse {
+          animation: luxury-pulse 2s infinite;
         }
       `}} />
 
@@ -220,16 +259,33 @@ export default function GoogleReviewsSection() {
           </div>
         </div>
 
-        {/* Dynamic single CTA Button row below the Carousel */}
-        <div className="flex justify-center pt-2">
+        {/* Dynamic highlighted single CTA Button row below the Carousel */}
+        <div className="flex flex-col items-center justify-center pt-6 pb-2 space-y-4">
+          <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] text-[#B91C1C] bg-[#FFF5F5] border border-[#FEB2B2]/40 px-4 py-1.5 rounded-full shadow-xs animate-pulse">
+            ✨ Help Babra's Favorite Taste Grow ✨
+          </span>
           <a
             href="https://g.page/r/CdtBTgw3wz7jEBI/review"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#1a73e8] hover:bg-[#1557b0] text-white text-[11px] sm:text-xs font-extrabold uppercase tracking-widest shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer"
+            className="btn-luxury-pulse animate-luxury-shine inline-flex items-center justify-center gap-3.5 px-8 sm:px-10 py-4 rounded-full bg-gradient-to-r from-[#B91C1C] via-[#FF9933] to-[#C5A059] hover:from-[#9B1212] hover:via-[#E68A00] hover:to-[#AA7C11] text-white text-xs sm:text-sm font-black uppercase tracking-widest shadow-xl hover:-translate-y-1 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 cursor-pointer select-none border border-white/20 focus:outline-none"
           >
-            <span>⭐⭐⭐⭐⭐ Write a Google Review</span>
+            <div className="bg-white p-1.5 rounded-full shadow-sm flex items-center justify-center shrink-0">
+              <GoogleGLogo className="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div className="flex flex-col items-start leading-none text-left">
+              <div className="flex items-center gap-0.5 mb-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3 h-3 fill-amber-300 text-amber-300" />
+                ))}
+              </div>
+              <span className="text-white font-black text-xs sm:text-sm">Write a Google Review</span>
+            </div>
+            <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-white/90 shrink-0 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
+          <p className="text-[10px] sm:text-xs text-[#3E2723]/60 font-bold tracking-wider uppercase text-center max-w-xs">
+            It takes only 30 seconds to support us!
+          </p>
         </div>
       </div>
     </section>
