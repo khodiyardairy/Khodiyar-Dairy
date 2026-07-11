@@ -120,6 +120,20 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
   const [showIntro, setShowIntro] = useState(false);
   const [isCut, setIsCut] = useState(false);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+  const [isCuttingStarted, setIsCuttingStarted] = useState(false);
+  const [confettiParticles, setConfettiParticles] = useState<Array<{id: number, x: number, y: number, r: number, delay: number, size: number}>>([]);
+
+  // Lock body scroll during intro overlay to prevent user from scrolling the main site
+  useEffect(() => {
+    if (showIntro) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showIntro]);
 
   useEffect(() => {
     const hasPlayed = sessionStorage.getItem('khodiyar-intro-played');
@@ -139,16 +153,38 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
     }
 
     setShowIntro(true);
+  }, []);
 
-    const scissorsMoveTimer = setTimeout(() => {
+  const triggerConfetti = () => {
+    const particlesArray: Array<{id: number, x: number, y: number, r: number, delay: number, size: number}> = [];
+    for (let i = 0; i < 60; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = 80 + Math.random() * 220; // explosive range
+      particlesArray.push({
+        id: i,
+        x: Math.cos(angle) * velocity,
+        y: Math.sin(angle) * velocity - (30 + Math.random() * 60), // upward/sideward gravity drift
+        r: Math.random() * 720,
+        delay: Math.random() * 0.15,
+        size: 5 + Math.random() * 8, // elegant confetti sizes
+      });
+    }
+    setConfettiParticles(particlesArray);
+  };
+
+  const handleCutRibbon = () => {
+    if (isCuttingStarted || isCut) return;
+    setIsCuttingStarted(true);
+
+    // Scissors move & "snip" animation takes about 450ms
+    setTimeout(() => {
       setIsCut(true);
-    }, 1500);
+      triggerConfetti();
+    }, 450);
 
-    const fadeOutTimer = setTimeout(() => {
+    // Fade to website after ribbon pieces slide apart and confetti bursts (total 1.8 seconds)
+    setTimeout(() => {
       sessionStorage.setItem('khodiyar-intro-played', 'true');
-    }, 2500);
-
-    const removeIntroTimer = setTimeout(() => {
       setShowIntro(false);
       setIsAnimationComplete(true);
       
@@ -158,14 +194,8 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
           target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 100);
-    }, 3200);
-
-    return () => {
-      clearTimeout(scissorsMoveTimer);
-      clearTimeout(fadeOutTimer);
-      clearTimeout(removeIntroTimer);
-    };
-  }, []);
+    }, 1800);
+  };
 
   const handleSkipIntro = () => {
     sessionStorage.setItem('khodiyar-intro-played', 'true');
@@ -281,92 +311,175 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: 'easeInOut' }}
-            className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[9999] bg-[#F5EFE6] flex flex-col items-center justify-center overflow-hidden"
           >
             {/* Skip Intro Button */}
             <button
               onClick={handleSkipIntro}
-              className="absolute bottom-6 right-6 px-4 py-2 text-[11px] font-black uppercase tracking-wider text-[#3E2723]/60 hover:text-[#3E2723] bg-[#FAF6EE] border border-[#F0EAD6] hover:bg-[#FFF8E1] hover:border-[#FF9933] rounded-full transition-all cursor-pointer z-50 shadow-xs"
+              className="absolute bottom-6 right-6 px-4 py-2 text-[11px] font-black uppercase tracking-wider text-[#3E2723]/60 hover:text-[#3E2723] bg-[#FAF6EE] border border-[#F0EAD6] hover:bg-[#FFF8E1] hover:border-[#FF9933] rounded-full transition-all cursor-pointer z-50 shadow-sm select-none focus:outline-none"
             >
               Skip Intro
             </button>
 
-            {/* Intro Content Container */}
-            <div className="relative w-full max-w-lg px-4 flex flex-col items-center justify-center">
-              
-              {/* Welcome Text above the ribbon */}
-              <motion.p
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="text-xs sm:text-sm font-black uppercase tracking-[0.25em] text-[#3E2723] mb-16 text-center select-none animate-pulse"
-              >
-                WELCOME TO SHREE KHODIYAR DAIRY
-              </motion.p>
+            {/* Elegant Luxury Invitation Card */}
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={isCut ? { scale: 1.05, opacity: 0 } : { scale: 1, opacity: 1 }}
+              transition={isCut ? { duration: 0.8, ease: "easeInOut", delay: 0.2 } : { duration: 0.6 }}
+              className="relative w-[310px] xs:w-[340px] sm:w-[380px] h-[500px] xs:h-[550px] sm:h-[600px] bg-[#FAF6EE] border-2 border-[#D4AF37]/40 rounded-[2.5rem] shadow-[0_20px_50px_rgba(62,39,35,0.12)] p-6 sm:p-8 flex flex-col justify-between items-center text-center z-10"
+            >
+              {/* Card Corner Borders for Luxury Feel */}
+              <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-[#D4AF37]/40 rounded-tl-lg pointer-events-none" />
+              <div className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-[#D4AF37]/40 rounded-tr-lg pointer-events-none" />
+              <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-[#D4AF37]/40 rounded-bl-lg pointer-events-none" />
+              <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-[#D4AF37]/40 rounded-br-lg pointer-events-none" />
 
-              {/* Left Ribbon Half */}
-              <motion.div
-                initial={{ x: 0 }}
-                animate={isCut ? { x: '-100%' } : { x: 0 }}
-                transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1] }}
-                className="absolute left-0 top-1/2 -translate-y-1/2 w-1/2 h-10 sm:h-12 bg-gradient-to-r from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center justify-end overflow-hidden"
-              >
-                <div className="w-full h-1 bg-[#D4AF37] opacity-30 my-auto" />
-              </motion.div>
+              {/* TOP CONTENT PANEL */}
+              <div className="flex flex-col items-center w-full">
+                <span className="text-[10px] sm:text-[11px] font-black tracking-[0.25em] text-[#C5A059] uppercase">
+                  PURE • TRADITIONAL • HANDCRAFTED
+                </span>
+                
+                <h2 className="font-serif tracking-widest text-[#3E2723] text-base sm:text-lg font-black uppercase mt-4">
+                  KHODIYAR DAIRY & PRODUCTS
+                </h2>
+                
+                <div className="w-12 h-[1px] bg-[#D4AF37]/40 my-3" />
+                
+                <p className="font-sans italic text-xs text-[#3E2723]/60">
+                  You're invited to the
+                </p>
+                
+                <h3 className="text-2xl sm:text-3xl font-black text-[#3E2723] tracking-widest uppercase mt-2 bg-gradient-to-r from-[#8B5A2B] via-[#D4AF37] to-[#8B5A2B] bg-clip-text text-transparent font-sans">
+                  GRAND OPENING
+                </h3>
+                
+                <p className="text-xs sm:text-sm font-bold tracking-widest text-[#3E2723]/80 uppercase mt-1">
+                  Of Khodiyar Dairy
+                </p>
+              </div>
 
-              {/* Right Ribbon Half */}
-              <motion.div
-                initial={{ x: 0 }}
-                animate={isCut ? { x: '100%' } : { x: 0 }}
-                transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1] }}
-                className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-10 sm:h-12 bg-gradient-to-l from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center justify-start overflow-hidden"
-              >
-                <div className="w-full h-1 bg-[#D4AF37] opacity-30 my-auto" />
-              </motion.div>
+              {/* MIDDLE SPACER (This is where the Ribbon will cross horizontally) */}
+              <div className="h-12 w-full my-4 flex items-center justify-center relative pointer-events-none">
+                {/* Visual empty space to prevent text overlap */}
+              </div>
 
-              {/* Gold Bow */}
-              <motion.div
-                initial={{ scale: 1, opacity: 1, rotate: 0 }}
-                animate={isCut ? { scale: 0, opacity: 0, rotate: 45 } : { scale: 1, opacity: 1, rotate: 0 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center select-none pointer-events-none"
-              >
-                <div className="relative flex items-center justify-center">
-                  {/* Left Loop */}
-                  <div className="w-10 h-10 border-4 border-[#D4AF37] rounded-full bg-gradient-to-tr from-[#AA7C11] via-[#FBF5B7] to-[#AA7C11] transform -rotate-45 translate-x-2 shadow-md" />
-                  {/* Right Loop */}
-                  <div className="w-10 h-10 border-4 border-[#D4AF37] rounded-full bg-gradient-to-tl from-[#AA7C11] via-[#FBF5B7] to-[#AA7C11] transform rotate-45 -translate-x-2 shadow-md" />
-                  {/* Center Knot */}
-                  <div className="absolute w-6 h-6 rounded-md bg-gradient-to-r from-[#AA7C11] via-[#FBF5B7] to-[#AA7C11] border-2 border-[#D4AF37] shadow-lg flex items-center justify-center z-10" />
-                  
-                  {/* Hanging tails */}
-                  <div className="absolute top-6 left-1 w-2.5 h-10 bg-[#D4AF37] transform -rotate-12 origin-top" />
-                  <div className="absolute top-6 right-1 w-2.5 h-10 bg-[#D4AF37] transform rotate-12 origin-top" />
-                </div>
-              </motion.div>
+              {/* BOTTOM CONTENT PANEL */}
+              <div className="flex flex-col items-center w-full">
+                {/* CTA BUTTON */}
+                <motion.button
+                  onClick={handleCutRibbon}
+                  disabled={isCuttingStarted}
+                  animate={isCuttingStarted ? { scale: 0.9, opacity: 0 } : { scale: [1, 1.03, 1], opacity: 1 }}
+                  transition={isCuttingStarted ? { duration: 0.3 } : { repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                  whileHover={isCuttingStarted ? {} : { scale: 1.03 }}
+                  className="w-[190px] h-[50px] rounded-full bg-gradient-to-r from-[#DFBA73] via-[#F5D798] to-[#C5A059] text-[#3E2723] font-black text-xs sm:text-sm uppercase tracking-wider shadow-md shadow-[#C5A059]/30 hover:shadow-lg hover:shadow-[#C5A059]/40 transition-shadow flex items-center justify-center gap-1.5 cursor-pointer border border-[#FAF6EE]/50 select-none focus:outline-none pointer-events-auto disabled:pointer-events-none"
+                >
+                  <span>✂</span> Tap Ribbon to Enter
+                </motion.button>
 
-              {/* Scissors Icon */}
+                <p className="font-sans italic text-[11px] sm:text-xs text-[#3E2723]/65 font-medium mt-6">
+                  Your presence is the sweetest gift...
+                </p>
+                
+                <p className="text-[10px] sm:text-[11px] font-black tracking-widest text-[#C5A059] uppercase mt-2">
+                  HAPPINESS IS JUST ONE BITE AWAY.
+                </p>
+              </div>
+
+            </motion.div>
+
+            {/* Left Ribbon Half */}
+            <motion.div
+              initial={{ x: 0 }}
+              animate={isCut ? { x: '-100%' } : { x: 0 }}
+              transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1] }}
+              className="absolute left-0 top-1/2 -translate-y-1/2 w-1/2 h-10 sm:h-12 bg-gradient-to-r from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center justify-end overflow-hidden z-20 pointer-events-none"
+            >
+              <div className="w-full h-1 bg-[#D4AF37] opacity-30 my-auto" />
+            </motion.div>
+
+            {/* Right Ribbon Half */}
+            <motion.div
+              initial={{ x: 0 }}
+              animate={isCut ? { x: '100%' } : { x: 0 }}
+              transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1] }}
+              className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-10 sm:h-12 bg-gradient-to-l from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center justify-start overflow-hidden z-20 pointer-events-none"
+            >
+              <div className="w-full h-1 bg-[#D4AF37] opacity-30 my-auto" />
+            </motion.div>
+
+            {/* Gold Bow */}
+            <motion.div
+              initial={{ scale: 1, opacity: 1, rotate: 0 }}
+              animate={isCut ? { scale: 0, opacity: 0, rotate: 45 } : { scale: 1, opacity: 1, rotate: 0 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex items-center justify-center select-none pointer-events-none"
+            >
+              <div className="relative flex items-center justify-center">
+                {/* Left Loop */}
+                <div className="w-10 h-10 border-4 border-[#D4AF37] rounded-full bg-gradient-to-tr from-[#AA7C11] via-[#FBF5B7] to-[#AA7C11] transform -rotate-45 translate-x-2 shadow-md" />
+                {/* Right Loop */}
+                <div className="w-10 h-10 border-4 border-[#D4AF37] rounded-full bg-gradient-to-tl from-[#AA7C11] via-[#FBF5B7] to-[#AA7C11] transform rotate-45 -translate-x-2 shadow-md" />
+                {/* Center Knot */}
+                <div className="absolute w-6 h-6 rounded-md bg-gradient-to-r from-[#AA7C11] via-[#FBF5B7] to-[#AA7C11] border-2 border-[#D4AF37] shadow-lg flex items-center justify-center z-10" />
+                
+                {/* Hanging tails */}
+                <div className="absolute top-6 left-1 w-2.5 h-10 bg-[#D4AF37] transform -rotate-12 origin-top" />
+                <div className="absolute top-6 right-1 w-2.5 h-10 bg-[#D4AF37] transform rotate-12 origin-top" />
+              </div>
+            </motion.div>
+
+            {/* Scissors Icon */}
+            <motion.div
+              initial={{ y: -60, x: -20, opacity: 0, rotate: -35 }}
+              animate={
+                isCuttingStarted
+                  ? isCut
+                    ? { y: 0, x: 0, opacity: [1, 1, 0], rotate: [-20, -5, -20], scale: [1, 1.1, 0] }
+                    : { y: 0, x: 0, opacity: 1, rotate: [-35, -15, -35] }
+                  : { y: -30, x: -10, opacity: 1, rotate: -35 }
+              }
+              transition={{
+                duration: isCuttingStarted ? 0.6 : 1.5,
+                ease: "easeInOut",
+                repeat: isCuttingStarted ? 0 : Infinity,
+                repeatType: "reverse"
+              }}
+              className="absolute left-1/2 top-1/2 z-40 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+              style={{ marginTop: '-24px' }}
+            >
+              <div className="p-2.5 sm:p-3 bg-[#3E2723] rounded-full text-[#D4AF37] border-2 border-[#D4AF37] shadow-xl flex items-center justify-center">
+                <Scissors className="w-5 h-5 sm:w-6 sm:h-6 rotate-90" />
+              </div>
+            </motion.div>
+
+            {/* Confetti Particles Emitter */}
+            {isCut && confettiParticles.map((particle) => (
               <motion.div
-                initial={{ y: -100, opacity: 0, rotate: -20 }}
-                animate={
-                  isCut
-                    ? { y: 0, opacity: [1, 1, 0], rotate: [0, -10, 0], scale: [1, 1.1, 0.9] }
-                    : { y: -15, opacity: 1, rotate: [10, -5, 10] }
-                }
-                transition={{
-                  y: { duration: 0.8, ease: 'easeOut' },
-                  rotate: { duration: 1, repeat: isCut ? 0 : Infinity, repeatType: 'reverse', ease: 'easeInOut' },
-                  opacity: isCut ? { delay: 0.4, duration: 0.3 } : { duration: 0.3 },
+                key={particle.id}
+                initial={{ x: 0, y: 0, opacity: 1, rotate: 0, scale: 1 }}
+                animate={{ 
+                  x: particle.x, 
+                  y: particle.y, 
+                  opacity: 0, 
+                  rotate: particle.r + 360,
+                  scale: 0
                 }}
-                className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                style={{ marginTop: isCut ? '-15px' : '-45px' }}
-              >
-                <div className="p-3 bg-[#3E2723] rounded-full text-[#D4AF37] border-2 border-[#D4AF37] shadow-xl flex items-center justify-center">
-                  <Scissors className="w-6 h-6 rotate-90" />
-                </div>
-              </motion.div>
-
-            </div>
+                transition={{ 
+                  duration: 1.5, 
+                  delay: particle.delay,
+                  ease: "easeOut"
+                }}
+                className="absolute left-1/2 top-1/2 z-50 rounded-sm pointer-events-none"
+                style={{
+                  width: particle.size,
+                  height: particle.size,
+                  backgroundColor: ['#D4AF37', '#FFDF00', '#FFD700', '#B59410', '#F3E5AB'][particle.id % 5],
+                  boxShadow: '0 0 6px rgba(212, 175, 55, 0.6)'
+                }}
+              />
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
