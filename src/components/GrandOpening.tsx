@@ -224,9 +224,39 @@ export default function GrandOpening({ initialCutsRemaining, onComplete }: Grand
           <h2 className="text-4xl sm:text-6xl font-black tracking-[0.06em] text-[#B91C1C] leading-none mb-2 sm:mb-3 drop-shadow-xs font-serif uppercase">
             OPENING
           </h2>
-          <p className="text-xs sm:text-sm font-extrabold tracking-[0.15em] text-[#3E2723] uppercase">
+          <p className="text-xs sm:text-sm font-extrabold tracking-[0.15em] text-[#3E2723] uppercase mb-4 sm:mb-6">
             Of Khodiyar Dairy
           </p>
+
+          {/* Premium Gold Gradient Pill CTA Button (Width: 195px, Height: 48/52px, Fully Rounded) */}
+          <div className="h-14 flex items-center justify-center w-full z-20">
+            <AnimatePresence>
+              {!isClicked && (
+                <motion.button
+                  key="grand-cta-button"
+                  onClick={handleRibbonClick}
+                  disabled={isSubmitting}
+                  initial={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.85, y: 15 }}
+                  animate={{ scale: [1, 1.03, 1] }}
+                  transition={{
+                    scale: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+                    opacity: { duration: 0.35 },
+                    y: { duration: 0.35 }
+                  }}
+                  whileHover={{ scale: 1.03 }}
+                  className={`w-[195px] h-[48px] sm:h-[52px] rounded-full bg-gradient-to-r from-[#DFBA73] via-[#F5D798] to-[#C5A059] text-[#3E2723] font-black text-xs sm:text-sm uppercase tracking-wider shadow-md shadow-[#C5A059]/25 hover:shadow-lg transition-all flex items-center justify-center gap-1.5 border border-[#FAF6EE]/50 select-none focus:outline-none z-50 ${isSubmitting ? 'opacity-80 cursor-wait pointer-events-none' : 'cursor-pointer pointer-events-auto'}`}
+                >
+                  {isSubmitting ? (
+                    <span className="animate-spin mr-1">⌛</span>
+                  ) : (
+                    <span>✂</span>
+                  )}
+                  <span>{isSubmitting ? 'Connecting...' : 'Tap Ribbon to Enter'}</span>
+                </motion.button>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         {/* Card Footer Message text */}

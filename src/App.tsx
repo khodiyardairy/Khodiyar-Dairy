@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import BottomNav from './components/BottomNav';
 import HomeView from './components/HomeView';
@@ -11,7 +11,7 @@ import ContactView from './components/ContactView';
 import CartView from './components/CartView';
 import CheckoutView from './components/CheckoutView';
 import ProductDetailView from './components/ProductDetailView';
-import GrandOpening from './components/GrandOpening';
+import GrandOpeningIntro from './components/GrandOpening';
 import { Product, CartItem } from './types';
 import { products } from './data/dairyData';
 import { motion, AnimatePresence } from 'motion/react';
@@ -63,11 +63,12 @@ function ProductDetailRouteWrapper({
   );
 }
 
-function AppContent() {
+const FORCE_SHOW_INTRO = true;
+
+export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Load cart state from localStorage
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
       const stored = localStorage.getItem('khodiyar_cart');
@@ -76,6 +77,19 @@ function AppContent() {
       return [];
     }
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
+  const [introCompleted, setIntroCompleted] = useState(false);
+
+  console.log("isLoading", isLoading);
+  console.log("showIntro", showIntro);
+  console.log("introCompleted", introCompleted);
+
+  const [isSiteUnlocked, setIsSiteUnlocked] = useState(false);
+  const [isCheckingStatus, setIsCheckingStatus] = useState(false);
+  const [cutsRemaining, setCutsRemaining] = useState(2);
+  const [showGrandToast, setShowGrandToast] = useState(false);
 
   // Sync cart with localStorage
   useEffect(() => {
@@ -117,10 +131,11 @@ function AppContent() {
     setCart([]);
   };
 
-  const [isSiteUnlocked, setIsSiteUnlocked] = useState(false);
-  const [isCheckingStatus, setIsCheckingStatus] = useState(true);
-  const [cutsRemaining, setCutsRemaining] = useState(0);
-  const [showGrandToast, setShowGrandToast] = useState(false);
+  const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+  const handleViewDetail = (product: Product) => {
+    navigate(`/product/${product.id}`);
+  };
 
   useEffect(() => {
     // Check if the URL requests a reset of the grand opening status
@@ -148,6 +163,28 @@ function AppContent() {
     fetchStatus();
 
     function fetchStatus() {
+      // If FORCE_SHOW_INTRO is enabled, we always show the intro
+      if (FORCE_SHOW_INTRO) {
+        // Fetch status to display cuts remaining count on card
+        fetch('/api/grand-opening-status')
+          .then((res) => {
+            if (!res.ok) throw new Error('API error');
+            return res.json();
+          })
+          .then((data) => {
+            setCutsRemaining(data.cutsRemaining ?? 0);
+          })
+          .catch((err) => {
+            console.error('Error fetching grand opening status (forced intro):', err);
+            setCutsRemaining(0);
+          })
+          .finally(() => {
+            setIsSiteUnlocked(false);
+            setIsCheckingStatus(false);
+          });
+        return;
+      }
+
       // Check local storage first to prevent API requests for already-unlocked devices
       try {
         const hasPlayed = localStorage.getItem('khodiyar-intro-played') === 'true';
@@ -160,7 +197,7 @@ function AppContent() {
         console.warn('localStorage not available:', e);
       }
 
-      // Check Vercel KV status (or server in-memory fallback)
+      // Check server status
       fetch('/api/grand-opening-status')
         .then((res) => {
           if (!res.ok) {
@@ -193,11 +230,19 @@ function AppContent() {
     }
   }, []);
 
-  const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-
-  const handleViewDetail = (product: Product) => {
-    navigate(`/product/${product.id}`);
-  };
+  if (showIntro) {
+    return (
+      <GrandOpeningIntro 
+        initialCutsRemaining={2} 
+        onComplete={() => {
+          console.log("onComplete called");
+          setIntroCompleted(true);
+          setShowIntro(false);
+          setIsSiteUnlocked(true);
+        }} 
+      />
+    );
+  }
 
   if (isCheckingStatus) {
     return (
@@ -245,7 +290,7 @@ function AppContent() {
       </AnimatePresence>
 
       {!isSiteUnlocked && (
-        <GrandOpening 
+        <GrandOpeningIntro 
           initialCutsRemaining={cutsRemaining} 
           onComplete={() => setIsSiteUnlocked(true)} 
         />
@@ -343,13 +388,5 @@ function AppContent() {
         <BottomNav cartCount={totalCartCount} />
       </div>
     </>
-  );
-}
-
-export default function App() {
-  return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
   );
 }
