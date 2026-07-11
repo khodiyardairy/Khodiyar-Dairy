@@ -311,12 +311,12 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: 'easeInOut' }}
-            className="fixed inset-0 z-[9999] bg-[#F5EFE6] flex flex-col items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[9999] bg-[#0A0908] flex flex-col items-center justify-center overflow-hidden"
           >
             {/* Skip Intro Button */}
             <button
               onClick={handleSkipIntro}
-              className="absolute bottom-6 right-6 px-4 py-2 text-[11px] font-black uppercase tracking-wider text-[#3E2723]/60 hover:text-[#3E2723] bg-[#FAF6EE] border border-[#F0EAD6] hover:bg-[#FFF8E1] hover:border-[#FF9933] rounded-full transition-all cursor-pointer z-50 shadow-sm select-none focus:outline-none"
+              className="absolute bottom-6 right-6 px-4 py-2 text-[11px] font-black uppercase tracking-wider text-white/55 hover:text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#DFBA73] rounded-full transition-all cursor-pointer z-50 shadow-sm select-none focus:outline-none"
             >
               Skip Intro
             </button>
@@ -326,77 +326,110 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={isCut ? { scale: 1.05, opacity: 0 } : { scale: 1, opacity: 1 }}
               transition={isCut ? { duration: 0.8, ease: "easeInOut", delay: 0.2 } : { duration: 0.6 }}
-              className="relative w-[310px] xs:w-[340px] sm:w-[380px] h-[500px] xs:h-[550px] sm:h-[600px] bg-[#FAF6EE] border-2 border-[#D4AF37]/40 rounded-[2.5rem] shadow-[0_20px_50px_rgba(62,39,35,0.12)] p-6 sm:p-8 flex flex-col justify-between items-center text-center z-10"
+              className="relative w-[320px] xs:w-[350px] sm:w-[395px] h-[540px] xs:h-[585px] sm:h-[635px] bg-gradient-to-b from-[#FAF6EE] to-[#FFFDF9] rounded-[2.5rem] shadow-[0_25px_60px_rgba(0,0,0,0.8)] p-6 sm:p-8 flex flex-col justify-between items-center text-center z-10 select-none overflow-hidden"
             >
-              {/* Card Corner Borders for Luxury Feel */}
-              <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-[#D4AF37]/40 rounded-tl-lg pointer-events-none" />
-              <div className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-[#D4AF37]/40 rounded-tr-lg pointer-events-none" />
-              <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-[#D4AF37]/40 rounded-bl-lg pointer-events-none" />
-              <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-[#D4AF37]/40 rounded-br-lg pointer-events-none" />
+              {/* Premium Double Gold Border */}
+              <div className="absolute inset-3 border-2 border-[#D4AF37]/45 rounded-[2rem] pointer-events-none" />
+              <div className="absolute inset-[18px] border border-[#D4AF37]/25 rounded-[1.8rem] pointer-events-none" />
+              
+              {/* Luxury Corner Ornaments (Double lines style) */}
+              <div className="absolute top-6 left-6 w-8 h-8 border-t border-l border-[#D4AF37]/40 pointer-events-none" />
+              <div className="absolute top-6 right-6 w-8 h-8 border-t border-r border-[#D4AF37]/40 pointer-events-none" />
+              <div className="absolute bottom-6 left-6 w-8 h-8 border-b border-l border-[#D4AF37]/40 pointer-events-none" />
+              <div className="absolute bottom-6 right-6 w-8 h-8 border-b border-r border-[#D4AF37]/40 pointer-events-none" />
 
-              {/* TOP CONTENT PANEL */}
-              <div className="flex flex-col items-center w-full">
-                <span className="text-[10px] sm:text-[11px] font-black tracking-[0.25em] text-[#C5A059] uppercase">
-                  PURE • TRADITIONAL • HANDCRAFTED
-                </span>
-                
-                <h2 className="font-serif tracking-widest text-[#3E2723] text-base sm:text-lg font-black uppercase mt-4">
-                  KHODIYAR DAIRY & PRODUCTS
+              {/* Gold Filigree Swirl Decor in the Bottom Right Corner */}
+              <svg className="absolute bottom-6 right-6 w-14 h-14 text-[#C5A059]/15 pointer-events-none select-none rotate-90" viewBox="0 0 100 100" fill="currentColor">
+                <path d="M10,90 C40,90 80,80 90,10 C90,30 80,60 50,70 C30,75 15,80 10,90 Z" opacity="0.4" />
+                <path d="M30,85 C50,80 75,65 85,45 C80,55 65,70 45,75 C35,78 25,82 20,87 C25,86 28,85 30,85 Z" />
+              </svg>
+
+              {/* TOP HEADER CONTENT (No Overlap, Precise Spacing) */}
+              <div className="flex flex-col items-center w-full z-10 mt-2 sm:mt-4">
+                <h2 className="font-serif tracking-widest text-[#2D1B18] text-2xl xs:text-3xl sm:text-4xl font-extrabold uppercase leading-none">
+                  KHODIYAR
                 </h2>
-                
-                <div className="w-12 h-[1px] bg-[#D4AF37]/40 my-3" />
-                
-                <p className="font-sans italic text-xs text-[#3E2723]/60">
-                  You're invited to the
-                </p>
-                
-                <h3 className="text-2xl sm:text-3xl font-black text-[#3E2723] tracking-widest uppercase mt-2 bg-gradient-to-r from-[#8B5A2B] via-[#D4AF37] to-[#8B5A2B] bg-clip-text text-transparent font-sans">
-                  GRAND OPENING
+                <h2 className="font-serif tracking-widest text-[#2D1B18] text-2xl xs:text-3xl sm:text-4xl font-extrabold uppercase leading-none mt-1">
+                  DAIRY
+                </h2>
+                <h3 className="font-sans tracking-[0.28em] text-[#C5A059] text-[10px] sm:text-xs font-black uppercase mt-1.5">
+                  & PRODUCTS
                 </h3>
                 
-                <p className="text-xs sm:text-sm font-bold tracking-widest text-[#3E2723]/80 uppercase mt-1">
+                {/* Premium Golden Pill Badge */}
+                <div className="px-4 py-1.5 bg-[#FFFDEE] border border-[#EEDCA5]/60 rounded-full text-[9px] sm:text-[10px] font-black tracking-wider text-[#A37B30] uppercase mt-3.5 shadow-xs select-none">
+                  PURE • TRADITIONAL • HANDCRAFTED
+                </div>
+                
+                <p className="font-serif italic text-xs sm:text-sm text-[#A37B30]/95 mt-5">
+                  You're invited to the
+                </p>
+              </div>
+
+              {/* MIDDLE SECTION - SPLIT GRAND OPENING (With spacer for the ribbon) */}
+              <div className="flex flex-col items-center w-full my-auto py-1 z-10 relative">
+                <h3 className="text-[32px] xs:text-[38px] sm:text-[46px] font-black tracking-[0.18em] text-[#B91C1C] font-serif leading-none select-none uppercase">
+                  GRAND
+                </h3>
+                
+                {/* Horizontal gap perfectly sized for the red ribbon height (approx. 40px - 48px) */}
+                <div className="h-10 sm:h-12 w-full my-1" />
+                
+                <h3 className="text-[32px] xs:text-[38px] sm:text-[46px] font-black tracking-[0.18em] text-[#B91C1C] font-serif leading-none select-none uppercase">
+                  OPENING
+                </h3>
+                
+                <p className="text-[10px] sm:text-[11px] font-bold tracking-[0.25em] text-[#3E2723] uppercase mt-2">
                   Of Khodiyar Dairy
                 </p>
               </div>
 
-              {/* MIDDLE SPACER (This is where the Ribbon will cross horizontally) */}
-              <div className="h-12 w-full my-4 flex items-center justify-center relative pointer-events-none">
-                {/* Visual empty space to prevent text overlap */}
-              </div>
+              {/* BOTTOM SECTION - CTA & INVITATION FOOTER */}
+              <div className="flex flex-col items-center w-full z-10 mb-2 sm:mb-4">
+                {/* PREMIUM CTA BUTTON - Pulses and completely vanishes from DOM upon click */}
+                <div className="h-14 sm:h-16 flex items-center justify-center w-full">
+                  <AnimatePresence>
+                    {!isCuttingStarted && (
+                      <motion.button
+                        key="cta-invite-btn"
+                        onClick={handleCutRibbon}
+                        initial={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.85, y: 15 }}
+                        animate={{ scale: [1, 1.03, 1] }}
+                        transition={{
+                          scale: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+                          opacity: { duration: 0.35, ease: "easeInOut" },
+                          y: { duration: 0.35, ease: "easeInOut" }
+                        }}
+                        whileHover={{ scale: 1.03 }}
+                        className="w-[195px] h-[48px] sm:h-[52px] rounded-full bg-gradient-to-r from-[#DFBA73] via-[#F5D798] to-[#C5A059] text-[#2D1B18] font-black text-xs sm:text-sm uppercase tracking-wider shadow-md shadow-[#C5A059]/25 hover:shadow-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer border border-[#FAF6EE]/50 select-none focus:outline-none z-50 pointer-events-auto"
+                      >
+                        <span>✂</span> Tap Ribbon to Enter
+                      </motion.button>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-              {/* BOTTOM CONTENT PANEL */}
-              <div className="flex flex-col items-center w-full">
-                {/* CTA BUTTON */}
-                <motion.button
-                  onClick={handleCutRibbon}
-                  disabled={isCuttingStarted}
-                  animate={isCuttingStarted ? { scale: 0.9, opacity: 0 } : { scale: [1, 1.03, 1], opacity: 1 }}
-                  transition={isCuttingStarted ? { duration: 0.3 } : { repeat: Infinity, duration: 3, ease: "easeInOut" }}
-                  whileHover={isCuttingStarted ? {} : { scale: 1.03 }}
-                  className="w-[190px] h-[50px] rounded-full bg-gradient-to-r from-[#DFBA73] via-[#F5D798] to-[#C5A059] text-[#3E2723] font-black text-xs sm:text-sm uppercase tracking-wider shadow-md shadow-[#C5A059]/30 hover:shadow-lg hover:shadow-[#C5A059]/40 transition-shadow flex items-center justify-center gap-1.5 cursor-pointer border border-[#FAF6EE]/50 select-none focus:outline-none pointer-events-auto disabled:pointer-events-none"
-                >
-                  <span>✂</span> Tap Ribbon to Enter
-                </motion.button>
-
-                <p className="font-sans italic text-[11px] sm:text-xs text-[#3E2723]/65 font-medium mt-6">
+                <p className="font-serif italic text-[11px] sm:text-xs text-[#3E2723]/70 font-semibold mt-4">
                   Your presence is the sweetest gift...
                 </p>
                 
-                <p className="text-[10px] sm:text-[11px] font-black tracking-widest text-[#C5A059] uppercase mt-2">
+                <p className="text-[9px] sm:text-[10px] font-black tracking-widest text-[#C5A059] uppercase mt-1.5">
                   HAPPINESS IS JUST ONE BITE AWAY.
                 </p>
               </div>
 
             </motion.div>
 
-            {/* Left Ribbon Half */}
+            {/* Left Ribbon Half (Spans across the screen, sits perfectly between GRAND and OPENING) */}
             <motion.div
               initial={{ x: 0 }}
               animate={isCut ? { x: '-100%' } : { x: 0 }}
               transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1] }}
-              className="absolute left-0 top-1/2 -translate-y-1/2 w-1/2 h-10 sm:h-12 bg-gradient-to-r from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center justify-end overflow-hidden z-20 pointer-events-none"
+              className="absolute left-0 top-1/2 -translate-y-1/2 w-1/2 h-10 sm:h-12 bg-gradient-to-r from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_4px_12px_rgba(0,0,0,0.18)] flex items-center justify-end overflow-hidden z-20 pointer-events-auto cursor-pointer"
+              onClick={handleCutRibbon}
             >
-              <div className="w-full h-1 bg-[#D4AF37] opacity-30 my-auto" />
+              <div className="w-full h-1 bg-[#D4AF37] opacity-35 my-auto" />
             </motion.div>
 
             {/* Right Ribbon Half */}
@@ -404,9 +437,10 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
               initial={{ x: 0 }}
               animate={isCut ? { x: '100%' } : { x: 0 }}
               transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1] }}
-              className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-10 sm:h-12 bg-gradient-to-l from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center justify-start overflow-hidden z-20 pointer-events-none"
+              className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-10 sm:h-12 bg-gradient-to-l from-[#7F1D1D] via-[#B91C1C] to-[#EF4444] shadow-[0_4px_12px_rgba(0,0,0,0.18)] flex items-center justify-start overflow-hidden z-20 pointer-events-auto cursor-pointer"
+              onClick={handleCutRibbon}
             >
-              <div className="w-full h-1 bg-[#D4AF37] opacity-30 my-auto" />
+              <div className="w-full h-1 bg-[#D4AF37] opacity-35 my-auto" />
             </motion.div>
 
             {/* Gold Bow */}
@@ -414,9 +448,10 @@ export default function HomeView({ onAddToCart, onViewDetail }: HomeViewProps) {
               initial={{ scale: 1, opacity: 1, rotate: 0 }}
               animate={isCut ? { scale: 0, opacity: 0, rotate: 45 } : { scale: 1, opacity: 1, rotate: 0 }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex items-center justify-center select-none pointer-events-none"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex items-center justify-center select-none pointer-events-auto cursor-pointer"
+              onClick={handleCutRibbon}
             >
-              <div className="relative flex items-center justify-center">
+              <div className="relative flex items-center justify-center scale-95 sm:scale-105">
                 {/* Left Loop */}
                 <div className="w-10 h-10 border-4 border-[#D4AF37] rounded-full bg-gradient-to-tr from-[#AA7C11] via-[#FBF5B7] to-[#AA7C11] transform -rotate-45 translate-x-2 shadow-md" />
                 {/* Right Loop */}
