@@ -203,11 +203,11 @@ export default function GrandOpening({ initialCutsRemaining, onComplete }: Grand
             PURE • TRADITIONAL • HANDCRAFTED
           </p>
           
-          {/* Global Cuts Remaining Premium Label */}
+          {/* Global Cuts Remaining Premium Label 
           <div className="mt-3.5 px-4 py-1.5 bg-[#FFF5F5] border border-[#FEB2B2]/40 rounded-full text-[9px] sm:text-[10px] font-extrabold tracking-wider text-[#B91C1C] uppercase animate-pulse">
             Exclusive opening access — {initialCutsRemaining} ribbon cut{initialCutsRemaining > 1 ? 's' : ''} remaining
           </div>
-        </div>
+        </div>*/}
 
         {/* Card Middle Invite Styling with exact space/gap for the red ribbon */}
         <div className="my-auto py-4 sm:py-6 flex flex-col items-center z-10 text-center relative w-full">
